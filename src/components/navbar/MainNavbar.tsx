@@ -6,8 +6,8 @@ import NavbarButtons from './NavbarButtons'
 const MainNavbar = () => {
     return (
         <>
-            <Container maxWidth="xl" sx={{ bgcolor: "white", minWidth: 100, p: 1 }}>
-                <Grid container>
+            <Container maxWidth="xl" sx={{ bgcolor: "white", minWidth: 100, p: 1, boxShadow: '0 4px 8px #00000005, 0 6px 20px #00000005' }}>
+                <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Grid item md={7} xs={12}>
                         <NavbarMenus />
                     </Grid>
@@ -15,7 +15,7 @@ const MainNavbar = () => {
                         <NavbarButtons />
                     </Grid>
                 </Grid>
-            </Container>
+            </Container >
         </>
     )
 }

@@ -3,5 +3,17 @@ import user from './images/user.png';
 import CategoryIcon from './images/category.svg';
 import TagIcon from './images/tag.svg';
 import ShopIcon from './images/shop.svg';
+import MainDealImage from './images/mainImage.png';
+import TravelCategoryIcon from './images/travel.png';
+import BroadbandCategoryIcon from './images/broadband.png';
+import FoodCategoryIcon from './images/food.png';
+import FashionCategoryIcon from './images/fashion.png';
+import HomeAndLivingCategoryIcon from './images/home_and_living.png';
+import SportsAndFitnessCategoryIcon from './images/sports_and_fitness.png';
 
-export { MainLogo, user, CategoryIcon, TagIcon, ShopIcon }
+
+
+export {
+    MainLogo, user, CategoryIcon, TagIcon, ShopIcon, MainDealImage, TravelCategoryIcon, BroadbandCategoryIcon,
+    FoodCategoryIcon, FashionCategoryIcon, HomeAndLivingCategoryIcon, SportsAndFitnessCategoryIcon
+}

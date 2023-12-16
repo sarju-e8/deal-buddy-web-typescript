@@ -18,8 +18,8 @@ const styles = {
         fontWeight: 'bold',
     },
     menuNameStyle: {
-        ml: 1.5,
-        fontSize: 16,
+        pl: 1.5,
+        fontSize: 14,
     },
     menuIconStyle: {
         fontSize: 22
@@ -36,9 +36,9 @@ const NavbarMenus = () => {
             <Box className="navbar-menu-links" sx={{ display: 'flex', alignItems: 'center', ml: 8 }}>
                 <Stack direction="row" spacing={4} sx={{}}>
                     <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><CategoryOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Categories</Typography></Link>
+                    <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><StorefrontOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Stores </Typography></Link>
                     <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocalOfferOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Deals</Typography></Link>
                     <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocationOnOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Map</Typography></Link>
-                    <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><StorefrontOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Stores </Typography></Link>
                 </Stack>
             </Box>
             {/* </Container> */}
