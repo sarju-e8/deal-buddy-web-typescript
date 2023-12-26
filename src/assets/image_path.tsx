@@ -10,10 +10,13 @@ import FoodCategoryIcon from './images/food.png';
 import FashionCategoryIcon from './images/fashion.png';
 import HomeAndLivingCategoryIcon from './images/home_and_living.png';
 import SportsAndFitnessCategoryIcon from './images/sports_and_fitness.png';
-
+import HomeCoupons from './images/home-coupons.png';
+import HomeDeals from './images/home-deals.png';
+import ClickIcon from './images/click.png';
 
 
 export {
     MainLogo, user, CategoryIcon, TagIcon, ShopIcon, MainDealImage, TravelCategoryIcon, BroadbandCategoryIcon,
-    FoodCategoryIcon, FashionCategoryIcon, HomeAndLivingCategoryIcon, SportsAndFitnessCategoryIcon
+    FoodCategoryIcon, FashionCategoryIcon, HomeAndLivingCategoryIcon, SportsAndFitnessCategoryIcon, HomeCoupons
+    , HomeDeals, ClickIcon
 }
