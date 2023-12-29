@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import SponsoredAdsCards from './SponsoredAdsCards'
 import { getSponsorAds } from '../../services/SponsorAdsApi';
 import { SponsorAds } from '../../@types/SponsorAds';
+import { theme } from '../../theme/theme';
 
 const SponsoredAds: React.FC = () => {
     const [apiData, setApiData] = useState<SponsorAds[]>([]);
@@ -20,7 +21,7 @@ const SponsoredAds: React.FC = () => {
     return (
         <>
             <Container maxWidth="xl" className='sponsor-container'
-                sx={{ bgcolor: "rgba(67, 223, 154, .05)", padding: "40px", display: "block" }}>
+                sx={{ bgcolor: theme.palette.background.paper, padding: "40px", display: "block" }}>
                 <Box className="sponser-ads-title section-title section-link-title"
                     sx={{
                         display: "flex", alignItems: "center", justifyContent: "space-between",

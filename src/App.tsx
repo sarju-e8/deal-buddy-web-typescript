@@ -9,18 +9,20 @@ import MainPopularSales from './components/popular-sales/MainPopularSales';
 import MainPopularCoupons from './components/popular-coupons/MainPopularCoupons';
 import SponsoredAds from './components/ads-sponsor/SponsoredAds';
 import MainPopularStores from './components/popular-stores/MainPopularStores';
+import MainBlog from './components/blogs/MainBlog';
+import LearnMore from './components/learn-more/LearnMore';
+import Footer from './components/footer/Footer';
+import Home from './components/home/Home';
+import Router from './routes';
+import { Route } from 'react-router-dom';
 
 function App() {
   return (
     <>
       <MainHeader />
       <MainNavbar />
-      <MainDealsCoupons />
-      <EmailSubscription />
-      <MainPopularSales />
-      <MainPopularCoupons />
-      <SponsoredAds />
-      <MainPopularStores />
+      <Router />
+      <Footer />
     </>
   );
 }

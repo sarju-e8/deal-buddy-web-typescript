@@ -2,6 +2,7 @@ import { Box, InputAdornment, Link, Stack, TextField } from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import React from 'react'
 import { isWhiteSpaceLike } from 'typescript';
+import { theme } from '../../theme/theme';
 
 const styles = {
     someTextField: {
@@ -30,9 +31,9 @@ const HeaderSearchBar = () => {
                 sx={{
                     width: 500,
                     maxWidth: '100%',
-                    ml:-2,
+                    ml: -2,
                     borderRadius: 2.5,
-                    background:'#00C86D',
+                    background: '#00C86D',
                 }}
             >
                 <TextField
@@ -40,12 +41,18 @@ const HeaderSearchBar = () => {
                     placeholder='Find your perfect deal'
                     sx={{
                         fieldset: { border: "none", outline: "none" },
-                        bgcolor: "white", borderRadius: 2.5, border: "none", outline:"none"
+                        bgcolor: "white", borderRadius: 2.5, border: "none", outline: "none",
+                        "& input::placeholder": {
+                            color: theme.palette.text.disabled
+                        }
                     }}
                     fullWidth
                     id="fullWidth"
                     InputProps={{
-                        sx: { '&: hover fieldset': { border: 'none' }, '&:focus-within fieldset, &:focus-visible fieldset': { border: 'none' } },
+                        sx: {
+                            '&: hover fieldset': { border: 'none' }, '&:focus-within fieldset, &:focus-visible fieldset': { border: 'none' },
+                            color: theme.palette.common.black,
+                        },
                         style: { border: 'none', height: 43, outline: 'none' },
                         startAdornment: (
                             <InputAdornment position="start" sx={{ border: "none", outline: 'none' }}>

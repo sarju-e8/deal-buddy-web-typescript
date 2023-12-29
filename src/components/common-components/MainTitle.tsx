@@ -1,5 +1,6 @@
 import { Box, Grid, Link, Typography } from '@mui/material'
 import React from 'react'
+import { theme } from '../../theme/theme';
 
 export interface IProps {
     name: string;
@@ -10,7 +11,7 @@ const MainTitle = (props: IProps) => {
     return (
         <>
             <Box className="popular-sales-title-main-div" sx={{ py: "40px", px: "60px", width: "91.8%" }}>
-                <Box sx={{ bgcolor: "#e3faed", borderRadius: "10px", }}>
+                <Box sx={{ bgcolor: theme.palette.background.default, borderRadius: "10px", }}>
                     <Box className="popular-sales-title-link" sx={{ p: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", ml: "unset", mb: "24px" }}>
                         <Typography component="h2" sx={{ fontSize: "26px", fontWeight: 900, color: "black" }}>{props.name}</Typography>
                         <Link href="#" className="popular-sales-link" sx={{

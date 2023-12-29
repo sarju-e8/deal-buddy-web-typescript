@@ -13,10 +13,15 @@ import SportsAndFitnessCategoryIcon from './images/sports_and_fitness.png';
 import HomeCoupons from './images/home-coupons.png';
 import HomeDeals from './images/home-deals.png';
 import ClickIcon from './images/click.png';
-
+import footerLogo from "./images/footer_logo.svg";
+import footerLogoIcon from "./images/footer_logo_icon.svg";
+import facebookIcon from "./images/Facebook.svg";
+import instaIcon from "./images/instagram.svg";
+import appStore from "./images/appStore.svg";
+import googlePlayStore from "./images/googlePlayStore.svg";
 
 export {
     MainLogo, user, CategoryIcon, TagIcon, ShopIcon, MainDealImage, TravelCategoryIcon, BroadbandCategoryIcon,
     FoodCategoryIcon, FashionCategoryIcon, HomeAndLivingCategoryIcon, SportsAndFitnessCategoryIcon, HomeCoupons
-    , HomeDeals, ClickIcon
+    , HomeDeals, ClickIcon, footerLogo, footerLogoIcon, facebookIcon, instaIcon, appStore, googlePlayStore
 }

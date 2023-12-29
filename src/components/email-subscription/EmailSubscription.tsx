@@ -3,6 +3,7 @@ import { Box, Button, Container, FormControl, Grid, InputAdornment, TextField, T
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import { relative } from 'path'
 import React from 'react'
+import { theme } from '../../theme/theme';
 
 
 
@@ -10,7 +11,7 @@ const EmailSubscription = () => {
     return (
         <>
             <Box className="join-now" sx={{
-                py: "40px", px: "82px", width: "88.5%"
+                py: "40px", pl: "82px", width: "88.5%"
             }}>
                 <Grid container sx={{
                     backgroundColor: "#e3faed",
@@ -32,12 +33,18 @@ const EmailSubscription = () => {
                                 placeholder='Enter your email address'
                                 sx={{
                                     fieldset: { border: "none", outline: "none" },
-                                    bgcolor: "white", borderRadius: 2.5, border: "none", outline: "none"
+                                    bgcolor: "white", borderRadius: 2.5, border: "none", outline: "none",
+                                    "& input::placeholder": {
+                                        color: theme.palette.text.disabled
+                                    }
                                 }}
                                 fullWidth
                                 id="fullWidth"
                                 InputProps={{
-                                    sx: { '&: hover fieldset': { border: 'none' }, '&:focus-within fieldset, &:focus-visible fieldset': { border: 'none' }, pr: "10px" },
+                                    sx: {
+                                        '&: hover fieldset': { border: 'none' }, '&:focus-within fieldset, &:focus-visible fieldset': { border: 'none' }, pr: "10px",
+                                        color: theme.palette.common.black,
+                                    },
                                     style: { border: 'none', height: 50, outline: 'none' },
                                     startAdornment: (
                                         <InputAdornment position="start" sx={{ border: "none", outline: 'none' }}>

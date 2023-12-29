@@ -6,7 +6,7 @@ import PopularStores from './PopularStores'
 
 const MainPopularStores = () => {
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{ pb: "40px" }}>
             <MainTitle name='Popular Stores' btnName='View All' />
             <PopularStores />
         </Container>

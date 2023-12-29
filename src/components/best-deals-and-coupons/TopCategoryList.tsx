@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Category } from '../../@types/category';
 import CategoryList from './CategoryList';
 import { getCategory } from '../../services/CategoryApi';
+import { theme } from '../../theme/theme';
 
 const style = {
     categoryCard: {
@@ -17,9 +18,9 @@ const style = {
         height: "100%"
     },
     categoryMainTitle: {
-        fontSize: "18px",
-        fontWeight: 700,
-        lineHeight: "28px",
+        // fontSize: "18px",
+        // fontWeight: 700,
+        // lineHeight: "28px",
         mb: "3px",
     },
     // categoryList: {
@@ -84,7 +85,7 @@ const TopCategoryList: React.FC = () => {
         <>
             <Container maxWidth="lg">
                 <Box className="category-card" sx={{ ...style.categoryCard }}>
-                    <Typography className='category-main-title' sx={{ ...style.categoryMainTitle }}>Top Categories</Typography>
+                    <Typography className='category-main-title' sx={{ fontSize:theme.typography.h2.fontSize }}>Top Categories</Typography>
                     {
                         apiData && apiData.map((item) => {
                             // console.log(item);
