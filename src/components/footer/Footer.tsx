@@ -4,6 +4,7 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 
 import React from 'react'
 import { FooterLinks } from '../../@types/FooterLinks';
+import { theme } from '../../theme/theme';
 
 const style = {
     FooterDescription: {
@@ -152,7 +153,7 @@ const Footer: React.FC = () => {
                                                     sx={{ paddingRight: "30px" }}>
                                                     <Typography variant='h3' className='quick-links-title'
                                                         sx={{
-                                                            ...style.FooterLinksTitle
+                                                            ...theme.typography.h5
                                                         }}>
                                                         Quick Links
                                                     </Typography>
@@ -173,7 +174,7 @@ const Footer: React.FC = () => {
                                                 <Box className="quick-links-right" sx={{ paddingLeft: "30px" }}>
                                                     <Typography variant='h3' className='general-links-title'
                                                         sx={{
-                                                            ...style.FooterLinksTitle
+                                                            ...theme.typography.h5
                                                         }}>
                                                         General
                                                     </Typography>

@@ -1,30 +1,67 @@
 import { createTheme } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { common } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
 
     interface Theme {
-        customColor: {
-            danger: string;
+        customBackgroundColor: {
+            transparentBlack: string;
+            imageBlurBgColor: String;
         }
     }
 
     interface ThemeOptions {
-        status?: {
-            danger?: string;
+        customBackgroundColor?: {
+            transparentBlack?: string;
+            imageBlurBgColor?: string;
         }
+    }
+
+    interface Theme {
+        buttonGradient: {
+            greenGradient: string;
+            yellowGradient: string;
+        }
+    }
+
+    interface ThemeOptions {
+        buttonGradient?: {
+            greenGradient?: string;
+            yellowGradient?: string;
+        }
+    }
+
+    interface TypographyVariants {
+        cardSubtitle: React.CSSProperties;
+        paragraph: React.CSSProperties;
+    }
+
+    interface TypographyVariantsOptions {
+        cardSubtitle: React.CSSProperties;
+        paragraph?: React.CSSProperties;
+    }
+}
+
+declare module "@mui/material/Typography" {
+    interface TypographyPropsVariantOverrides {
+        cardSubtitle: true;
+        h1: true;
+
     }
 }
 
 export const theme = createTheme({
-    status: {
-        danger: "red",
+    customBackgroundColor: {
+        transparentBlack: "#00000080",
+        imageBlurBgColor: "red",
     },
     palette: {
 
         primary: {
             main: "#00c86d",
             dark: "#309868",
+            // contrastText:""
         },
         secondary: {
             main: "#fff400",
@@ -41,6 +78,7 @@ export const theme = createTheme({
             300: "#f0f0f0",
             400: "#ededed",
             500: "#a9a9a9",
+            // 600: "#a8a8a8",
         },
         background: {
             default: "#e3faed",
@@ -53,43 +91,82 @@ export const theme = createTheme({
         },
     },
 
+    buttonGradient: {
+        greenGradient: "linear-gradient(107.73deg,#43df9a 13.88%,#03b465 87.89%)",
+        yellowGradient: "linear-gradient(109.06deg,#faf57e 12.84%,#fef400 87.16%)",
+    },
+
     typography: {
         fontFamily: "Open Sans",
+        // offer and deal image 
         h1: {
-            xlFont: "36px",
+            fontSize: "36px",
             fontWeight: 700,
-            xlLine: "44px",
+            lineHeight: "44px",
         },
+        // main find the best deal title
         h2: {
-            xlFont: "30px",
+            // md: "40px",
+            fontSize: "30px",
             fontWeight: 600,
-            xlLine: "38px",
+            lineHeight: "38px",
         },
+        // popular sales common component titles
         h3: {
-            xlFont: "26px",
+            fontSize: "26px",
             fontWeight: 700,
-            xlLine: "31.2px",
+            lineHeight: "31.2px",
         },
+        // join the deals email subscribe 
         h4: {
-            xlFont: "24px",
-            xlLine: "600",
+            fontSize: "24px",
+            lineHeight: "30px",
             fontWeight: 600,
         },
+        // footer links title and top category title
         h5: {
-            xlFont: "18px",
+            fontSize: "18px",
             fontWeight: 700,
-            xlLine: "28px",
+            lineHeight: "28px",
         },
+        // popular card/sales images title Hyper Drive
         h6: {
-            xlFont: "16px",
+            fontSize: "16px",
             fontWeight: 500,
-            xlLine: "22.4px",
+            lineHeight: "22.4px",
         },
         button: {
-            xlFont: "14px",
+            fontSize: "14px",
             fontWeight: 500,
-            xlLine: "19.6px",
+            lineHeight: "19.6px",
+        },
+        subtitle1: {
+            fontSize: "16px",
+            fontWeight: 600,
+            lineHeight: "19.6px",
+        },
+        body1: {
+            fontSize: "16px",
+            fontWeight: 400,
+            lineHeight: "19.6px",
+        },
+        body2: {
+            fontSize: "14px",
+            fontWeight: 400,
+            lineHeight: "19.6px",
+        },
+        cardSubtitle: {
+            fontSize: "18px",
+            fontWeight: 600,
+            lineHeight: "28px",
+        },
+        paragraph: {
+            fontSize: "16px",
+            fontWeight: 400,
+            lineHeight: "25.2px",
         },
 
     }
+
+
 })

@@ -4,6 +4,7 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
 import { Stores } from '../../@types/Stores';
 import React from 'react'
+import { theme } from '../../theme/theme';
 
 const PopularStoresCards = ({ activeDealsCount, address, imageUrl, name, storeModes }: Stores) => {
     return (
@@ -24,7 +25,7 @@ const PopularStoresCards = ({ activeDealsCount, address, imageUrl, name, storeMo
                         <Box className="store-details" sx={{ ml: "15px" }}>
                             <Box className="store-name-div" sx={{ mb: "10px" }}>
                                 <Typography component="h2" className="store-name"
-                                    sx={{ fontSize: "18px", fontWeight: 600, lineHeight: "28px", color: "black" }}>
+                                    sx={{ ...theme.typography.cardSubtitle, color: theme.palette.common.black }}>
                                     {name}
                                 </Typography>
                             </Box>
@@ -32,17 +33,17 @@ const PopularStoresCards = ({ activeDealsCount, address, imageUrl, name, storeMo
                                 display: "flex", mb: "10px",
                                 alignItems: "start",
                             }}>
-                                <LocationOnOutlinedIcon sx={{ fontSize: "22px", margin: "0 5px 0 0", color: "#00c86d", }} />
+                                <LocationOnOutlinedIcon sx={{ fontSize: "22px", margin: "0 5px 0 0", color: theme.palette.text.primary, }} />
                                 <Typography className="location-name" sx={{
-                                    display: "-webkit-box", fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: "black"
+                                    display: "-webkit-box", fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: theme.palette.common.black
                                 }}>
                                     {storeModes[0].name === "Online" ? `${storeModes[0].name + " Store"}` : address.fillAddress}</Typography>
                             </Box>
                             <Box className="store-offers" sx={{
                                 display: "flex", mb: "10px",
                             }}>
-                                <LocalOfferOutlinedIcon sx={{ fontSize: "22px", margin: "0 5px 0 0", color: "#00c86d" }} />
-                                <Typography className="offer-name" sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: "black" }}>
+                                <LocalOfferOutlinedIcon sx={{ fontSize: "22px", margin: "0 5px 0 0", color: theme.palette.text.primary }} />
+                                <Typography className="offer-name" sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: theme.palette.common.black }}>
                                     {activeDealsCount === 0 ? `No active deals` : `${activeDealsCount} active deals`}</Typography>
                             </Box>
                         </Box>
@@ -50,8 +51,8 @@ const PopularStoresCards = ({ activeDealsCount, address, imageUrl, name, storeMo
                         {
                             storeModes[0].name === "In Store" ? (
 
-                                <Link href="#" sx={{ bgcolor: "#00C86D", display: "flex", alignItems: "center", alignSelf: "flex-end", padding: "10px", borderRadius: "10px" }}>
-                                    <NearMeOutlinedIcon sx={{ color: "white", fontSize: "20px" }} />
+                                <Link href="#" sx={{ bgcolor: theme.palette.primary.main, display: "flex", alignItems: "center", alignSelf: "flex-end", padding: "10px", borderRadius: "10px" }}>
+                                    <NearMeOutlinedIcon sx={{ color: theme.palette.common.white, fontSize: "20px" }} />
                                 </Link>
                             ) : (
                                 <></>

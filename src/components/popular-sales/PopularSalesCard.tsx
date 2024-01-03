@@ -6,6 +6,8 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import { ClickIcon } from '../../assets/image_path';
 import { Deal } from '../../@types/deals';
 import { calculateDays } from '../../helperFunctions/CalculateDays';
+import { theme } from '../../theme/theme';
+import ButtonComp from '../common-components/Button';
 
 
 export interface SalesProductCard {
@@ -60,16 +62,16 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                             </Box>
                         </Box>
                         <Box className="category-title"
-                            sx={{ top: "20px", left: "20px", position: "absolute", background: "rgba(0,0,0,0.75)", color: "white", boxShadow: "0 1px 2px #1018280d", borderRadius: "5px", padding: "8px 14px", fontWeight: 500, fontSize: "14px", lineHeight: "20px" }}>
+                            sx={{ top: "20px", left: "20px", position: "absolute", background: "rgba(0,0,0,0.75)", color: theme.palette.common.white, boxShadow: "0 1px 2px #1018280d", borderRadius: "5px", padding: "8px 14px", fontWeight: 500, fontSize: "14px", lineHeight: "20px" }}>
                             <Typography>{category.name}</Typography>
                         </Box>
                         <Link className="wishlist-button text-white" sx={{ cursor: "pointer", position: "absolute", top: "20px", right: "10px", height: "35px", width: "35px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px", }}>
                             {/* <Typography component="span" className='icon-heart'> */}
-                            <FavoriteBorderOutlinedIcon className='icon-heart' sx={{ fontSize: "28px", color: "#fff400" }} />
+                            <FavoriteBorderOutlinedIcon className='icon-heart' sx={{ fontSize: "28px", color: theme.palette.secondary.main }} />
                             {/* </Typography> */}
                         </Link>
                     </Box>
-                    <Box className="product-details" sx={{ bgcolor: "white", padding: "20px", display: "flex", flexGrow: 1, flexDirection: "column", justifyContent: "space-between" }}>
+                    <Box className="product-details" sx={{ bgcolor: theme.palette.common.white, padding: "20px", display: "flex", flexGrow: 1, flexDirection: "column", justifyContent: "space-between" }}>
                         <Box className="detail" sx={{ flexGrow: 1 }}>
                             <Typography component="span" className='title text-uppercase' sx={{ mb: "6px", display: "block", fontSize: "12px", lineHeight: "18px", color: "#00000080", textTransform: "uppercase" }}>
                                 {productType} -
@@ -77,7 +79,8 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                                     {`${productModes[0]?.name}`} {productModes[1]?.name && "/ " + productModes[1]?.name}</Typography>
                             </Typography>
                             <Link href="#" sx={{ textDecoration: "none", color: "black" }}>
-                                <Typography component="h4" className='item-name truncate-tree-line' sx={{ mb: "14px", fontWeight: 500, fontSize: "16px", lineHeight: 1.4, display: '-webkit-box', maxWidth: "100%", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                                <Typography component="h4" className='item-name truncate-tree-line'
+                                    sx={{ ...theme.typography.h6, mb: "14px", display: '-webkit-box', maxWidth: "100%", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                                     {name}</Typography>
                             </Link>
                             <Box className="item-details store-name" sx={{ display: "flex", marginBottom: "10px" }}>
@@ -96,7 +99,7 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                                     {`Expires in ${expiresInDaysCount} days`}</Typography>
                             </Box>
                         </Box>
-                        <Button className='view-btn'
+                        {/* <Button className='view-btn'
                             sx={{
                                 mt: "20px", borderRadius: "5px", border: "none", color: "white", padding: "10px 24px", display: "inline-block", background: "linear-gradient(107.73deg,#43df9a 13.88%,#03b465 87.89%)", transition: ".5s", boxShadow: "unset", '&:hover': {
                                     color: 'black',
@@ -104,7 +107,9 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                                 }
                             }}>
                             <Typography sx={{ lineHeight: 1.4, fontWeight: 500, fontSize: "14px", textTransform: "capitalize" }}>View Deal</Typography>
-                        </Button>
+                        </Button> */}
+
+                        <ButtonComp name="View Deal" sx={{ marginTop: "20px" }}></ButtonComp>
                     </Box>
                 </Box>
             </Grid >

@@ -33,7 +33,7 @@ const HeaderSearchBar = () => {
                     maxWidth: '100%',
                     ml: -2,
                     borderRadius: 2.5,
-                    background: '#00C86D',
+                    background: theme.palette.primary.main,
                 }}
             >
                 <TextField
@@ -41,7 +41,7 @@ const HeaderSearchBar = () => {
                     placeholder='Find your perfect deal'
                     sx={{
                         fieldset: { border: "none", outline: "none" },
-                        bgcolor: "white", borderRadius: 2.5, border: "none", outline: "none",
+                        bgcolor: theme.palette.common.white, borderRadius: 2.5, border: "none", outline: "none",
                         "& input::placeholder": {
                             color: theme.palette.text.disabled
                         }

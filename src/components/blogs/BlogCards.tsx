@@ -2,6 +2,8 @@ import { Box, Button, Grid, Link, Typography } from '@mui/material'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import React from 'react'
 import { IBlogs } from '../../@types/IBlogs';
+import { theme } from '../../theme/theme';
+import ButtonComp from '../common-components/Button';
 
 const style = {
     BlogMainGridCard: {
@@ -13,7 +15,7 @@ const style = {
         width: "100%",
         height: "100%",
         margin: "0 auto",
-        bgcolor: "white",
+        bgcolor: theme.palette.common.white,
         borderRadius: "10px",
         flexDirection: "column",
         maxWidth: "304px",
@@ -38,11 +40,12 @@ const style = {
         width: "100%",
         bottom: "4px",
         fontSize: "16px",
-        color: "white",
+        color: theme.palette.common.white,
         display: "none",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "#00000080",
+        // bgcolor: "#00000080",
+        bgcolor: theme.customBackgroundColor.transparentBlack,
         boxShadow: "0 0 15px #0000000d",
         height: "38px",
     },
@@ -65,7 +68,7 @@ const style = {
         pl: "8px"
     },
     BlogDetails: {
-        bgcolor: "white",
+        bgcolor: theme.palette.common.white,
         padding: "20px",
         display: "flex",
         flexGrow: 1,
@@ -76,27 +79,27 @@ const style = {
         flexGrow: 1,
         pb: "10px",
     },
-    BlogHeadings: {
-        webkitLineClamp: 3,
-        fontSize: "18px",
-        lineHeight: "28px",
-        fontWeight: 500,
-        mb: "10px",
-        color: "black",
-    },
+    // BlogHeadings: {
+    //     webkitLineClamp: 3,
+    //     fontSize: "18px",
+    //     lineHeight: "28px",
+    //     fontWeight: 500,
+    //     mb: "10px",
+    //     color: theme.palette.common.black,
+    // },
     BlogSubTexts: {
         fontSize: "14px",
         lineHeight: "20px",
-        color: "#00000080",
+        color: theme.palette.text.secondary,
         margin: 0,
         webKitLineClamp: 3,
     },
-    BlogReadMoreBtn: {
-        borderRadius: "5px", textTransform: "none", border: "none", color: "white", padding: "10px 24px", display: "inline-block", background: "linear-gradient(107.73deg,#43df9a 13.88%,#03b465 87.89%)", transition: ".5s", boxShadow: "unset", '&:hover': {
-            color: 'black',
-            background: 'linear-gradient(109.06deg,#faf57e 12.84%,#fef400 87.16%)',
-        }
-    }
+    // BlogReadMoreBtn: {
+    //     borderRadius: "5px", textTransform: "none", border: "none", color: "white", padding: "10px 24px", display: "inline-block", background: "linear-gradient(107.73deg,#43df9a 13.88%,#03b465 87.89%)", transition: ".5s", boxShadow: "unset", '&:hover': {
+    //         color: 'black',
+    //         background: 'linear-gradient(109.06deg,#faf57e 12.84%,#fef400 87.16%)',
+    //     }
+    // }
 }
 
 const BlogCards = ({ imageUrl, sortDescription, title, views }: IBlogs) => {
@@ -126,7 +129,7 @@ const BlogCards = ({ imageUrl, sortDescription, title, views }: IBlogs) => {
                     <Box className="blogs-details" sx={{ ...style.BlogDetails }}>
                         <Box className="blogs-description" sx={{ ...style.BlogDescription }}>
                             <Link href="#" className='blogs-links' sx={{ ...style.BlogLinks }}>
-                                <Typography className='blogs-headings truncate-two-line' sx={{ ...style.BlogHeadings }}>
+                                <Typography className='blogs-headings truncate-two-line' sx={{ ...theme.typography.cardSubtitle, color: theme.palette.common.black, mb: "10px" }}>
                                     {title}
                                 </Typography>
                             </Link>
@@ -134,7 +137,8 @@ const BlogCards = ({ imageUrl, sortDescription, title, views }: IBlogs) => {
                                 {sortDescription}
                             </Typography>
                         </Box>
-                        <Button className='default-btn blogs-read-more-btn' sx={{ ...style.BlogReadMoreBtn }}>Read More</Button>
+                        {/* <Button className='default-btn blogs-read-more-btn' sx={{ ...style.BlogReadMoreBtn }}>Read More</Button> */}
+                        <ButtonComp name="Read More" sx={{ marginTop: "20px" }}></ButtonComp>
                     </Box>
                 </Box>
             </Grid>
