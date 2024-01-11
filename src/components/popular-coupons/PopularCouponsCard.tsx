@@ -20,13 +20,13 @@ import ButtonComp from '../common-components/Button';
     gap: 24px;
 }
 </style> */}
-const PopularCouponsCard = ({ name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
+const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
 
     const expiresInDaysCount = calculateDays(endDate);
 
     return (
         <>
-            <Grid item lg={3} md={4} sm={6} xs={12} className='coupons-single-item-grid' sx={{
+            <Grid item lg={dealsLgSize} md={4} sm={6} xs={12} className='coupons-single-item-grid' sx={{
                 p: "10px",
                 // hover on coupon that time display view count
                 "& : hover .coupons-image .view-info": { gap: "24px", gridGap: "24px", display: "flex" }
@@ -152,7 +152,7 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                     </Box>
                     <Box className="circle-bottom"
                         sx={{
-                            bottom: "-10px", left: "270px", top: "-196px", right: "-10px", position: "relative",
+                            bottom: "-10px", left: `${circleBottomClass}`, top: "-196px", right: "-10px", position: "relative",
                             bgcolor: theme.palette.common.white, transform: "scaleY(-1)", height: "30px", width: "25px", borderRadius: "100%",
                         }}>
                     </Box>

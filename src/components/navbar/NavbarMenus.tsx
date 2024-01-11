@@ -87,8 +87,12 @@ const NavbarMenus = () => {
                             </Link>
                         </NavLink>
                     </Menu>
-                    <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocalOfferOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Deals</Typography></Link>
-                    <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocationOnOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Map</Typography></Link>
+                    <NavLink style={{ textDecoration: "inherit" }} to={'/deals'}>
+                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocalOfferOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Deals</Typography></Link>
+                    </NavLink>
+                    <NavLink style={{ textDecoration: "inherit" }} to={'/physical-stores'}>
+                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocationOnOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Map</Typography></Link>
+                    </NavLink>
                 </Stack>
             </Box >
             {/* </Container> */}

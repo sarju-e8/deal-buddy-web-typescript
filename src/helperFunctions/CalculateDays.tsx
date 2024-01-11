@@ -9,7 +9,7 @@ export const calculateDays = (_endDate: Date | any) => {
     // To calculate the no. of days between two dates
     let Difference_In_Days =
         Math.round(Difference_In_Time / (1000 * 3600 * 24));
-    console.log(">>>", Difference_In_Days);
+    // console.log(">>>", Difference_In_Days);
 
     return Difference_In_Days;
 }

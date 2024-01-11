@@ -5,9 +5,10 @@ import { Route } from "@mui/icons-material";
 import HowItWorks from "../components/how-it-works/HowItWorks";
 import ListYourBusiness from "../components/list-your-business/ListYourBusiness";
 import Categories from "../components/categories/Categories";
-import AllStores from "../components/stores/AllStores";
-import OnlineStores from "../components/stores/OnlineStores";
-import PhysicalStores from "../components/stores/PhysicalStores";
+import AllStores from "../components/stores/all-stores/AllStores";
+import OnlineStores from "../components/stores/online-stores/OnlineStores";
+import PhysicalStores from "../components/stores/physical-stores/PhysicalStores";
+import MainDeals from "../components/deals/MainDeals";
 
 export default function Router() {
     return useRoutes([
@@ -32,6 +33,9 @@ export default function Router() {
             path: "/physical-stores", element: <PhysicalStores />
         },
         {
+            path: "/deals", element: <MainDeals />
+        },
+        {
             path: "/how-it-works", element: <HowItWorks />
         },
         {
@@ -39,6 +43,24 @@ export default function Router() {
         },
         {
             path: "/contact-us", element: <></>
-        }
+        },
+        {
+            path: "/about-us", element: <></>
+        },
+        {
+            path: "/faq", element: <></>
+        },
+        {
+            path: "/blogs", element: <></>
+        },
+        {
+            path: "/nz-price-comparison-sites", element: <></>
+        },
+        {
+            path: "/terms-of-use", element: <></>
+        },
+        {
+            path: "/privacy-policy", element: <></>
+        },
     ])
 }

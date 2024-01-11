@@ -21,7 +21,7 @@ const PopularSalesProducts: React.FC = () => {
         });
     }, [])
 
-    console.log("apiDaatSale", apiData)
+    // console.log("apiDaatSale", apiData)
 
     // apiData && apiData.map((item) => {
     //     // let url: string = item.productImages[0].imageUrl;

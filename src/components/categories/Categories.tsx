@@ -16,7 +16,7 @@ const Categories: React.FC = () => {
             setApiData(res.data.items);
         });
     }, [])
-    console.log("categoryList", apiData);
+    // console.log("categoryList", apiData);
     return (
         <>
             <Container maxWidth="xl">
@@ -32,9 +32,9 @@ const Categories: React.FC = () => {
                             sx={{ display: "flex", justifyContent: "center" }}>
                             {
                                 apiData.map((item) => {
-                                    const { id, imageUrl, name } = item;
+                                    const { id, imageUrl, name, slug } = item;
                                     return (
-                                        <CategoryCards key={id} id={id} name={name} imageUrl={imageUrl} />
+                                        <CategoryCards key={id} id={id} name={name} imageUrl={imageUrl} slug={slug} />
                                     )
                                 })
                             }

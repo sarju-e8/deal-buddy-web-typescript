@@ -26,13 +26,13 @@ const style = {
     }
 }
 
-const PopularSalesCard = ({ name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
+const PopularSalesCard = ({ dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
 
     const expiresInDaysCount = calculateDays(endDate);
 
     return (
         <>
-            <Grid item lg={3} md={4} sm={6} xs={12} className='product-single-item-grid' sx={{ p: "10px" }}>
+            <Grid item lg={dealsLgSize} md={4} sm={6} xs={12} className='product-single-item-grid' sx={{ p: "10px" }}>
                 <Box className="product-sale-card"
                     sx={{
                         display: "flex", overflow: "hidden", width: "100%", height: "100%",
@@ -40,7 +40,7 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                         border: "1px solid rgba(0,0,0,.15)",
                         margin: "0 auto",
                         bgcolor: "white", borderRadius: "10px",
-                        "&: hover .product-image .view-info": { gap: "24px", gridGap: "24px", display: "flex" }
+                        "&: hover .product-image .product-view-info": { gap: "24px", gridGap: "24px", display: "flex" }
                     }}>
                     <Box className="product-image"
                         sx={{ height: "200px", width: "100%", position: "relative", }}>
@@ -50,22 +50,22 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                                 src={productImages[0].imageUrl}
                                 sx={{ height: "100%", width: "100%", objectFit: "cover", borderRadius: "10px 10px 0 0" }} />
                         </Link>
-                        <Box className="view-info" sx={{
+                        <Box className="product-view-info" sx={{
                             position: "absolute", width: "100%", bottom: 0, fontSize: "16px", color: "white",
                             display: "none", alignItems: "center", justifyContent: "center", bgcolor: "#00000080",
                             boxShadow: "0 0 15px #0000000d", height: "38px"
                         }}>
-                            <Box className="view-item" sx={{ lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <Box className="product-view-item" sx={{ lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
                                 <Box component="img" src={ClickIcon} sx={{ height: "18px", width: "18px", objectFit: "contain" }} alt="click" className="click-icon" />
                                 <Typography component="span" className='view-text' sx={{ fontSize: "14px", lineHeight: "18px", pl: "8px" }}>
                                     {clicks}</Typography>
                             </Box>
                         </Box>
-                        <Box className="category-title"
+                        <Box className="product-category-title"
                             sx={{ top: "20px", left: "20px", position: "absolute", background: "rgba(0,0,0,0.75)", color: theme.palette.common.white, boxShadow: "0 1px 2px #1018280d", borderRadius: "5px", padding: "8px 14px", fontWeight: 500, fontSize: "14px", lineHeight: "20px" }}>
                             <Typography>{category.name}</Typography>
                         </Box>
-                        <Link className="wishlist-button text-white" sx={{ cursor: "pointer", position: "absolute", top: "20px", right: "10px", height: "35px", width: "35px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px", }}>
+                        <Link className="product-wishlist-button text-white" sx={{ cursor: "pointer", position: "absolute", top: "20px", right: "10px", height: "35px", width: "35px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px", }}>
                             {/* <Typography component="span" className='icon-heart'> */}
                             <FavoriteBorderOutlinedIcon className='icon-heart' sx={{ fontSize: "28px", color: theme.palette.secondary.main }} />
                             {/* </Typography> */}
@@ -83,17 +83,17 @@ const PopularSalesCard = ({ name, productImages, clicks, category, stores, locat
                                     sx={{ ...theme.typography.h6, mb: "14px", display: '-webkit-box', maxWidth: "100%", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                                     {name}</Typography>
                             </Link>
-                            <Box className="item-details store-name" sx={{ display: "flex", marginBottom: "10px" }}>
+                            <Box className="product-item-details store-name" sx={{ display: "flex", marginBottom: "10px" }}>
                                 <StorefrontOutlinedIcon sx={{ fontSize: "20px", margin: "0 12px 0 0" }} />
                                 <Typography className='truncate-two-line' sx={{ margin: 0, fontSize: "14px", lineHeight: "20px", display: "-webkit-box", maxWidth: "100%", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                                     {stores[0].name}</Typography>
                             </Box>
-                            <Box className="item-details location" sx={{ display: "flex", marginBottom: "10px" }}>
+                            <Box className="product-item-details location" sx={{ display: "flex", marginBottom: "10px" }}>
                                 <LocationOnOutlinedIcon sx={{ fontSize: "20px", margin: "0 12px 0 0" }} />
                                 <Typography className='truncate' sx={{ margin: 0, fontSize: "14px", lineHeight: "20px", width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                                     {NZWide ? "NZWide" : locations[0]?.location}</Typography>
                             </Box>
-                            <Box className="item-details item-expires" sx={{ display: "flex", marginBottom: "10px" }}>
+                            <Box className="product-item-details item-expires" sx={{ display: "flex", marginBottom: "10px" }}>
                                 <CalendarTodayOutlinedIcon sx={{ fontSize: "20px", margin: "0 12px 0 0" }} />
                                 <Typography sx={{ margin: 0, fontSize: "14px", lineHeight: "20px" }}>
                                     {`Expires in ${expiresInDaysCount} days`}</Typography>

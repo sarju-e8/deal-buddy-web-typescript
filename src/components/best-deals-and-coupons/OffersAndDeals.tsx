@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getDealsImage, getOfferImage } from '../../services/OfferAndDealsApi';
 import { HomeCoupons, HomeDeals } from '../../assets/image_path';
 import { theme } from '../../theme/theme';
+import { NavLink } from 'react-router-dom';
 
 const style = {
     container: {
@@ -79,7 +80,8 @@ const OffersAndDeals = () => {
 
                     <Grid className='deals-grid' item md={6} xs={12}>
                         <Box className="main-deals-div" sx={{ ...style.mainDealsDiv }}>
-                            <Link href={DealsHrefLink} target="_blank" sx={{ ...style.link }}>
+                            <NavLink to="/deals" style={{ textDecoration: "inherit" }}>
+                                {/* <Link href={DealsHrefLink} target="_blank" sx={{ ...style.link }}> */}
                                 <Box className="deals-card" sx={{ ...style.dealsCardDiv }}>
                                     <Box className="content" sx={{ ...style.contentDiv }}>
                                         <Typography className='deals-title' component='h2' sx={{ ...theme.typography.h1 }}>Deals</Typography>
@@ -87,7 +89,8 @@ const OffersAndDeals = () => {
                                         <Typography className='deals-subtitle-second' sx={{ ...style.subTitle }}>vendors and our team</Typography>
                                     </Box>
                                 </Box>
-                            </Link>
+                                {/* </Link> */}
+                            </NavLink>
                         </Box>
                     </Grid>
                 </Grid>

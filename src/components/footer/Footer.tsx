@@ -5,6 +5,7 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import React from 'react'
 import { FooterLinks } from '../../@types/FooterLinks';
 import { theme } from '../../theme/theme';
+import { NavLink } from 'react-router-dom';
 
 const style = {
     FooterDescription: {
@@ -34,27 +35,27 @@ const Footer: React.FC = () => {
         {
             id: 1,
             linkName: "Home",
-            linkPath: "#",
+            linkPath: "/",
         },
         {
             id: 2,
             linkName: "About Us",
-            linkPath: "#",
+            linkPath: "/about-us",
         },
         {
             id: 3,
             linkName: "Contact Us",
-            linkPath: "#",
+            linkPath: "/contact-us",
         },
         {
             id: 4,
             linkName: "FAQ’s",
-            linkPath: "#",
+            linkPath: "/faq",
         },
         {
             id: 5,
             linkName: "Blogs",
-            linkPath: "#",
+            linkPath: "/blogs",
         },
     ]
 
@@ -62,27 +63,27 @@ const Footer: React.FC = () => {
         {
             id: 1,
             linkName: "Categories",
-            linkPath: "#",
+            linkPath: "/categories",
         },
         {
             id: 2,
             linkName: "Stores",
-            linkPath: "#",
+            linkPath: "/stores",
         },
         {
             id: 3,
             linkName: "Deals",
-            linkPath: "#",
+            linkPath: "/deals",
         },
         {
             id: 4,
             linkName: "Map",
-            linkPath: "#",
+            linkPath: "/physical-stores",
         },
         {
             id: 5,
             linkName: "NZ Price Comparision Site",
-            linkPath: "#",
+            linkPath: "/nz-price-comparison-sites",
         },
     ]
 
@@ -95,12 +96,14 @@ const Footer: React.FC = () => {
                     <Box className="icon-div">
                         <ChevronRightOutlinedIcon className='chevron-right-icon' sx={{ fontSize: "20px", color: "#43DF9A", display: "flex" }} />
                     </Box>
-                    <Link href={linkPath} className='link-name'
-                        sx={{
-                            paddingLeft: "6px", fontSize: "14px", lineHeight: "20px",
-                            fontWeight: 400, color: "black", textDecoration: "none",
-                            transition: "0.5s", "&:hover": { color: "#43DF9A" }
-                        }}>{linkName}</Link>
+                    <NavLink to={linkPath} style={{ textDecoration: "inherit" }}>
+                        <Link href={linkPath} className='link-name'
+                            sx={{
+                                paddingLeft: "6px", fontSize: "14px", lineHeight: "20px",
+                                fontWeight: 400, color: "black", textDecoration: "none",
+                                transition: "0.5s", "&:hover": { color: "#43DF9A" }
+                            }}>{linkName}</Link>
+                    </NavLink>
                 </ListItem >
             </>
         )
@@ -116,11 +119,13 @@ const Footer: React.FC = () => {
                                 <Grid item lg={4} md={4} sm={5} xs={12}>
                                     <Box className="footer-logo-description-div"
                                         sx={{ marginBottom: "50px", paddingRight: "24px" }}>
-                                        <Link href="#" className='footer-logo-link'
-                                            sx={{ height: "66px", objectFit: "contain" }}>
-                                            <Box component="img" src={footerLogo} className='footer-logo'
-                                                alt='deal buddy logo' sx={{ marginBottom: "20px" }} />
-                                        </Link>
+                                        <NavLink to="/" style={{ textDecoration: "inherit" }}>
+                                            <Link className='footer-logo-link'
+                                                sx={{ height: "66px", objectFit: "contain" }}>
+                                                <Box component="img" src={footerLogo} className='footer-logo'
+                                                    alt='deal buddy logo' sx={{ marginBottom: "20px" }} />
+                                            </Link>
+                                        </NavLink>
                                         <Typography className='footer-description'
                                             sx={{ ...style.FooterDescription, paddingBottom: "32px" }}>
                                             Dealbuddy aims to help customers discover new experiences and products at the lowest possible prices
@@ -163,7 +168,7 @@ const Footer: React.FC = () => {
                                                         {
                                                             quickLinksData.map((item) => {
                                                                 const { id, linkName, linkPath } = item;
-                                                                console.log("qldId", id)
+                                                                // console.log("qldId", id)
                                                                 return <FooterCommonLinks key={id} linkPath={linkPath} linkName={linkName} />
                                                             })
                                                         }
@@ -226,13 +231,17 @@ const Footer: React.FC = () => {
                                         fontSize: "14px", lineHeight: "20px", margin: "0", paddingRight: "24px",
                                         display: "flex", justifyContent: "center", alignItems: "center"
                                     }}>
-                                    <Link href='#' className='footer-links'
-                                        sx={{ ...style.FooterTermsAndPolicyLinks, "&:hover": { color: "#43DF9A" } }}>
-                                        Terms of use</Link>
+                                    <NavLink to="/terms-of-use" style={{ textDecoration: "none" }}>
+                                        <Link href='#' className='footer-links'
+                                            sx={{ ...style.FooterTermsAndPolicyLinks, "&:hover": { color: "#43DF9A" } }}>
+                                            Terms of use</Link>
+                                    </NavLink>
                                     |
-                                    <Link href="#" className='footer-links'
-                                        sx={{ ...style.FooterTermsAndPolicyLinks, "&:hover": { color: "#43DF9A" } }}>
-                                        Privacy Policy</Link>
+                                    <NavLink to="/privacy-policy" style={{ textDecoration: " none" }}>
+                                        <Link href="#" className='footer-links'
+                                            sx={{ ...style.FooterTermsAndPolicyLinks, "&:hover": { color: "#43DF9A" } }}>
+                                            Privacy Policy</Link>
+                                    </NavLink>
                                 </Typography>
                                 <Box className="footer-fb-insta-icon" sx={{ display: "flex" }}>
                                     <Link href="https://www.facebook.com/dealbuddynz/" target="_blank">
@@ -248,7 +257,7 @@ const Footer: React.FC = () => {
                         </Box>
                     </Box>
                 </Container>
-            </Container>
+            </Container >
         </>
     )
 }
