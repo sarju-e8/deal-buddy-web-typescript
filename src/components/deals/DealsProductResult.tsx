@@ -7,6 +7,7 @@ import { getDealsAndCoupons, getFiltersData } from '../../services/DealsAndCoupo
 import PopularSalesCard from '../popular-sales/PopularSalesCard'
 import PopularCouponsCard from '../popular-coupons/PopularCouponsCard'
 import ButtonComp from '../common-components/Button'
+import { DealMode } from '../../@types/DealMode'
 
 const style = {
     navTabs: {
@@ -32,38 +33,38 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     let [pageNumber, setPageNumber] = useState<number>(1);
     const [productTypeValue, setProductTypeValue] = React.useState('all');
     const [sortBy, setSortBy] = useState(namesSortBy)
-    const [dealModes, setDealModes] = useState(namesDealModes)
+    const [dealModes, setDealModes] = useState<DealMode[]>(namesDealModes)
     // const [temp, setTemp] = useState(1)
 
     const url: string = `deal/deals?v=1704457556025&shortBy=${namesSortBy}&limit=36&page=${pageNumber}&updateViewCount=true&t=1704457556023`;
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        // if (newValue === "all") {
-        //     setProductTypeValue(newValue);
-        //     getDealsAndCoupons(url).then((res) => {
-        //         setAllItemCount(res.data.total);
-        //         setSalesCount(res.data.sellCount);
-        //         setCouponsCount(res.data.couponCount);
-        //         setDealsApiData(res.data.items);
-        //     });
-        // } else if (newValue === "sale") {
-        //     setProductTypeValue(newValue);
-        //     getFiltersData(url, namesSortBy, newValue).then((res) => {
-        //         // setAllItemCount(res.data.total);
-        //         setSalesCount(res.data.sellCount);
-        //         // setCouponsCount(res.data.couponCount);
-        //         setDealsApiData(res.data.items);
-        //         console.log("sale", dealsApiData)
-        //     });
-        // } else if (newValue === "coupon") {
-        //     setProductTypeValue(newValue);
-        //     getFiltersData(url, namesSortBy, newValue).then((res) => {
-        //         // setAllItemCount(res.data.total);
-        //         // setSalesCount(res.data.sellCount);
-        //         setCouponsCount(res.data.couponCount);
-        //         setDealsApiData(res.data.items);
-        //     });
-        // }
+        if (newValue === "all") {
+            setProductTypeValue(newValue);
+            getDealsAndCoupons(url).then((res) => {
+                // setAllItemCount(res.data.total);
+                // setSalesCount(res.data.sellCount);
+                // setCouponsCount(res.data.couponCount);
+                setDealsApiData(res.data.items);
+            });
+        } else if (newValue === "sale") {
+            setProductTypeValue(newValue);
+            getFiltersData(url, namesSortBy, newValue).then((res) => {
+                // setAllItemCount(res.data.total);
+                // setSalesCount(res.data.sellCount);
+                // setCouponsCount(res.data.couponCount);
+                setDealsApiData(res.data.items);
+                console.log("sale", dealsApiData)
+            });
+        } else if (newValue === "coupon") {
+            setProductTypeValue(newValue);
+            getFiltersData(url, namesSortBy, newValue).then((res) => {
+                // setAllItemCount(res.data.total);
+                // setSalesCount(res.data.sellCount);
+                // setCouponsCount(res.data.couponCount);
+                setDealsApiData(res.data.items);
+            });
+        }
         setProductTypeValue(newValue)
     }
 
@@ -71,6 +72,31 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
         setPageNumber(pageNumber += 1);
     }
 
+    console.log("deals usestate", namesDealModes);
+
+    const applyFilters = () => {
+        let updatedList = dealsApiData;
+
+        // if (dealModes) {
+        //     updatedList = updatedList.filter((item) => item.productModes[0].id === dealModes);
+        // }
+        // console.log("updatelist", updatedList);
+
+        const dealsCheck = dealModes.filter(item => item.checked).map(item => item.name.toLowerCase());
+
+        if (dealsCheck.length) {
+            updatedList = updatedList.filter((item) =>
+                dealsCheck.includes(item.id))
+        }
+        console.log("updatedList", updatedList);
+        setDealModes(updatedList);
+    }
+
+    // const handleChangeChecked = (namesDealModes: any) => {
+    //     const changeCheckbox = namesDealModes.map((item) => {
+    //         item.id === id ? {...item, }
+    //     })
+    // }
 
 
 
@@ -114,17 +140,41 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     }, [pageNumber])
 
     useEffect(() => {
-        // if (pageNumber === 1) {
-        setSortBy(namesSortBy)
-        getFiltersData(url, namesSortBy).then((res) => {
-            setAllItemCount(res.data.total);
-            setSalesCount(res.data.sellCount);
-            setCouponsCount(res.data.couponCount);
-            setDealsApiData(res.data.items);
-            console.log("default ", sortBy)
 
-        });
-    }, [sortBy])
+        if (productTypeValue === "all") {
+            // applyFilters();
+            setSortBy(namesSortBy)
+            getDealsAndCoupons(url).then((res) => {
+                setAllItemCount(res.data.total);
+                setSalesCount(res.data.sellCount);
+                setCouponsCount(res.data.couponCount);
+                setDealsApiData(res.data.items);
+                setDealModes(namesDealModes);
+                console.log("default ", sortBy)
+                console.log("dealsMode 1", namesDealModes);
+            });
+
+            // getFiltersData(url, namesSortBy).then((res) => {
+            //     setAllItemCount(res.data.total);
+            //     setSalesCount(res.data.sellCount);
+            //     setCouponsCount(res.data.couponCount);
+            //     setDealsApiData(res.data.items);
+            //     console.log("default ", sortBy)
+            // });
+
+        } else {
+            // applyFilters();
+            setSortBy(namesSortBy)
+            getFiltersData(url, namesSortBy, productTypeValue).then((res) => {
+                setAllItemCount(res.data.total);
+                setSalesCount(res.data.sellCount);
+                setCouponsCount(res.data.couponCount);
+                setDealsApiData(res.data.items);
+                setDealModes(namesDealModes);
+                console.log("dealsMode 2", namesDealModes);
+            });
+        }
+    }, [sortBy, namesDealModes])
 
     // useEffect(() => {
     //     // if (pageNumber === 1) {

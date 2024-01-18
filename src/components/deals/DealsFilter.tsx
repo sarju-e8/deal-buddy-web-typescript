@@ -1,8 +1,9 @@
 import { Box, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { theme } from '../../theme/theme'
-import { getDealsAndCoupons, getFiltersData } from '../../services/DealsAndCouponsApi'
+import { getDealsAndCoupons, getDealsMode, getFiltersData } from '../../services/DealsAndCouponsApi'
 import { Deal } from '../../@types/deals'
+import { DealMode } from '../../@types/DealMode'
 
 const style = {
     commonColor: {
@@ -24,25 +25,29 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
     const [filterApiSortByClicksData, setFilterApiSortByClicksData] = useState<Deal[]>([]);
     let [pageNumber, setPageNumber] = useState<number>(1);
     const [currentParam, setCurrentParam] = useState("date")
+    const [dealMode, setDealMode] = useState<DealMode[]>([]);
+    // const [cusines, setCusines] = useState<DealMode[]>(dealMode);
+    const [checkedArray, setCheckedArray] = useState<any>([]);
+
 
     const dealsHandleClick = () => {
         setPageNumber(pageNumber += 1);
     }
 
-const onclick_filter_data = ()=>{
-    // getFiltersData(url).then((res)=>{
-    //     console.log(res.data.items);
-        
-    // })
-}
+    const onclick_filter_data = () => {
+        // getFiltersData(url).then((res)=>{
+        //     console.log(res.data.items);
 
-const dealMode = [
-    {dealMode : "c9155a1c-0369-4d2d-b317-d828e6218420"}
-]
+        // })
+    }
+
+    // const dealMode = [
+    //     { dealMode: "c9155a1c-0369-4d2d-b317-d828e6218420" }
+    // ]
     // const url: string = `deal/deals?v=1704457556025&limit=36&page=${pageNumber}&updateViewCount=true&t=1704457556023`;
     // const sortBy: string = "clicks";
-    const url: string = `deal/deals?v=1704457556025&shortBy=date&limit=36&page=1&updateViewCount=true&t=1704457556023`;
-
+    // const url: string = `deal/deals?v=1704457556025&shortBy=date&limit=36&page=1&updateViewCount=true&t=1704457556023`;
+    const url: string = `product-mode`;
 
     const sortByClicksData = (sortBy: string) => {
         // getSortByFilterData(url, sortBy).then((res) => {
@@ -61,12 +66,107 @@ const dealMode = [
     }
 
     const sortByDealModesData = (dealMode: string) => {
+        console.log(">>>>", dealMode);
+
         setNamesDealModes(dealMode);
     }
 
     useEffect(() => {
+        // getDealsMode(url).then((res) => {
+        //     console.log("modesss", res.data.items);
 
-    },)
+        //     setDealMode(res.data.items)
+        // });
+        getDealsMode(url).then((res) => {
+            setDealMode(res.data.items.map((dealMode: any) => {
+                dealMode.value = dealMode.id;
+                dealMode.label = dealMode.name;
+                dealMode.selected = false;
+                console.log("....", dealMode);
+                return dealMode;
+            }));
+        });
+    }, [])
+
+    const handleChangeChecked = (e: any, isChecked: boolean) => {
+
+        console.log("event", e.target);
+        isChecked = e.target.checked;
+        if (isChecked) {
+
+            // console.log("checked true", e.target._wrapperState.initialValue)
+            console.log("checked.....", e.target.checked)
+            checkedArray.push(e.target.value);
+
+            console.log("checkdeals activate", checkedArray);
+            // setCheckedArray(checkedArray);
+
+            setNamesDealModes(checkedArray);
+        } else {
+            console.log("uncheckek.....", isChecked)
+            // let checkedCheckboxValue = checkedArray.map((item: any) => {
+            //     // checkedCheckboxValue = item;
+            //     console.log("itemss", item);
+
+            // });
+            // console.log("abcd", checkedCheckboxValue);
+            // // if (e.target.value == checkedCheckboxValue) {
+            // //     checkedArray.pop(e.target.value);
+            // // }
+
+            // using filter
+            // let filterUncheckedArray = checkedArray.filter((checkbox: any) => {
+            //     console.log("checkboxx", checkbox)
+            //     console.log("evm", e.target.value);
+            //     return e.target.value !== checkbox;
+            // })
+
+            // console.log("unchecked values", filterUncheckedArray);
+            // // setCheckedArray(filterUncheckedArray);
+            // console.log("checkdeals activateee", checkedArray);
+
+            const index = checkedArray.indexOf(e.target.value);
+            checkedArray.splice(index, 1);
+            // setCheckedArray(checkedArray);
+            console.log("final", checkedArray)
+            setNamesDealModes(checkedArray);
+        }
+
+
+
+
+
+        // setDealMode(changeChecked);
+        // console.log("chengess", changeChecked)
+
+
+        // console.log("chk id", id)
+        // console.log("ddd", dealMode)
+
+        // const ids = { currentChkId: id }
+
+        // const checkedId = [{ ...ids }]
+
+        // console.log("ids..", checkedId);
+    }
+
+    // const handleChangeChecked = (event: any) => {
+    //     const isChecked = event.target.checked;
+    //     if (isChecked) {
+    //         setCheckedArray({ checkedArray: [...checkedArray, event.target.value] });
+    //         console.log("checkedarray", checkedArray);
+    //     }
+    // }
+
+    const CheckboxCards = ({ id, name }: DealMode) => {
+        return (
+            <FormControlLabel key={id}
+                onChange={handleChangeChecked}
+                control={<Checkbox sx={{ ...style.commonColor }} />}
+                label={name} value={id} sx={{ ...style.checkBoxLabel }} />
+        )
+    }
+
     return (
         <>
             <Box className="filter-sidebar" sx={{ width: "100%", flexShrink: 0, }}>
@@ -121,8 +221,20 @@ const dealMode = [
                                 color: theme.palette.common.black, ...theme.typography.subtitle1, mb: "5px",
                             }}>Deal Mode</Typography>
                             <FormGroup>
-                                <FormControlLabel onClick={() => getFiltersData(url, "date",dealMode[0])} control={<Checkbox sx={{ ...style.commonColor }} />} label="Online" sx={{ ...style.checkBoxLabel }} />
-                                <FormControlLabel control={<Checkbox sx={{ ...style.commonColor }} />} label="In Store" sx={{ ...style.checkBoxLabel }} />
+                                {/* <FormControlLabel onClick={() => getFiltersData(url, "date",dealMode[0])} control={<Checkbox sx={{ ...style.commonColor }} />} label="Online" sx={{ ...style.checkBoxLabel }} /> */}
+                                {/* <FormControlLabel onChange={() => changeChecked(dealMode)} control={<Checkbox sx={{ ...style.commonColor }} />} label="Online" sx={{ ...style.checkBoxLabel }} />
+                                <FormControlLabel control={<Checkbox sx={{ ...style.commonColor }} />} label="In Store" sx={{ ...style.checkBoxLabel }} /> */}
+                                {
+                                    dealMode.map((item, index) => {
+                                        const { id, name } = item;
+
+                                        return (
+                                            <>
+                                                <CheckboxCards key={index} name={name} id={id} />
+                                            </>
+                                        )
+                                    })
+                                }
                             </FormGroup>
                         </Box>
 
