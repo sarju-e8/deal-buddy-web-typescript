@@ -19,9 +19,14 @@ import facebookIcon from "./images/Facebook.svg";
 import instaIcon from "./images/instagram.svg";
 import appStore from "./images/appStore.svg";
 import googlePlayStore from "./images/googlePlayStore.svg";
-
+import howItsWorkBGI from "./images/how-it-works.jpg";
+import listYourBusinessBGI from "./images/list-your-business.jpg";
+import businessBriefcaseIcon from "./images/business-briefcase.png";
+import dealsCouponIcon from "./images/deals-icon.png";
+import storeIcon from "./images/store-img.png";
 export {
     MainLogo, user, CategoryIcon, TagIcon, ShopIcon, MainDealImage, TravelCategoryIcon, BroadbandCategoryIcon,
     FoodCategoryIcon, FashionCategoryIcon, HomeAndLivingCategoryIcon, SportsAndFitnessCategoryIcon, HomeCoupons
-    , HomeDeals, ClickIcon, footerLogo, footerLogoIcon, facebookIcon, instaIcon, appStore, googlePlayStore
+    , HomeDeals, ClickIcon, footerLogo, footerLogoIcon, facebookIcon, instaIcon, appStore, googlePlayStore,
+    howItsWorkBGI, listYourBusinessBGI, businessBriefcaseIcon, dealsCouponIcon, storeIcon
 }

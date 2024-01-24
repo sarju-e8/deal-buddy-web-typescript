@@ -172,13 +172,13 @@ function SwipeableTextMobileStepper() {
       {
         // jo api ma 1 karta vadhu image hase to jj left and right slide icons display thase otherwise nay thay
         apiData.length > 1 ?
-          <MobileStepper className='button-component' sx={{ ".MuiMobileStepper-dotActive": { bgcolor: '#00c86d' }, ".MuiMobileStepper-dots": { marginTop: "450px", bgcolor: "#fff", padding: "5px", borderRadius: "10px" }, bgcolor: 'transparent', width: "59.5%", height: "200px", position: 'absolute', top: "400px" }}
+          <MobileStepper className='button-component' sx={{ ".MuiMobileStepper-dotActive": { bgcolor: theme.palette.primary.main }, ".MuiMobileStepper-dots": { marginTop: "450px", bgcolor: "#fff", padding: "5px", borderRadius: "10px" }, bgcolor: 'transparent', width: "59.5%", height: "200px", position: 'absolute', top: "400px" }}
 
             steps={maxSteps}
             position="static"
             activeStep={activeStep}
             nextButton={
-              <Button sx={{ color: '#00c86d', bgcolor: '#fff', minWidth: 'auto', borderRadius: "50%" }}
+              <Button sx={{ color: theme.palette.text.primary, bgcolor: theme.palette.common.white, minWidth: 'auto', borderRadius: "50%" }}
                 size="small"
                 onClick={handleNext}
                 disabled={activeStep === maxSteps - 1}
@@ -192,7 +192,7 @@ function SwipeableTextMobileStepper() {
               </Button>
             }
             backButton={
-              <Button sx={{ color: '#00c86d', bgcolor: '#fff', minWidth: 'auto', borderRadius: "50%" }} size="small" onClick={handleBack} disabled={activeStep === 0}>
+              <Button sx={{ color: theme.palette.text.primary, bgcolor: theme.palette.common.white, minWidth: 'auto', borderRadius: "50%" }} size="small" onClick={handleBack} disabled={activeStep === 0}>
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowRight />
                 ) : (

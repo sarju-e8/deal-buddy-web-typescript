@@ -6,9 +6,9 @@ const DealsCouponsTitle = () => {
     return (
         <Container maxWidth="lg" sx={{ py: "40px" }}>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "start", ml: "-18px" }}>
-                <Typography sx={{ ...theme.typography.h1 }}>Find the best deals and coupons near you</Typography>
+                <Typography sx={{ ...theme.typography.h2 }}>Find the best deals and coupons near you</Typography>
             </Box>
-        </Container>
+        </Container >
     )
 }
 

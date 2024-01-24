@@ -14,7 +14,7 @@ const PopularStores: React.FC = () => {
             setApiData(res.data.items);
         });
     }, [])
-    console.log("stores", apiData);
+    // console.log("stores", apiData);
 
     return (
         <>

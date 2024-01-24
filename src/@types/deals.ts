@@ -18,6 +18,8 @@ export interface Deal {
     endDate: Date;
     stores: Stores | any;
     locations: Locations[];
-
+    couponCode?: string;
+    dealsLgSize?: number;
+    circleBottomClass?: string;
 }
 

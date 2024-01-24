@@ -2,6 +2,8 @@ import { Box, Typography } from '@mui/material'
 import { TravelCategoryIcon } from "../../assets/image_path";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import React, { FC } from 'react'
+import { theme } from '../../theme/theme';
+import { styled } from "@mui/material/styles";
 
 export interface CategoryListProps {
     name: string;
@@ -23,7 +25,7 @@ const style = {
         justifyContent: 'center'
     },
     categoryIconDiv: {
-        bgcolor: "#00c86d",
+        // bgcolor: "#00c86d",
         height: "36px",
         width: "36px",
         borderRadius: "10px",
@@ -41,12 +43,15 @@ const style = {
     }
 }
 
+const useTheme = theme;
+console.log("useTHeme", useTheme)
+
 const CategoryList = ({ name, image }: CategoryListProps) => {
     return (
         <>
             <Box className="category-list" sx={{ ...style.categoryList }}>
                 <Box className="category-content" sx={{ ...style.categoryContent }}>
-                    <Box className="category-icon-div" sx={{ ...style.categoryIconDiv }}>
+                    <Box className="category-icon-div" sx={{ ...style.categoryIconDiv, bgcolor: theme.palette.primary.main }}>
                         <Box className='category-icon'
                             component="img" src={image}
                             sx={{ ...style.categoryIcon }} />

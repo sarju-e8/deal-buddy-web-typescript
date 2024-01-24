@@ -7,6 +7,7 @@ import { Category } from '../../@types/category';
 import CategoryList from './CategoryList';
 import { getCategory } from '../../services/CategoryApi';
 import { theme } from '../../theme/theme';
+import { NavLink } from 'react-router-dom';
 
 const style = {
     categoryCard: {
@@ -80,12 +81,11 @@ const TopCategoryList: React.FC = () => {
         });
     }, [])
     // console.log("apidata", apiData);
-
     return (
         <>
             <Container maxWidth="lg">
                 <Box className="category-card" sx={{ ...style.categoryCard }}>
-                    <Typography className='category-main-title' sx={{ fontSize:theme.typography.h2.fontSize }}>Top Categories</Typography>
+                    <Typography className='category-main-title' sx={{ ...theme.typography.h5, marginBottom: "3px" }}>Top Categories</Typography>
                     {
                         apiData && apiData.map((item) => {
                             // console.log(item);
@@ -95,10 +95,11 @@ const TopCategoryList: React.FC = () => {
                             );
                         })
                     }
-
-                    <Link href="#" sx={{ textDecoration: "none", display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                        <Typography sx={{ color: "#00c86d", fontWeight: 'bold', fontSize: "16px", lineHeight: "24px", pt: "20px", display: "block", }}>View all categories</Typography>
-                    </Link>
+                    <NavLink to='/categories' style={{ textDecoration: "inherit" }}>
+                        <Link sx={{ textDecoration: "none", display: "flex", alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography sx={{ color: theme.palette.text.primary, fontWeight: 'bold', fontSize: "16px", lineHeight: "24px", pt: "20px", display: "block", }}>View all categories</Typography>
+                        </Link>
+                    </NavLink>
                 </Box>
             </Container>
         </>

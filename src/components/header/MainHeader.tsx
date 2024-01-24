@@ -4,11 +4,12 @@ import Logo from './Logo'
 import HeaderSelectLocation from './HeaderSelectLocation'
 import HeaderSearchBar from './HeaderSearchBar'
 import HeaderUserLoginStatus from './HeaderUserLoginStatus'
+import { theme } from '../../theme/theme'
 
 const MainHeader = () => {
   return (
     <>
-      <Container maxWidth="xl" sx={{ bgcolor: "#00C86D", minWidth: 100, p: 1 }}>
+      <Container maxWidth="xl" sx={{ bgcolor: theme.palette.primary.main, minWidth: 100, p: 1 }}>
         <Grid container>
           <Grid item md={3} xs={12}>
             <Logo />

@@ -7,6 +7,8 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import { Deal } from '../../@types/deals';
 import { calculateDays } from '../../helperFunctions/CalculateDays';
+import { theme } from '../../theme/theme';
+import ButtonComp from '../common-components/Button';
 
 
 
@@ -18,13 +20,13 @@ import { calculateDays } from '../../helperFunctions/CalculateDays';
     gap: 24px;
 }
 </style> */}
-const PopularCouponsCard = ({ name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
+const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
 
     const expiresInDaysCount = calculateDays(endDate);
 
     return (
         <>
-            <Grid item lg={3} md={4} sm={6} xs={12} className='coupons-single-item-grid' sx={{
+            <Grid item lg={dealsLgSize} md={4} sm={6} xs={12} className='coupons-single-item-grid' sx={{
                 p: "10px",
                 // hover on coupon that time display view count
                 "& : hover .coupons-image .view-info": { gap: "24px", gridGap: "24px", display: "flex" }
@@ -32,13 +34,13 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                 <Box className="coupons-card"
                     sx={{
                         maxWidth: "630px", display: "flex", flexDirection: "column", overflow: "hidden",
-                        width: "100%", height: "100%", margin: "0 auto", bgcolor: "white", borderRadius: "10px",
+                        width: "100%", height: "100%", margin: "0 auto", bgcolor: theme.palette.common.white, borderRadius: "10px",
                         // "& : hover .coupons-image .view-info": { gap: "24px", gridGap: "24px", display: "flex" }
                     }}>
                     <Box className="first-part"
                         sx={{
                             // width: "100%", 
-                            background: "rgba(67, 223, 154, .05)", border: "1px dashed rgba(0,0,0,.15)",
+                            background: theme.palette.background.paper, border: "1px dashed rgba(0,0,0,.15)",
                             borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px", borderTopRightRadius: "10px", borderRightColor: "#00000026",
                             height: "100%", maxWidth: "unset"
                         }}>
@@ -49,8 +51,8 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                             </Link>
                             <Box className="view-info"
                                 sx={{
-                                    position: "absolute", width: "100%", bottom: 0, fontSize: "16px", color: 'white',
-                                    display: "none", alignItems: "center", justifyContent: "center", bgcolor: "#00000080",
+                                    position: "absolute", width: "100%", bottom: 0, fontSize: "16px", color: theme.palette.common.white,
+                                    display: "none", alignItems: "center", justifyContent: "center", bgcolor: theme.customBackgroundColor.transparentBlack,
                                     boxShadow: "0 0 15px #0000000d", height: "38px"
                                 }}>
                                 <Box className="view-item"
@@ -61,12 +63,12 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                                 </Box>
                             </Box>
                             <Box className="category-title"
-                                sx={{ top: "20px", left: "20px", position: "absolute", background: "rgba(0,0,0,0.75)", color: "white", boxShadow: "0 1px 2px #1018280d", borderRadius: "5px", padding: "8px 14px", fontWeight: 500, fontSize: "14px", lineHeight: "20px" }}>
+                                sx={{ top: "20px", left: "20px", position: "absolute", background: "rgba(0,0,0,0.75)", color: theme.palette.common.white, boxShadow: "0 1px 2px #1018280d", borderRadius: "5px", padding: "8px 14px", fontWeight: 500, fontSize: "14px", lineHeight: "20px" }}>
                                 <Typography>{category.name}</Typography>
                             </Box>
                             <Link className="wishlist-button text-white" sx={{ cursor: "pointer", position: "absolute", top: "20px", right: "10px", height: "35px", width: "35px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px", }}>
                                 {/* <Typography component="span" className='icon-heart'> */}
-                                <FavoriteBorderOutlinedIcon className='icon-heart' sx={{ fontSize: "28px", color: "#fff400" }} />
+                                <FavoriteBorderOutlinedIcon className='icon-heart' sx={{ fontSize: "28px", color: theme.palette.secondary.main }} />
                                 {/* </Typography> */}
                             </Link>
                         </Box>
@@ -75,16 +77,17 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                             <Typography component="span" className='title text-uppercase'
                                 sx={{
                                     pb: "4px", display: "block", fontSize: "12px", lineHeight: "18px",
-                                    color: "#00000080", textTransform: "uppercase"
+                                    color: theme.palette.text.secondary, textTransform: "uppercase"
                                 }}>
                                 {productType} -
                                 <Typography component="span" sx={{ pl: '4px', fontSize: "12px" }}>
                                     {`${productModes[0]?.name}`} {productModes[1]?.name && "/ " + productModes[1]?.name}
                                 </Typography>
-                                <Link className='coupon-item' sx={{ color: "black", transition: ".5s", textDecoration: "none", outline: "0" }}>
+                                <Link className='coupon-item' sx={{ color: theme.palette.common.black, transition: ".5s", textDecoration: "none", outline: "0" }}>
                                     <Typography component="h4" className='item-name truncate-tree-line'
                                         sx={{
-                                            margin: 0, fontWeight: 500, fontSize: "16px", lineHeight: 1.4,
+                                            ...theme.typography.h6,
+                                            margin: 0,
                                             display: "-webkit-box", maxWidth: "100%", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden"
                                         }}>
                                         {name}
@@ -97,7 +100,7 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                     <Box className="second-part"
                         sx={{
                             // width: "100%",
-                            position: "relative", bgcolor: "#e3faed", padding: "10px", maxWidth: "unset",
+                            position: "relative", bgcolor: theme.palette.background.default, padding: "10px", maxWidth: "unset",
                             borderRadius: "10px"
                         }}>
                         <Box className="coupons-details-second" sx={{ display: "flex", flexDirection: "column", height: "100%", }}>
@@ -127,29 +130,30 @@ const PopularCouponsCard = ({ name, productImages, clicks, category, stores, loc
                                         {`Expires In  ${expiresInDaysCount} days`}</Typography>
                                 </Box>
                             </Box>
-                            <Button className='view-btn'
+                            {/* <Button className='view-btn'
                                 sx={{
                                     mt: "20px", borderRadius: "5px", border: "none", color: "white", padding: "10px 24px", display: "inline-block", background: "linear-gradient(107.73deg,#43df9a 13.88%,#03b465 87.89%)", transition: ".5s", boxShadow: "unset", '&:hover': {
                                         color: 'black',
                                         background: 'linear-gradient(109.06deg,#faf57e 12.84%,#fef400 87.16%)',
                                     }
                                 }}>
-                                <Typography sx={{ lineHeight: 1.4, fontWeight: 500, fontSize: "14px", textTransform: "capitalize" }}>
+                                <Typography sx={{ ...theme.typography.button, textTransform: "capitalize" }}>
                                     Show Code</Typography>
-                            </Button>
+                            </Button> */}
+                            <ButtonComp name="Show Code" sx={{ marginTop: "20px" }}></ButtonComp>
                         </Box>
                     </Box>
 
                     <Box className="circle-top"
                         sx={{
-                            top: "-180px", position: "relative", bgcolor: "white", transform: "scaleY(-1)",
+                            top: "-180px", position: "relative", bgcolor: theme.palette.common.white, transform: "scaleY(-1)",
                             height: "30px", width: "25px", borderRadius: "100%", left: "-12px"
                         }}>
                     </Box>
                     <Box className="circle-bottom"
                         sx={{
-                            bottom: "-10px", left: "270px", top: "-196px", right: "-10px", position: "relative",
-                            bgcolor: "white", transform: "scaleY(-1)", height: "30px", width: "25px", borderRadius: "100%",
+                            bottom: "-10px", left: `${circleBottomClass}`, top: "-196px", right: "-10px", position: "relative",
+                            bgcolor: theme.palette.common.white, transform: "scaleY(-1)", height: "30px", width: "25px", borderRadius: "100%",
                         }}>
                     </Box>
                 </Box>

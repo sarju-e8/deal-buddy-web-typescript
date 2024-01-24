@@ -3,6 +3,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined';
 import React from 'react'
 import { NavLink } from 'react-router-dom';
+import { theme } from '../../theme/theme';
 
 const style = {
     menuMainDivStyle: {
@@ -12,8 +13,8 @@ const style = {
         ml: 10
     },
     menuButtonStyle: {
-        background: "linear-gradient(107.73deg,#43df9a 13.88%,#03b465 87.89%)",
-        color: 'white',
+        background: theme.buttonGradient.greenGradient,
+        color: theme.palette.common.white,
         textDecoration: 'none',
         px: 3,
         py: 1.25,
@@ -23,8 +24,8 @@ const style = {
         justifyContent: 'center',
         transition: '.5s',
         '&:hover': {
-            color: 'black',
-            background: 'linear-gradient(109.06deg,#faf57e 12.84%,#fef400 87.16%)',
+            color: theme.palette.common.black,
+            background: theme.buttonGradient.yellowGradient,
         }
     },
     menuButtonIconStyle: {
@@ -36,8 +37,10 @@ const style = {
         // }
     },
     menuButtonNameStyle: {
-        fontSize: "14px",
-        fontWeight: 500,
+        ...theme.typography.button,
+        // textTransform: "none",
+        // fontSize: "14px",
+        // fontWeight: 500,
         // color: "white",
         // "&: hover": {
         //     color: "black"
@@ -52,17 +55,20 @@ const NavbarButtons = () => {
                 <NavLink to="/how-it-works" style={{ textDecoration: "inherit" }}>
                     <Link sx={{ ...style.menuButtonStyle }}>
                         <HelpOutlineIcon sx={{ ...style.menuButtonIconStyle }} />
-                        <Typography component="span" sx={{ ...style.menuButtonNameStyle }}>
+                        <Typography component="span" sx={{ ...style.menuButtonNameStyle, textTransform: "none", }}>
                             {/* <NavLink to="/how-it-works" style={{ textDecoration: "inherit", ...style.menuButtonNameStyle }}> */}
                             How it works
                             {/* </NavLink> */}
                         </Typography>
                     </Link>
                 </NavLink>
-                <Link sx={{ ...style.menuButtonStyle, ml: 1.5, }} href="#">
-                    <BusinessCenterOutlinedIcon sx={{ ...style.menuButtonIconStyle }} />
-                    <Typography component="span" sx={{ ...style.menuButtonNameStyle }}>List your business</Typography>
-                </Link>
+
+                <NavLink to="/list-your-business" style={{ textDecoration: "inherit" }}>
+                    <Link sx={{ ...style.menuButtonStyle, ml: 1.5, }} href="#">
+                        <BusinessCenterOutlinedIcon sx={{ ...style.menuButtonIconStyle }} />
+                        <Typography component="span" sx={{ ...style.menuButtonNameStyle, textTransform: "none", }}>List your business</Typography>
+                    </Link>
+                </NavLink>
             </Box >
         </>
     )
