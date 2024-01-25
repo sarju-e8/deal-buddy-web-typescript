@@ -7,7 +7,24 @@ export const getCategory = async (url: string) => {
     return CategoryData;
 }
 
-export const getAllCategoryList = async (url: string) => {
-    const AllCategoryListData = await axios.get(`${BASE_URL}/${url}`);
+export const getAllCategoryList = async (params: object) => {
+    const AllCategoryListData = await axios.get(`${BASE_URL}/category`, {
+        params: {
+            ...params
+        }
+    }
+
+    );
+
     return AllCategoryListData;
+}
+
+export const getIndividualCategoryDetails = async (slug: string, params: object) => {
+    const IndividualCategoryDetail = await axios.get(`${BASE_URL}/category/slug-or-id/${slug}`, {
+        params: {
+            ...params
+        }
+    });
+
+    return IndividualCategoryDetail;
 }

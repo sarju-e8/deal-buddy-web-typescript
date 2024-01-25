@@ -15,7 +15,7 @@ const SponsoredAds: React.FC = () => {
             setApiData(res.data.items)
         });
     }, [])
-    console.log("sponsor-ads", apiData);
+    // console.log("sponsor-ads", apiData);
 
 
     return (

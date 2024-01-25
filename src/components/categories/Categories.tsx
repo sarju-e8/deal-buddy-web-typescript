@@ -9,10 +9,16 @@ import CategoryCards from './CategoryCards'
 const Categories: React.FC = () => {
     const [apiData, setApiData] = useState<Category[]>([]);
 
-    const url: string = "category?v=1704193922481&where%5Bstatus%5D=active&order%5BorderBy%5D=ASC";
+    // const url: string = "category?v=1704193922481&where%5Bstatus%5D=active&order%5BorderBy%5D=ASC";
 
     useEffect(() => {
-        getAllCategoryList(url).then((res) => {
+        var params = {
+            where: "",
+            status: "active",
+            orderBy: "ASC",
+        }
+
+        getAllCategoryList(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])

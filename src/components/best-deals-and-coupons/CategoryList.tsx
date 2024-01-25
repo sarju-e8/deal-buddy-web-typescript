@@ -44,7 +44,7 @@ const style = {
 }
 
 const useTheme = theme;
-console.log("useTHeme", useTheme)
+// console.log("useTHeme", useTheme)
 
 const CategoryList = ({ name, image }: CategoryListProps) => {
     return (

@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { theme } from '../../theme/theme'
 import { NavLink } from 'react-router-dom'
 import { Deal } from '../../@types/deals'
-import { getDealsAndCoupons, getFiltersData } from '../../services/DealsAndCouponsApi'
+import { getDeals } from '../../services/DealsAndCouponsApi'
 import PopularSalesCard from '../popular-sales/PopularSalesCard'
 import PopularCouponsCard from '../popular-coupons/PopularCouponsCard'
 import ButtonComp from '../common-components/Button'
 import { DealMode } from '../../@types/DealMode'
+import { useSelector, useDispatch } from 'react-redux'
+import { storePageNumber, storeProductType } from '../../redux/features/dealModeSlice'
 
 const style = {
     navTabs: {
@@ -26,78 +28,102 @@ const style = {
 
 
 const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
-    const [dealsApiData, setDealsApiData] = useState<Deal[]>([]);
-    const [allItamCount, setAllItemCount] = useState();
-    const [salesCount, setSalesCount] = useState();
-    const [couponsCount, setCouponsCount] = useState();
-    let [pageNumber, setPageNumber] = useState<number>(1);
-    const [productTypeValue, setProductTypeValue] = React.useState('all');
+    const [dealsList, setDealsList] = useState<Deal[]>([]);
+    const [allItamCount, setAllItemCount] = useState(0);
+    const [salesCount, setSalesCount] = useState(0);
+    const [couponsCount, setCouponsCount] = useState(0);
+    const [totalDealsCount, setTotalDealsCount] = useState(0);
+
+    // const [productTypeValue, setProductTypeValue] = React.useState('all');
     const [sortBy, setSortBy] = useState(namesSortBy)
-    const [dealModes, setDealModes] = useState<DealMode[]>(namesDealModes)
+    const [storeDealModes, setStoreDealModes] = useState<DealMode[]>()
+    const [storeDiscountTypes, setStoreDiscountType] = useState([])
+    const [storeShortBy, setStoreShortBy] = useState();
+
+    const storeDealMode = useSelector((state: any) => state.dealModeOptions.dealModes);
+    const storeDiscountType = useSelector((state: any) => state.dealModeOptions.discountTypes);
+    const shortByRadionButtonValue = useSelector((state: any) => state.dealModeOptions.shortBy);
+    const pageNumber = useSelector((state: any) => state.dealModeOptions.page);
+    const storeProductTypeValue = useSelector((state: any) => state.dealModeOptions.productType);
+    const categorySlugValue = useSelector((state: any) => state.dealModeOptions.categorySlug);
+
     // const [temp, setTemp] = useState(1)
 
-    const url: string = `deal/deals?v=1704457556025&shortBy=${namesSortBy}&limit=36&page=${pageNumber}&updateViewCount=true&t=1704457556023`;
+    const limit = 5;
+    var page = 1;
+
+    var category = "";
+    var store = "";
+    var productType = "";
+    var shortBy = "date";
+    var dealModes = "";
+    var discountTypes = "";
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        if (newValue === "all") {
-            setProductTypeValue(newValue);
-            getDealsAndCoupons(url).then((res) => {
-                // setAllItemCount(res.data.total);
-                // setSalesCount(res.data.sellCount);
-                // setCouponsCount(res.data.couponCount);
-                setDealsApiData(res.data.items);
-            });
-        } else if (newValue === "sale") {
-            setProductTypeValue(newValue);
-            getFiltersData(url, namesSortBy, newValue).then((res) => {
-                // setAllItemCount(res.data.total);
-                // setSalesCount(res.data.sellCount);
-                // setCouponsCount(res.data.couponCount);
-                setDealsApiData(res.data.items);
-                console.log("sale", dealsApiData)
-            });
-        } else if (newValue === "coupon") {
-            setProductTypeValue(newValue);
-            getFiltersData(url, namesSortBy, newValue).then((res) => {
-                // setAllItemCount(res.data.total);
-                // setSalesCount(res.data.sellCount);
-                // setCouponsCount(res.data.couponCount);
-                setDealsApiData(res.data.items);
-            });
-        }
-        setProductTypeValue(newValue)
-    }
+        // alert(newValue)
+        dispatch(storeProductType(newValue));
+        dispatch(storePageNumber(page));
 
-    const dealsHandleClick = () => {
-        setPageNumber(pageNumber += 1);
-    }
-
-    console.log("deals usestate", namesDealModes);
-
-    const applyFilters = () => {
-        let updatedList = dealsApiData;
-
-        // if (dealModes) {
-        //     updatedList = updatedList.filter((item) => item.productModes[0].id === dealModes);
+        // if (newValue === "all") {
+        //     setProductTypeValue(newValue);
+        //     // getDealsAndCoupons(url, shortByRadionButtonValue).then((res) => {
+        //     //     // setAllItemCount(res.data.total);
+        //     //     // setSalesCount(res.data.sellCount);
+        //     //     // setCouponsCount(res.data.couponCount);
+        //     //     setDealsList(res.data.items);
+        //     // });
+        // } else if (newValue === "sale") {
+        //     setProductTypeValue(newValue);
+        //     // getFiltersData(url, shortByRadionButtonValue, newValue).then((res) => {
+        //     //     // setAllItemCount(res.data.total);
+        //     //     // setSalesCount(res.data.sellCount);
+        //     //     // setCouponsCount(res.data.couponCount);
+        //     //     setDealsList(res.data.items);
+        //     //     // console.log("sale", dealsList)
+        //     // });
+        // } else if (newValue === "coupon") {
+        //     setProductTypeValue(newValue);
+        //     // getFiltersData(url, shortByRadionButtonValue, newValue).then((res) => {
+        //     //     // setAllItemCount(res.data.total);
+        //     //     // setSalesCount(res.data.sellCount);
+        //     //     // setCouponsCount(res.data.couponCount);
+        //     //     setDealsList(res.data.items);
+        //     // });
         // }
-        // console.log("updatelist", updatedList);
-
-        const dealsCheck = dealModes.filter(item => item.checked).map(item => item.name.toLowerCase());
-
-        if (dealsCheck.length) {
-            updatedList = updatedList.filter((item) =>
-                dealsCheck.includes(item.id))
-        }
-        console.log("updatedList", updatedList);
-        setDealModes(updatedList);
+        // setProductTypeValue(newValue)
     }
+
+    const dispatch = useDispatch();
+
+    // console.log("page", pageNumber);
+
+    // const url: string = `deal/deals?v=1704457556025&limit=5&page=${pageNumber}&updateViewCount=true&t=1704457556023`;
+
+    // console.log("deals usestate", namesDealModes);
+
+    // const applyFilters = () => {
+    //     let updatedList = dealsList;
+
+    //     // if (dealModes) {
+    //     //     updatedList = updatedList.filter((item) => item.productModes[0].id === dealModes);
+    //     // }
+    //     // console.log("updatelist", updatedList);
+
+    //     const dealsCheck = dealModes.filter(item => item.checked).map(item => item.name.toLowerCase());
+
+    //     if (dealsCheck.length) {
+    //         updatedList = updatedList.filter((item) =>
+    //             dealsCheck.includes(item.id))
+    //     }
+    //     console.log("updatedList", updatedList);
+    //     setDealModes(updatedList);
+    // }
 
     // const handleChangeChecked = (namesDealModes: any) => {
     //     const changeCheckbox = namesDealModes.map((item) => {
     //         item.id === id ? {...item, }
     //     })
     // }
-
 
 
     const buttonClick = (e: any, btnName: string) => {
@@ -111,70 +137,124 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
 
     }
 
-    if (namesSortBy != sortBy) {
-        if (sortBy != namesSortBy) {
-            setSortBy(namesSortBy)
-        }
-    }
+    // const storeDealMode = useSelector((state: any) => state.dealModeOptions.dealModes);
+    // console.log("newDealMode", storeDealMode);
+    // const iterator = useSelector((state: any) => state.dealModeOptions.dealModes.keys());
+    // for (const key of iterator) {
+    //     console.log("key", key);
+    // }
+
+    // const storeDiscountType = useSelector((state: any) => state.dealModeOptions.discountTypes);
+    // console.log("newDiscountType", storeDiscountType);
+
+    // const shortByRadionButtonValue = useSelector((state: any) => state.dealModeOptions.shortBy);
+    // console.log("radio valeu", shortByRadionButtonValue);
+
+    // if (namesSortBy != sortBy) {
+    //     if (sortBy != namesSortBy) {
+    //         setSortBy(namesSortBy)
+    //     }
+    // }
 
 
-    useEffect(() => {
-        if (pageNumber === 1) {
-            getDealsAndCoupons(url).then((res) => {
-                setAllItemCount(res.data.total);
-                setSalesCount(res.data.sellCount);
-                setCouponsCount(res.data.couponCount);
-                setDealsApiData(res.data.items);
-                console.log("default ", sortBy)
-            });
-        } else {
-            getDealsAndCoupons(url).then((res) => {
-                const loadMorePageData = dealsApiData;
-                console.log("load 1", dealsApiData);
 
-                setDealsApiData(loadMorePageData.concat(res.data.items));
-            })
-        }
-        setSortBy(namesSortBy)
-        setDealModes(namesDealModes)
-    }, [pageNumber])
+
 
     useEffect(() => {
 
-        if (productTypeValue === "all") {
-            // applyFilters();
-            setSortBy(namesSortBy)
-            getDealsAndCoupons(url).then((res) => {
-                setAllItemCount(res.data.total);
+        var params = {
+            page: pageNumber,
+            limit: 5,
+            categorySlug: categorySlugValue,
+            store: "",
+            productType: storeProductTypeValue,
+            shortBy: shortByRadionButtonValue,
+            dealModes: storeDealMode,
+            discountTypes: storeDiscountType,
+        }
+
+        if (pageNumber > 1) {
+            getDeals(params).then((res) => {
+                const concatNewData = res.data.items;
+                // setAllItemCount(res.data.total);
+                setAllItemCount(res.data.sellCount + res.data.couponCount);
                 setSalesCount(res.data.sellCount);
                 setCouponsCount(res.data.couponCount);
-                setDealsApiData(res.data.items);
-                setDealModes(namesDealModes);
-                console.log("default ", sortBy)
-                console.log("dealsMode 1", namesDealModes);
+                setTotalDealsCount(res.data.total);
+                setDealsList(dealsList.concat(concatNewData));
+
+                // console.log("default ", shortByRadionButtonValue)
             });
-
-            // getFiltersData(url, namesSortBy).then((res) => {
-            //     setAllItemCount(res.data.total);
-            //     setSalesCount(res.data.sellCount);
-            //     setCouponsCount(res.data.couponCount);
-            //     setDealsApiData(res.data.items);
-            //     console.log("default ", sortBy)
-            // });
-
         } else {
-            // applyFilters();
-            setSortBy(namesSortBy)
-            getFiltersData(url, namesSortBy, productTypeValue).then((res) => {
-                setAllItemCount(res.data.total);
+            getDeals(params).then((res) => {
+                setAllItemCount(res.data.sellCount + res.data.couponCount);
                 setSalesCount(res.data.sellCount);
                 setCouponsCount(res.data.couponCount);
-                setDealsApiData(res.data.items);
-                setDealModes(namesDealModes);
-                console.log("dealsMode 2", namesDealModes);
+                setTotalDealsCount(res.data.total);
+                setDealsList(res.data.items);
+
+                // console.log("default ", shortByRadionButtonValue)
             });
         }
-    }, [sortBy, namesDealModes])
+
+    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, categorySlugValue])
+
+    //     if (pageNumber === 1) {
+    //         getDealsAndCoupons(url, shortByRadionButtonValue).then((res) => {
+    //             setAllItemCount(res.data.total);
+    //             setSalesCount(res.data.sellCount);
+    //             setCouponsCount(res.data.couponCount);
+    //             setDealsList(res.data.items);
+    //             // console.log("default ", shortByRadionButtonValue)
+    //         });
+    //     } else {
+    //         getDealsAndCoupons(url, shortByRadionButtonValue).then((res) => {
+    //             const loadMorePageData = dealsList;
+    //             // console.log("load 1", dealsList);
+
+    //             setDealsList(loadMorePageData.concat(res.data.items));
+    //         })
+    //     }
+    //     // setSortBy(namesSortBy)
+    //     setStoreShortBy(shortByRadionButtonValue)
+    //     setStoreDealModes(storeDealMode)
+    //     setStoreDiscountType(storeDiscountType)
+    // }, [pageNumber])
+
+    // useEffect(() => {
+
+
+    //     if (productTypeValue === "all") {
+    //         // applyFilters();
+    //         // setSortBy(namesSortBy)
+    //         setStoreShortBy(shortByRadionButtonValue)
+    //         getDealsAndCoupons(url, shortByRadionButtonValue, storeDealMode, storeDiscountType).then((res) => {
+    //             setAllItemCount(res.data.total);
+    //             setSalesCount(res.data.sellCount);
+    //             setCouponsCount(res.data.couponCount);
+    //             setDealsList(res.data.items);
+    //             setStoreDealModes(storeDealMode);
+    //             setStoreDiscountType(storeDiscountType);
+    //             // console.log("default ", shortByRadionButtonValue)
+    //             // console.log("dealsMode 1", storeDealMode);
+    //             // console.log("discountType all", storeDiscountType);
+    //         });
+    //     } else {
+    //         // applyFilters();
+    //         // setSortBy(namesSortBy)
+    //         setStoreShortBy(shortByRadionButtonValue)
+    //         getFiltersData(url, shortByRadionButtonValue, productTypeValue, storeDealMode, storeDiscountType).then((res) => {
+    //             setAllItemCount(res.data.sellCount + res.data.couponCount);
+    //             setSalesCount(res.data.sellCount);
+    //             setCouponsCount(res.data.couponCount);
+    //             setDealsList(res.data.items);
+    //             setStoreDealModes(storeDealMode);
+    //             setStoreDiscountType(storeDiscountType);
+    //             // console.log("dealsMode 2", storeDealMode);
+    //             // console.log("discountType other", storeDiscountType);
+    //         });
+    //     }
+    // }, [shortByRadionButtonValue, storeDealMode, storeDiscountType, productTypeValue])
 
     // useEffect(() => {
     //     // if (pageNumber === 1) {
@@ -183,16 +263,16 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     //         setAllItemCount(res.data.total);
     //         setSalesCount(res.data.sellCount);
     //         setCouponsCount(res.data.couponCount);
-    //         setDealsApiData(res.data.items);
+    //         setDealsList(res.data.items);
     //         console.log("default ", sortBy)
 
     //     });
     //     // } else {
     //     //     getFiltersData(url, namesSortBy, productTypeValue).then((res) => {
-    //     //         const loadMorePageData = dealsApiData;
-    //     //         console.log("load 2", dealsApiData);
+    //     //         const loadMorePageData = dealsList;
+    //     //         console.log("load 2", dealsList);
 
-    //     //         setDealsApiData(loadMorePageData.concat(res.data.items));
+    //     //         setDealsList(loadMorePageData.concat(res.data.items));
     //     //     })
     //     // }
     //     // setDealModes(namesDealModes)
@@ -205,7 +285,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
 
                     <Box className="main-tabs" sx={{ width: '100%', borderBottom: "1px solid #dee2e6", }}>
                         <Tabs
-                            value={productTypeValue}
+                            value={storeProductTypeValue}
                             aria-label="secondary tabs example"
                             onChange={handleChange}
                             textColor='primary'
@@ -220,7 +300,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
                             }}
 
                         >
-                            <Tab value="all" label={`All (${allItamCount})`} sx={{ background: "rgba(0,0,0,.05)", color: theme.palette.text.secondary, width: "180px" }} />
+                            <Tab value="" label={`All (${allItamCount})`} sx={{ background: "rgba(0,0,0,.05)", color: theme.palette.text.secondary, width: "180px" }} />
                             <Tab value="sale" label={`Sales (${salesCount})`} sx={{ background: "rgba(0,0,0,.05)", color: theme.palette.text.secondary, width: "180px" }} />
                             <Tab value="coupon" label={`Coupons (${couponsCount})`} sx={{ background: "rgba(0,0,0,.05)", color: theme.palette.text.secondary, width: "180px" }} />
                         </Tabs>
@@ -231,7 +311,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
                     "&::-webkit-scrollbar": { display: "none" }
                 }}>
                     {
-                        dealsApiData.map((item) => {
+                        dealsList.map((item) => {
 
                             const { NZWide, category, clicks, endDate, id, locations, name, productImages, productModes, productType, stores, couponCode } = item;
 
@@ -262,11 +342,21 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
 
 
                 </Box>
+                {/* {
+                    allItamCount > limit ? <Box className="btn-div" sx={{ pt: "40px", textAlign: "center", m: "auto" }}>
+                        <ButtonComp func_call={() => dispatch(storePageNumber(pageNumber + 1))} name="Load more"></ButtonComp>
+                    </Box> :
+                        <></>
+                } */}
+
                 {
-                    pageNumber === 2 ? <></> :
-                        <Box className="btn-div" sx={{ pt: "40px", textAlign: "center", m: "auto" }}>
-                            <ButtonComp func_call={dealsHandleClick} name="Load more"></ButtonComp>
-                        </Box>
+                    dealsList.length < totalDealsCount ? (<Box className="btn-div" sx={{ pt: "40px", textAlign: "center", m: "auto" }}>
+                        <ButtonComp func_call={() => {
+                            dispatch(storePageNumber(pageNumber + 1))
+                            // alert(dealsList.length)
+                        }} name="Load more"></ButtonComp>
+                    </Box>) : (<></>)
+
                 }
             </Box >
         </>
