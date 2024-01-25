@@ -9,7 +9,7 @@ const FilterAndDealsList = () => {
     const [namesSortBy, setNamesSortBy] = useState<any>("date");
     const [namesDealModes, setNamesDealModes] = useState([]);
     useEffect(() => {
-        console.log("deeal modes parents", namesDealModes);
+        // console.log("deeal modes parents", namesDealModes);
     }, [namesSortBy, namesDealModes])
 
 

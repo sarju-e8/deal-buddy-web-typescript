@@ -5,21 +5,84 @@ import Slider from "react-slick";
 import { Box, Container, Grid, Link, Typography } from "@mui/material";
 import { theme } from "../../theme/theme";
 import { Category } from "../../@types/category";
-import { getAllCategoryList } from "../../services/CategoryApi";
+import { getAllCategoryList, getIndividualCategoryDetails } from "../../services/CategoryApi";
 import CategoryCards from "../categories/CategoryCards";
 import { TravelCategoryIcon } from "../../assets/image_path";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { storeCategorySlug, storePageNumber } from "../../redux/features/dealModeSlice";
+import { storeCategoryDescription, storeCategoryPageTitle, storeIsActiveValueChange } from "../../redux/features/CategoryNameAndDiscSlice";
+
+const style = {
+    linkActive: {
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.common.black,
+    }
+}
 
 const CategorySlider = () => {
     const [apiData, setApiData] = useState<Category[]>([]);
+    // const [selected, setSelected] = useState("");
 
-    const url: string = "category?v=1704193922481&where%5Bstatus%5D=active&order%5BorderBy%5D=ASC";
+    const storeIsActiveValue = useSelector((state: any) => state.categoryNameAndDesc.isActive);
+    const storeSlug = useSelector((state: any) => state.dealModeOptions.categorySlug);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getAllCategoryList(url).then((res) => {
-            setApiData(res.data.items);
-        });
-    }, [])
+        var params = {
+            where: "",
+            status: "active",
+            orderBy: "ASC",
+        }
+
+        if (storeSlug === '') {
+            getAllCategoryList(params).then((res) => {
+                setApiData(res.data.items);
+            });
+        }
+
+        var individualCategoryParams = {
+            isActive: storeIsActiveValue,
+        }
+
+        if (storeIsActiveValue) {
+            getIndividualCategoryDetails(storeSlug, individualCategoryParams).then((res) => {
+                dispatch(storeIsActiveValueChange(true));
+                dispatch(storeCategoryPageTitle(res.data.pageTitle));
+                dispatch(storeCategoryDescription(res.data.description));
+            });
+        }
+
+    }, [storeSlug])
+
+    // useEffect(() => {
+    //     var individualCategoryParams = {
+    //         isActive: storeIsActiveValue,
+    //     }
+
+
+    //     if (storeIsActiveValue) {
+    //         getIndividualCategoryDetails(storeSlug, individualCategoryParams).then((res) => {
+
+    //             // setIsActiveFlag(true);
+    //             // setIndividualCategory(res.data);
+    //             // dispatch(storeCategoryPageTitle({ currentPageTitle: res.data.pageTitle, currentStatus: true }));
+
+    //             dispatch(storeIsActiveValueChange(true));
+    //             dispatch(storeCategoryPageTitle(res.data.pageTitle));
+    //             dispatch(storeCategoryDescription(res.data.description));
+    //         });
+    //     }
+
+    // }, [storeSlug])
+
+    const handleCategoryName = (slug: string) => {
+        dispatch(storeCategorySlug(slug));
+        dispatch(storePageNumber(1));
+        // setSelected(slug);
+        dispatch(storeIsActiveValueChange(true));
+    }
 
     // const settings = {
     //     className: "center",
@@ -77,19 +140,28 @@ const CategorySlider = () => {
         ]
     };
 
-    const CategorySliderCards = ({ id, imageUrl, name, slug }: Category) => {
+    const CategorySliderCards = ({ id, imageUrl, name, slug, }: Category) => {
         return (
             // <Grid container>
             //     <Grid item lg={2} md={3} sm={4} xs={12}>
             <Box className="single-card-div" sx={{ width: "175px!important", pr: "20px", }}>
-                <NavLink to={slug} style={{ textDecoration: "inherit" }}>
+                <NavLink to={""}
+
+                    style={{
+                        textDecoration: "inherit",
+                    }}
+
+                    onClick={() => handleCategoryName(slug)}>
+
                     <Link className='category-item-link'
                         sx={{
                             display: "block", border: "1px solid rgba(0,0,0,0.15)", boxSizing: "border-box",
                             borderRadius: "10px", padding: "20px", margin: "1px", height: "100%", cursor: "pointer",
                             transition: "0.5s", textDecoration: "none", outline: 0,
+                            backgroundColor: slug === storeSlug ? theme.palette.background.paper : theme.palette.common.white,
+                            // color: slug === selected ? { "&:hover": { color: "none" } } : { "&:hover .category-name": { color: theme.palette.primary.main, transition: ".5s" } },
                             "&:hover .category-name":
-                                { color: theme.palette.primary.main, transition: ".5s" }
+                                { color: theme.palette.primary.main, transition: ".5s" },
                         }}>
                         <Box className="category-box" sx={{
                             margin: "0 auto 16px", width: "60px", height: "60px",

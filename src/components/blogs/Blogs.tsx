@@ -14,7 +14,7 @@ const Blogs: React.FC = () => {
             setApiData(res.data.items);
         });
     }, [])
-    console.log("blogs", apiData);
+    // console.log("blogs", apiData);
 
     return (
         <>

@@ -1,5 +1,5 @@
 export interface DealMode {
-    id: string;
+    id: string | any;
     name: string;
     checked?: boolean;
 }

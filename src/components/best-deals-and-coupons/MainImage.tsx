@@ -78,7 +78,7 @@ function SwipeableTextMobileStepper() {
       setApiData(res.data.items);
     });
   }, [])
-  console.log("sliderApi", apiData);
+  // console.log("sliderApi", apiData);
 
 
   const handleNext = () => {
