@@ -1,7 +1,7 @@
 import { AppBar, Box, Button, Grid, Link, Tab, Tabs, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { theme } from '../../theme/theme'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { Deal } from '../../@types/deals'
 import { getDeals } from '../../services/DealsAndCouponsApi'
 import PopularSalesCard from '../popular-sales/PopularSalesCard'
@@ -10,6 +10,7 @@ import ButtonComp from '../common-components/Button'
 import { DealMode } from '../../@types/DealMode'
 import { useSelector, useDispatch } from 'react-redux'
 import { storePageNumber, storeProductType } from '../../redux/features/dealModeSlice'
+import DealsStoreItem from './DealsStoreItem'
 
 const style = {
     navTabs: {
@@ -125,6 +126,9 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     //     })
     // }
 
+    const urlParams = useParams();
+    const { urlSlug } = urlParams; // get category url slug
+    const { urlStoreSlug } = urlParams; // get store url slug
 
     const buttonClick = (e: any, btnName: string) => {
         if (e) {
@@ -165,8 +169,9 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
         var params = {
             page: pageNumber,
             limit: 5,
-            categorySlug: categorySlugValue,
-            store: "",
+            // categorySlug: categorySlugValue,
+            categorySlug: urlSlug,
+            storeSlug: urlStoreSlug,
             productType: storeProductTypeValue,
             shortBy: shortByRadionButtonValue,
             dealModes: storeDealMode,
@@ -197,7 +202,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
             });
         }
 
-    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, categorySlugValue])
+    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, urlSlug, urlStoreSlug])
 
     //     if (pageNumber === 1) {
     //         getDealsAndCoupons(url, shortByRadionButtonValue).then((res) => {
@@ -280,6 +285,13 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
 
     return (
         <>
+            {
+                urlStoreSlug ?
+                    <Box className="main-store-item-box" sx={{ pb: "24px", marginLeft: "16px" }}>
+                        <DealsStoreItem />
+                    </Box>
+                    : <></>
+            }
             <Box className="product-details" sx={{ flexShrink: 1, width: "100%", ml: "16px" }}>
                 <Box className="show-deals-type-filter" sx={{ display: "block", pb: "24px" }}>
 

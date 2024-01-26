@@ -8,7 +8,7 @@ import { Category } from "../../@types/category";
 import { getAllCategoryList, getIndividualCategoryDetails } from "../../services/CategoryApi";
 import CategoryCards from "../categories/CategoryCards";
 import { TravelCategoryIcon } from "../../assets/image_path";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storeCategorySlug, storePageNumber } from "../../redux/features/dealModeSlice";
 import { storeCategoryDescription, storeCategoryPageTitle, storeIsActiveValueChange } from "../../redux/features/CategoryNameAndDiscSlice";
@@ -29,32 +29,34 @@ const CategorySlider = () => {
 
     const dispatch = useDispatch();
 
+    const urlParams = useParams();
+    const { urlSlug } = urlParams;
+
     useEffect(() => {
         var params = {
             where: "",
             status: "active",
             orderBy: "ASC",
         }
+        // if (!apiData) {
+        getAllCategoryList(params).then((res) => {
+            setApiData(res.data.items);
+        });
+        // }
 
-        if (storeSlug === '') {
-            getAllCategoryList(params).then((res) => {
-                setApiData(res.data.items);
-            });
-        }
+        // var individualCategoryParams = {
+        //     isActive: storeIsActiveValue,
+        // }
 
-        var individualCategoryParams = {
-            isActive: storeIsActiveValue,
-        }
+        // if (storeIsActiveValue) {
+        //     getIndividualCategoryDetails(storeSlug, individualCategoryParams).then((res) => {
+        //         dispatch(storeIsActiveValueChange(true));
+        //         dispatch(storeCategoryPageTitle(res.data.pageTitle));
+        //         dispatch(storeCategoryDescription(res.data.description));
+        //     });
+        // }
 
-        if (storeIsActiveValue) {
-            getIndividualCategoryDetails(storeSlug, individualCategoryParams).then((res) => {
-                dispatch(storeIsActiveValueChange(true));
-                dispatch(storeCategoryPageTitle(res.data.pageTitle));
-                dispatch(storeCategoryDescription(res.data.description));
-            });
-        }
-
-    }, [storeSlug])
+    }, [])
 
     // useEffect(() => {
     //     var individualCategoryParams = {
@@ -78,10 +80,12 @@ const CategorySlider = () => {
     // }, [storeSlug])
 
     const handleCategoryName = (slug: string) => {
-        dispatch(storeCategorySlug(slug));
+        console.log(">>>>", slug);
+        // dispatch(storeCategorySlug(slug));
         dispatch(storePageNumber(1));
         // setSelected(slug);
-        dispatch(storeIsActiveValueChange(true));
+        // dispatch(storeIsActiveValueChange(true));
+        // alert("slug alert" + slug)
     }
 
     // const settings = {
@@ -145,7 +149,7 @@ const CategorySlider = () => {
             // <Grid container>
             //     <Grid item lg={2} md={3} sm={4} xs={12}>
             <Box className="single-card-div" sx={{ width: "175px!important", pr: "20px", }}>
-                <NavLink to={""}
+                <NavLink to={`/categories/${slug}`}
 
                     style={{
                         textDecoration: "inherit",
@@ -158,7 +162,7 @@ const CategorySlider = () => {
                             display: "block", border: "1px solid rgba(0,0,0,0.15)", boxSizing: "border-box",
                             borderRadius: "10px", padding: "20px", margin: "1px", height: "100%", cursor: "pointer",
                             transition: "0.5s", textDecoration: "none", outline: 0,
-                            backgroundColor: slug === storeSlug ? theme.palette.background.paper : theme.palette.common.white,
+                            backgroundColor: slug === urlSlug ? theme.palette.background.paper : theme.palette.common.white,
                             // color: slug === selected ? { "&:hover": { color: "none" } } : { "&:hover .category-name": { color: theme.palette.primary.main, transition: ".5s" } },
                             "&:hover .category-name":
                                 { color: theme.palette.primary.main, transition: ".5s" },
@@ -198,7 +202,7 @@ const CategorySlider = () => {
                 <Slider {...settings}>
 
                     {
-                        apiData.map((item) => {
+                        apiData && apiData.map((item) => {
                             const { id, imageUrl, name, slug } = item;
                             return (
                                 <CategorySliderCards key={id} id={id} name={name} imageUrl={imageUrl} slug={slug} />

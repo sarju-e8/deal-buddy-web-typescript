@@ -1,6 +1,7 @@
 export interface Stores {
     id: string;
     name: string;
+    slug: string;
     imageUrl: string;
     activeDealsCount: number;
     address: {

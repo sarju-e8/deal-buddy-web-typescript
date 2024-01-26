@@ -5,31 +5,48 @@ import { Stores } from '../../../@types/Stores';
 import { getAllStores } from '../../../services/AllStoreApi';
 import StoreCards from '../../common-components/StoreCards';
 import ButtonComp from '../../common-components/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { storePageNumber } from '../../../redux/features/dealModeSlice';
 
 const OnlineStores = () => {
 
-    const [allStoreApiData, setAllStoreApiData] = useState<Stores[]>([]);
+    const [onlineStoresList, setOnlineStoresList] = useState<Stores[]>([]);
+    const [totalOnlineStoresCount, setTotalOnlineStoresCount] = useState(0);
 
-    let [pageNumber, setPageNumber] = useState<number>(1);
+    const pageNumber = useSelector((state: any) => state.dealModeOptions.page);
 
-    const handleClick = () => {
-        setPageNumber(pageNumber += 1);
-    }
+    const dispatch = useDispatch();
 
-    const url: string = `store/stores?v=1704362354302&take=20&page=${pageNumber}&skip=0&storeMode=Online&searchKeyword=&t=1704362354302`;
+    // let [pageNumber, setPageNumber] = useState<number>(1);
+
+    // const handleClick = () => {
+    //     setPageNumber(pageNumber += 1);
+    // }
+
+    // const url: string = `store/stores?v=1704362354302&take=20&page=${pageNumber}&skip=0&storeMode=Online&searchKeyword=&t=1704362354302`;
 
     useEffect(() => {
-        // console.log("hii");
-        if (pageNumber === 1) {
-            getAllStores(url).then((res) => {
-                setAllStoreApiData(res.data.items);
+        var params = {
+            page: pageNumber,
+            take: 20,
+            skip: 0,
+            storeMode: "Online",
+            searchKeyword: "",
+        }
+
+        if (pageNumber > 1) {
+            getAllStores(params).then((res) => {
+                const concatNewData = res.data.items;
+                setTotalOnlineStoresCount(res.data.total);
+                setOnlineStoresList(onlineStoresList.concat(concatNewData));
             });
         } else {
-            getAllStores(url).then((res) => {
-                // allStoreApiData.push(res.data.items);
-                // console.log(res.data.items);
-                const nextPageData = allStoreApiData;
-                setAllStoreApiData(nextPageData.concat(res.data.items));
+            getAllStores(params).then((res) => {
+                // onlineStoresList.push(res.data.items);
+                // // console.log(res.data.items);
+                // const nextPageData = onlineStoresList;
+                setTotalOnlineStoresCount(res.data.total);
+                setOnlineStoresList(res.data.items);
             });
         }
     }, [pageNumber])
@@ -41,21 +58,23 @@ const OnlineStores = () => {
                 <Box className="all-stores-main-div">
                     <Grid container className="store-grid-container">
                         {
-                            allStoreApiData.map((item) => {
-                                const { activeDealsCount, address, id, imageUrl, name, storeModes } = item;
+                            onlineStoresList.map((item) => {
+                                const { activeDealsCount, address, id, imageUrl, name, storeModes, slug } = item;
                                 return (
                                     <StoreCards key={id} id={id} name={name} imageUrl={imageUrl}
-                                        activeDealsCount={activeDealsCount} address={address} storeModes={storeModes} />
+                                        activeDealsCount={activeDealsCount} address={address} storeModes={storeModes} slug={slug} />
                                 )
                             })
                         }
                     </Grid>
 
                     {
-                        pageNumber === 4 ? <></> :
+                        onlineStoresList.length < totalOnlineStoresCount ?
                             <Box className="btn-div" sx={{ pt: "40px", textAlign: "center" }}>
-                                <ButtonComp func_call={handleClick} name="Load more"></ButtonComp>
+                                <ButtonComp func_call={() => { dispatch(storePageNumber(pageNumber + 1)) }}
+                                    name="Load more"></ButtonComp>
                             </Box>
+                            : <></>
                     }
 
                 </Box>

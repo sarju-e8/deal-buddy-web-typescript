@@ -23,12 +23,12 @@ const PopularStores: React.FC = () => {
                     {
                         apiData.map((item) => {
 
-                            const { id, name, activeDealsCount, address, imageUrl, storeModes } = item;
+                            const { id, name, activeDealsCount, address, imageUrl, storeModes, slug } = item;
 
                             return (
                                 <PopularStoresCards id={id} name={name} imageUrl={imageUrl}
                                     activeDealsCount={activeDealsCount} address={address}
-                                    storeModes={storeModes} />
+                                    storeModes={storeModes} slug={slug} />
                             )
                         })
                     }

@@ -4,33 +4,47 @@ import { Stores } from '../../../@types/Stores';
 import { getAllStores } from '../../../services/AllStoreApi';
 import StoreCards from '../../common-components/StoreCards';
 import ButtonComp from '../../common-components/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { storePageNumber } from '../../../redux/features/dealModeSlice';
 
 const AllStoresList: React.FC = () => {
 
-    const [allStoreApiData, setAllStoreApiData] = useState<Stores[]>([]);
+    const [allStoresList, setAllStoresList] = useState<Stores[]>([]);
+    const [totalStoresCount, setTotalStoresCount] = useState(0);
 
-    let [pageNumber, setPageNumber] = useState<number>(1);
+    const pageNumber = useSelector((state: any) => state.dealModeOptions.page);
 
-    const handleClick = () => {
-        setPageNumber(pageNumber += 1);
-    }
+    const dispatch = useDispatch();
 
-    const url: string = `store/stores?v=1704348367221&take=20&page=${pageNumber}&skip=0&searchKeyword=&t=1704348367221`;
+    // let [pageNumber, setPageNumber] = useState<number>(1);
+
+    // const handleClick = () => {
+    //     setPageNumber(pageNumber += 1);
+    // }
+
+    // const url: string = `store/stores?v=1704348367221&take=20&page=${pageNumber}&skip=0&searchKeyword=&t=1704348367221`;
 
     useEffect(() => {
-        // console.log("hii");
-        if (pageNumber === 1) {
-            getAllStores(url).then((res) => {
-                setAllStoreApiData(res.data.items);
+        var params = {
+            page: pageNumber,
+            take: 20,
+            skip: 0,
+            searchKeyword: "",
+        }
+
+        if (pageNumber > 1) {
+            getAllStores(params).then((res) => {
+                const concatNewData = res.data.items;
+                setTotalStoresCount(res.data.total);
+                setAllStoresList(allStoresList.concat(concatNewData));
             });
         } else {
-            getAllStores(url).then((res) => {
-                // allStoreApiData.push(res.data.items);
+            getAllStores(params).then((res) => {
+                // allStoresList.push(res.data.items);
                 // console.log(res.data.items);
-                const nextPageData = allStoreApiData;
-                setAllStoreApiData(nextPageData.concat(res.data.items));
-
-
+                // const nextPageData = allStoresList;
+                setTotalStoresCount(res.data.total);
+                setAllStoresList(res.data.items);
             });
         }
     }, [pageNumber])
@@ -42,21 +56,23 @@ const AllStoresList: React.FC = () => {
                 <Box className="all-stores-main-div">
                     <Grid container className="store-grid-container">
                         {
-                            allStoreApiData.map((item) => {
-                                const { activeDealsCount, address, id, imageUrl, name, storeModes } = item;
+                            allStoresList.map((item) => {
+                                const { activeDealsCount, address, id, imageUrl, name, storeModes, slug } = item;
                                 return (
                                     <StoreCards key={id} id={id} name={name} imageUrl={imageUrl}
-                                        activeDealsCount={activeDealsCount} address={address} storeModes={storeModes} />
+                                        activeDealsCount={activeDealsCount} address={address} storeModes={storeModes} slug={slug} />
                                 )
                             })
                         }
                     </Grid>
 
                     {
-                        pageNumber === 4 ? <></> :
+                        allStoresList.length < totalStoresCount ?
                             <Box className="btn-div" sx={{ pt: "40px", textAlign: "center" }}>
-                                <ButtonComp func_call={handleClick} name="Load more"></ButtonComp>
+                                <ButtonComp func_call={() => { dispatch(storePageNumber(pageNumber + 1)) }}
+                                    name="Load more"></ButtonComp>
                             </Box>
+                            : <></>
                     }
 
                 </Box>

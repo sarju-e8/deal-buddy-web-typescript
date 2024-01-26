@@ -64,7 +64,7 @@ const NavbarButtons = () => {
                 </NavLink>
 
                 <NavLink to="/list-your-business" style={{ textDecoration: "inherit" }}>
-                    <Link sx={{ ...style.menuButtonStyle, ml: 1.5, }} href="#">
+                    <Link sx={{ ...style.menuButtonStyle, ml: 1.5, }}>
                         <BusinessCenterOutlinedIcon sx={{ ...style.menuButtonIconStyle }} />
                         <Typography component="span" sx={{ ...style.menuButtonNameStyle, textTransform: "none", }}>List your business</Typography>
                     </Link>

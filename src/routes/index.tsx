@@ -9,22 +9,37 @@ import AllStores from "../components/stores/all-stores/AllStores";
 import OnlineStores from "../components/stores/online-stores/OnlineStores";
 import PhysicalStores from "../components/stores/physical-stores/PhysicalStores";
 import MainDeals from "../components/deals/MainDeals";
+import { useSelector } from "react-redux";
 
 export default function Router() {
+
+    // const storeSlug = useSelector((state: any) => state.dealModeOptions.categorySlug);
+
     return useRoutes([
         {
             path: "/",
             element: <Home />,
             children: [
+                // { path: "categories", element: <Categories /> },
             ],
         },
-        { path: "*", element: <Navigate to="/404" /> },
-        { path: "/404", element: <NotFound /> },
+        // { path: "/categories", element: <Categories /> },
         {
-            path: "/categories", element: <Categories />
+            path: "/categories",
+            // element: <Categories />,
+            children: [
+                // { element: <Navigate to={`categories/:urlSlug`} replace />, index: true, },
+                { element: <Categories />, index: true },
+                { path: `:urlSlug`, element: <MainDeals />, }
+            ]
+
         },
         {
-            path: "/stores", element: <AllStores />
+            path: "/stores",
+            children: [
+                { element: <AllStores />, index: true },
+                { path: `:urlStoreSlug`, element: <MainDeals />, }
+            ]
         },
         {
             path: "/online-stores", element: <OnlineStores />
@@ -62,5 +77,7 @@ export default function Router() {
         {
             path: "/privacy-policy", element: <></>
         },
+        { path: "*", element: <Navigate to="/404" /> },
+        { path: "/404", element: <NotFound /> },
     ])
 }

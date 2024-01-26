@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    isActive: false,
+    isActive: true,
     pageTitle: "Get the finest deals on everything with exciting discounts and coupon codes",
     description: "",
 
