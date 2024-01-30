@@ -149,7 +149,7 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
 
         setShortBy(shortBy);
 
-        getDealsMode(dealsUrl).then((res) => {
+        getDealsMode().then((res) => {
             setDealMode(res.data.items.map((dealMode: any) => {
                 dealMode.value = dealMode.id;
                 dealMode.label = dealMode.name;
@@ -159,7 +159,7 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
             }));
         });
 
-        getDiscountType(discountUrl).then((res) => {
+        getDiscountType().then((res) => {
             setDiscountType(res.data.items.map((discountType: any) => {
                 discountType.value = discountType.name;
                 discountType.label = discountType.name;

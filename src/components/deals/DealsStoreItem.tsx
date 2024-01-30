@@ -35,15 +35,15 @@ const DealsStoreItem = () => {
 
     const [dealsStoreDetail, setDealsStoreDetail] = useState<DealsStoreItemIProps>();
 
-    const [storeName, setStoreName] = useState("");
-    const [description, setDescription] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-    const [activeDealsCount, setActiveDealsCount] = useState();
-    const [website, setWebsite] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
-    const [slug, setSlug] = useState("");
-    const [onlineOrInstore, setOnlineOrInstore] = useState("");
+    // const [storeName, setStoreName] = useState("");
+    // const [description, setDescription] = useState("");
+    // const [imageUrl, setImageUrl] = useState("");
+    // const [activeDealsCount, setActiveDealsCount] = useState();
+    // const [website, setWebsite] = useState("");
+    // const [phone, setPhone] = useState("");
+    // const [address, setAddress] = useState("");
+    // const [slug, setSlug] = useState("");
+    // const [onlineOrInstore, setOnlineOrInstore] = useState("");
 
     const [readMore, setReadMore] = useState(false);
 
@@ -61,18 +61,18 @@ const DealsStoreItem = () => {
         if (urlStoreSlug) {
             getIndividualStoreDetails(urlStoreSlug, individualStoreParams).then((res) => {
                 dispatch(storeIsActiveValueChange(true));
-                console.log("Deals Store item", res)
+                // console.log("Deals Store item", res)
                 setDealsStoreDetail(res.data);
 
-                setStoreName(res.data.name);
-                setDescription(res.data.description);
-                setImageUrl(res.data.imageUrl);
-                setActiveDealsCount(res.data.activeDealsCount);
-                setWebsite(res.data.website);
-                setPhone(res.data.phone);
-                setAddress(res.data.address.fillAddress);
-                setSlug(res.data.slug);
-                setOnlineOrInstore(res.data.storeModes[0].name)
+                // setStoreName(res.data.name);
+                // setDescription(res.data.description);
+                // setImageUrl(res.data.imageUrl);
+                // setActiveDealsCount(res.data.activeDealsCount);
+                // setWebsite(res.data.website);
+                // setPhone(res.data.phone);
+                // setAddress(res.data.address.fillAddress);
+                // setSlug(res.data.slug);
+                // setOnlineOrInstore(res.data.storeModes[0].name)
             });
         }
     }, [urlStoreSlug])
@@ -148,7 +148,7 @@ const DealsStoreItem = () => {
     const navigateAddress = (event) => {
         event.stopPropagation();
         event.preventDefault();
-        let addressParams = "/?q=" + encodeURIComponent(address)
+        let addressParams = "/?q=" + encodeURIComponent(dealsStoreDetail?.address?.fillAddress)
         if (dealsStoreDetail?.address?.latitude && dealsStoreDetail?.address?.longitude) {
             addressParams = '?q=' + dealsStoreDetail?.address?.latitude + ',' + dealsStoreDetail?.address?.longitude;
         }

@@ -8,14 +8,29 @@ import { Stores } from '../../@types/Stores';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { storePageNumber } from '../../redux/features/dealModeSlice';
+import { categoryValue, discountValue, selectedCategoryName, selectedDiscountType } from '../../redux/features/StoreFilterSlice';
 
 const StoreCards = ({ activeDealsCount, address, imageUrl, name, storeModes, slug }: Stores) => {
 
     const dispatch = useDispatch();
 
     const handleStoreName = (slug: string) => {
-        console.log("store slug", slug);
+        // console.log("store slug", slug);
         dispatch(storePageNumber(1));
+        dispatch(discountValue(""));
+        dispatch(selectedDiscountType(""));
+        dispatch(categoryValue(""));
+        dispatch(selectedCategoryName(""));
+    }
+
+    const navigateAddress = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        let addressParams = "/?q=" + encodeURIComponent(address?.fillAddress)
+        if (address?.latitude && address?.longitude) {
+            addressParams = '?q=' + address?.latitude + ',' + address?.longitude;
+        }
+        window.open('https://maps.google.com' + addressParams, '_blank')
     }
 
     return (
@@ -54,7 +69,9 @@ const StoreCards = ({ activeDealsCount, address, imageUrl, name, storeModes, slu
                                     <Typography className="location-name" sx={{
                                         display: "-webkit-box", fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: theme.palette.common.black
                                     }}>
-                                        {storeModes[0].name === "Online" ? `${storeModes[0].name + " Store"}` : address.fillAddress}</Typography>
+                                        {/* {storeModes[0].name === "Online" ? `${storeModes[0].name + " Store"}` : address.fillAddress} */}
+                                        {storeModes[0]?.name === "In Store" || storeModes[1]?.name === "In Store" ? address.fillAddress : "Online Store"}
+                                    </Typography>
                                 </Box>
                                 <Box className="store-offers" sx={{
                                     display: "flex", mb: "10px",
@@ -66,9 +83,9 @@ const StoreCards = ({ activeDealsCount, address, imageUrl, name, storeModes, slu
                             </Box>
 
                             {
-                                storeModes[0].name === "In Store" ? (
+                                storeModes[0]?.name === "In Store" || storeModes[1]?.name === "In Store" ? (
 
-                                    <Link href="#" sx={{ bgcolor: theme.palette.primary.main, display: "flex", alignItems: "center", alignSelf: "flex-end", padding: "10px", borderRadius: "10px" }}>
+                                    <Link onClick={navigateAddress} sx={{ bgcolor: theme.palette.primary.main, display: "flex", alignItems: "center", alignSelf: "flex-end", padding: "10px", borderRadius: "10px" }}>
                                         <NearMeOutlinedIcon sx={{ color: theme.palette.common.white, fontSize: "20px" }} />
                                     </Link>
                                 ) : (

@@ -7,12 +7,18 @@ import PhysicalStoresVerticalCards from './PhysicalStoresVerticalCards';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonComp from '../../common-components/Button';
 import { storePageNumber } from '../../../redux/features/dealModeSlice';
+import NoStoreAvailabel from '../../common-components/NoStoreAvailabel';
+import Loading from '../../common-components/Loading';
 
 const PhysicalStoresList = () => {
     const [physicalStoresList, setPhysicalStoresList] = useState<Stores[]>([]);
     const [totalPhysicalStoresCount, setTotalPhysicalStoresCount] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const pageNumber = useSelector((state: any) => state.dealModeOptions.page);
+    const storeSearchKeyword = useSelector((state: any) => state.searchFilters.searchKeyword);
+    const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
+    const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
 
     const dispatch = useDispatch();
 
@@ -25,7 +31,9 @@ const PhysicalStoresList = () => {
             take: 20,
             skip: 0,
             storeMode: "In Store",
-            searchKeyword: "",
+            searchKeyword: storeSearchKeyword,
+            categoryId: storeCategoryId,
+            discountTypeId: storeDiscountTypeId,
             // NorthEast[lng]: -167.38023412500002,
             // NorthEast[lat]: -30.63678836122169,
             // SouthWest[lng]: 156.93617212499998,
@@ -34,30 +42,37 @@ const PhysicalStoresList = () => {
         }
         if (pageNumber > 1) {
             getAllStores(params).then((res) => {
+                setLoading(true);
                 const concatNewData = res.data.items;
                 setTotalPhysicalStoresCount(res.data.total);
                 setPhysicalStoresList(physicalStoresList.concat(concatNewData));
+                setLoading(false);
             });
         } else {
             getAllStores(params).then((res) => {
+                setLoading(true);
                 setTotalPhysicalStoresCount(res.data.total);
                 setPhysicalStoresList(res.data.items);
+                setLoading(false);
             });
         }
-    }, [pageNumber])
+    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
 
     return (
         <>
             <Box className="physical-store-box-container" sx={{ height: "600px", overflowY: "auto", pr: "12px" }}>
                 <Grid container>
                     {
-                        physicalStoresList.map((item) => {
-                            const { activeDealsCount, address, id, imageUrl, name, storeModes, slug } = item;
-                            return (
-                                <PhysicalStoresVerticalCards key={id} id={id} name={name} imageUrl={imageUrl} activeDealsCount={activeDealsCount}
-                                    address={address} storeModes={storeModes} slug={slug} />
-                            )
-                        })
+                        !loading ? (
+                            totalPhysicalStoresCount > 0 ?
+                                physicalStoresList.map((item) => {
+                                    const { activeDealsCount, address, id, imageUrl, name, storeModes, slug } = item;
+                                    return (
+                                        <PhysicalStoresVerticalCards key={id} id={id} name={name} imageUrl={imageUrl} activeDealsCount={activeDealsCount}
+                                            address={address} storeModes={storeModes} slug={slug} />
+                                    )
+                                }) : <NoStoreAvailabel />
+                        ) : (<Loading />)
                     }
                 </Grid>
                 {

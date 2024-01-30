@@ -7,13 +7,19 @@ import StoreCards from '../../common-components/StoreCards';
 import ButtonComp from '../../common-components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { storePageNumber } from '../../../redux/features/dealModeSlice';
+import NoStoreAvailabel from '../../common-components/NoStoreAvailabel';
+import Loading from '../../common-components/Loading';
 
 const OnlineStores = () => {
 
     const [onlineStoresList, setOnlineStoresList] = useState<Stores[]>([]);
     const [totalOnlineStoresCount, setTotalOnlineStoresCount] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const pageNumber = useSelector((state: any) => state.dealModeOptions.page);
+    const storeSearchKeyword = useSelector((state: any) => state.searchFilters.searchKeyword);
+    const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
+    const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
 
     const dispatch = useDispatch();
 
@@ -31,25 +37,31 @@ const OnlineStores = () => {
             take: 20,
             skip: 0,
             storeMode: "Online",
-            searchKeyword: "",
+            searchKeyword: storeSearchKeyword,
+            categoryId: storeCategoryId,
+            discountTypeId: storeDiscountTypeId,
         }
 
         if (pageNumber > 1) {
             getAllStores(params).then((res) => {
+                setLoading(true);
                 const concatNewData = res.data.items;
                 setTotalOnlineStoresCount(res.data.total);
                 setOnlineStoresList(onlineStoresList.concat(concatNewData));
+                setLoading(false);
             });
         } else {
             getAllStores(params).then((res) => {
                 // onlineStoresList.push(res.data.items);
                 // // console.log(res.data.items);
                 // const nextPageData = onlineStoresList;
+                setLoading(true);
                 setTotalOnlineStoresCount(res.data.total);
                 setOnlineStoresList(res.data.items);
+                setLoading(false);
             });
         }
-    }, [pageNumber])
+    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
     return (
         <>
             <StoreSearchBarAndDropDown title="Discover stores offering deals on online shopping" />
@@ -57,14 +69,16 @@ const OnlineStores = () => {
             <Container maxWidth="lg" sx={{ pb: "40px" }}>
                 <Box className="all-stores-main-div">
                     <Grid container className="store-grid-container">
-                        {
-                            onlineStoresList.map((item) => {
-                                const { activeDealsCount, address, id, imageUrl, name, storeModes, slug } = item;
-                                return (
-                                    <StoreCards key={id} id={id} name={name} imageUrl={imageUrl}
-                                        activeDealsCount={activeDealsCount} address={address} storeModes={storeModes} slug={slug} />
-                                )
-                            })
+                        {!loading ? (
+                            totalOnlineStoresCount > 0 ?
+                                onlineStoresList.map((item) => {
+                                    const { activeDealsCount, address, id, imageUrl, name, storeModes, slug } = item;
+                                    return (
+                                        <StoreCards key={id} id={id} name={name} imageUrl={imageUrl}
+                                            activeDealsCount={activeDealsCount} address={address} storeModes={storeModes} slug={slug} />
+                                    )
+                                }) : <NoStoreAvailabel />
+                        ) : (<Loading />)
                         }
                     </Grid>
 

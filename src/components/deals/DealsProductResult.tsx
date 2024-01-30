@@ -302,7 +302,8 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
                             onChange={handleChange}
                             textColor='primary'
                             sx={{
-                                span: { display: "none" },
+                                // span: { display: "none" },
+                                "& .MuiTabs-indicator": { display: "none" },
                                 '& .Mui-selected': {
                                     background: theme.palette.background.paper,
                                 },
