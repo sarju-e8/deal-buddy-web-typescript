@@ -7,6 +7,8 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import { NavLink } from 'react-router-dom';
 import { theme } from '../../theme/theme';
+import { storePageNumber } from '../../redux/features/dealModeSlice';
+import { useDispatch } from 'react-redux';
 
 const styles = {
     navbarMenuStyle: {
@@ -35,10 +37,18 @@ const styles = {
 
 
 const NavbarMenus = () => {
-    // console.log(CategoryIcon);
     const [anchorEl, setAnchorEl] = useState(null);
 
+    const dispatch = useDispatch();
+
     const handleClick = (event: any) => {
+        if (anchorEl !== event.currentTarget) {
+            setAnchorEl(event.currentTarget);
+            dispatch(storePageNumber(1));
+        }
+    }
+
+    const handleHover = (event) => {
         if (anchorEl !== event.currentTarget) {
             setAnchorEl(event.currentTarget);
         }
@@ -46,6 +56,7 @@ const NavbarMenus = () => {
 
     const handleClose = () => {
         setAnchorEl(null);
+        dispatch(storePageNumber(1));
     }
     return (
         <>
@@ -53,13 +64,13 @@ const NavbarMenus = () => {
             <Box className="navbar-menu-links" sx={{ display: 'flex', alignItems: 'center', ml: 8 }}>
                 <Stack direction="row" spacing={4} sx={{}}>
                     <NavLink to='/categories' style={{ textDecoration: "none" }}>
-                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><CategoryOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Categories</Typography></Link>
+                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }}><CategoryOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Categories</Typography></Link>
                     </NavLink>
-                    <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><StorefrontOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}
+                    <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }}><StorefrontOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}
                         aria-owns={anchorEl ? "simple-menu" : undefined}
                         aria-haspopup="true"
                         onClick={handleClick}
-                        onMouseOver={handleClick}
+                        onMouseOver={handleHover}
                     >
                         Stores
                     </Typography></Link>
@@ -88,10 +99,10 @@ const NavbarMenus = () => {
                         </NavLink>
                     </Menu>
                     <NavLink style={{ textDecoration: "inherit" }} to={'/deals'}>
-                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocalOfferOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Deals</Typography></Link>
+                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }}><LocalOfferOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Deals</Typography></Link>
                     </NavLink>
                     <NavLink style={{ textDecoration: "inherit" }} to={'/physical-stores'}>
-                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }} href="#"><LocationOnOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Map</Typography></Link>
+                        <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }}><LocationOnOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{ ...styles.menuNameStyle }}>Map</Typography></Link>
                     </NavLink>
                 </Stack>
             </Box >
