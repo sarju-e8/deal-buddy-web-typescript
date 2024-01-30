@@ -18,6 +18,16 @@ const PhysicalStoresVerticalCards = ({ activeDealsCount, address, id, imageUrl, 
         dispatch(storePageNumber(1));
     }
 
+    const navigateAddress = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        let addressParams = "/?q=" + encodeURIComponent(address?.fillAddress)
+        if (address?.latitude && address?.longitude) {
+            addressParams = '?q=' + address?.latitude + ',' + address?.longitude;
+        }
+        window.open('https://maps.google.com' + addressParams, '_blank')
+    }
+
     return (
         <>
             <Grid item lg={12} md={12} sm={12} xs={12} className='physical-stores-single-item-grid' sx={{ pr: "10px", py: "10px" }}>
@@ -64,10 +74,14 @@ const PhysicalStoresVerticalCards = ({ activeDealsCount, address, id, imageUrl, 
                                         {activeDealsCount === 0 ? `No active deals` : `${activeDealsCount} active deals`}</Typography>
                                 </Box>
                             </Box>
+                            {
+                                storeModes[0]?.name === "In Store" || storeModes[1]?.name === "In Store" ? (
+                                    <Link onClick={navigateAddress} sx={{ bgcolor: theme.palette.primary.main, display: "flex", alignItems: "center", alignSelf: "flex-end", padding: "10px", borderRadius: "10px" }}>
+                                        <NearMeOutlinedIcon sx={{ color: theme.palette.common.white, fontSize: "20px" }} />
+                                    </Link>
+                                ) : (<></>)
+                            }
 
-                            <Link href="#" sx={{ bgcolor: theme.palette.primary.main, display: "flex", alignItems: "center", alignSelf: "flex-end", padding: "10px", borderRadius: "10px" }}>
-                                <NearMeOutlinedIcon sx={{ color: theme.palette.common.white, fontSize: "20px" }} />
-                            </Link>
 
                             {/* {
                             storeModes[0].name === "In Store" ? (

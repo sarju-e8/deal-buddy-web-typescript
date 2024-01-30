@@ -70,12 +70,12 @@ export const getDeals = async (params: object) => {
 //     return AllDealsAndCoupons;
 // }
 
-export const getDealsMode = async (url: string) => {
-    const DealsModes = await axios.get(`${BASE_URL}/${url}`);
+export const getDealsMode = async () => {
+    const DealsModes = await axios.get(`${BASE_URL}/product-mode`);
     return DealsModes;
 }
 
-export const getDiscountType = async (url: string) => {
-    const DiscountTypes = await axios.get(`${BASE_URL}/${url}`);
+export const getDiscountType = async () => {
+    const DiscountTypes = await axios.get(`${BASE_URL}/discount-type`);
     return DiscountTypes;
 }
