@@ -10,6 +10,7 @@ import OnlineStores from "../components/stores/online-stores/OnlineStores";
 import PhysicalStores from "../components/stores/physical-stores/PhysicalStores";
 import MainDeals from "../components/deals/MainDeals";
 import { useSelector } from "react-redux";
+import DealsProductDetails from "../components/deals-product-details/DealsProductDetails";
 
 export default function Router() {
 
@@ -48,8 +49,23 @@ export default function Router() {
             path: "/physical-stores", element: <PhysicalStores />
         },
         {
-            path: "/deals", element: <MainDeals />
+            path: "/deals",
+            children: [
+                { element: <MainDeals />, index: true },
+                { path: ":urlDealSlug", element: <DealsProductDetails /> },
+            ]
         },
+        {
+            path: "/search",
+            children: [
+                { element: <MainDeals />, index: true },
+                // { path: ":urlTagName", element: <MainDeals /> },
+            ]
+        },
+        // {
+        // path: "/deals", element: <MainDeals />,
+        //     path: "/test-product-details", element: <DealsProductDetails />
+        // },
         {
             path: "/how-it-works", element: <HowItWorks />
         },

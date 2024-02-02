@@ -38,9 +38,8 @@ const PopularSalesProducts: React.FC = () => {
 
                     {apiData &&
                         apiData.map((data) => {
-
                             // const categoryName = data.category.name
-                            const { id, name, clicks, category, stores, productImages, locations, productType, productModes, NZWide, endDate } = data
+                            const { id, name, clicks, category, stores, productImages, locations, productType, productModes, NZWide, endDate, slug } = data
 
                             return (
                                 <>
@@ -49,7 +48,7 @@ const PopularSalesProducts: React.FC = () => {
                                         // Stores={data.Stores.name} 
                                         /> */}
 
-                                    <PopularSalesCard key={id} name={name} clicks={clicks} category={category} productImages={productImages} id={''} stores={stores} locations={locations} NZWide={NZWide} endDate={endDate} productType={productType} productModes={productModes} />
+                                    <PopularSalesCard key={id} name={name} clicks={clicks} category={category} productImages={productImages} id={id} stores={stores} locations={locations} NZWide={NZWide} endDate={endDate} productType={productType} productModes={productModes} slug={slug} />
                                 </>
                             )
                         })

@@ -20,6 +20,8 @@ export interface Deal {
     locations: Locations[];
     couponCode?: string;
     dealsLgSize?: number;
+    dealsMdSize?: number;
     circleBottomClass?: string;
+    slug: string;
 }
 

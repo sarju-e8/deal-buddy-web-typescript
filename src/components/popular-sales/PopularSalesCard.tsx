@@ -8,6 +8,7 @@ import { Deal } from '../../@types/deals';
 import { calculateDays } from '../../helperFunctions/CalculateDays';
 import { theme } from '../../theme/theme';
 import ButtonComp from '../common-components/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 export interface SalesProductCard {
@@ -26,9 +27,18 @@ const style = {
     }
 }
 
-const PopularSalesCard = ({ dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
+const PopularSalesCard = ({ dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate, slug }: Deal) => {
+
 
     const expiresInDaysCount = calculateDays(endDate);
+
+    const navigate = useNavigate();
+
+    const navigateToViewDetail = (slug) => {
+        // console.log("slug", slug)
+
+        navigate(`/deals/${slug}`);
+    }
 
     return (
         <>
@@ -109,7 +119,9 @@ const PopularSalesCard = ({ dealsLgSize = 3, name, productImages, clicks, catego
                             <Typography sx={{ lineHeight: 1.4, fontWeight: 500, fontSize: "14px", textTransform: "capitalize" }}>View Deal</Typography>
                         </Button> */}
 
-                        <ButtonComp name="View Deal" sx={{ marginTop: "20px" }}></ButtonComp>
+                        <ButtonComp name="View Deal" sx={{ marginTop: "20px" }}
+                            func_call={() => navigateToViewDetail(slug)}
+                        ></ButtonComp>
                     </Box>
                 </Box>
             </Grid >
