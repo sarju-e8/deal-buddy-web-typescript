@@ -1,7 +1,7 @@
 import { AppBar, Box, Button, Grid, Link, Tab, Tabs, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { theme } from '../../theme/theme'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useLocation, useParams } from 'react-router-dom'
 import { Deal } from '../../@types/deals'
 import { getDeals } from '../../services/DealsAndCouponsApi'
 import PopularSalesCard from '../popular-sales/PopularSalesCard'
@@ -130,6 +130,11 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     const { urlSlug } = urlParams; // get category url slug
     const { urlStoreSlug } = urlParams; // get store url slug
 
+
+    const location = useLocation();
+    const urlsearchKeyword = new URLSearchParams(location.search).get('search');
+
+
     const buttonClick = (e: any, btnName: string) => {
         if (e) {
             if (e.type == "click") {
@@ -176,6 +181,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
             shortBy: shortByRadionButtonValue,
             dealModes: storeDealMode,
             discountTypes: storeDiscountType,
+            searchKeyword: urlsearchKeyword,
         }
 
         if (pageNumber > 1) {
@@ -202,7 +208,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
             });
         }
 
-    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, urlSlug, urlStoreSlug])
+    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, urlSlug, urlStoreSlug, urlsearchKeyword])
 
     //     if (pageNumber === 1) {
     //         getDealsAndCoupons(url, shortByRadionButtonValue).then((res) => {
@@ -326,20 +332,20 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
                     {
                         dealsList.map((item) => {
 
-                            const { NZWide, category, clicks, endDate, id, locations, name, productImages, productModes, productType, stores, couponCode } = item;
+                            const { NZWide, category, clicks, endDate, id, locations, name, productImages, productModes, productType, stores, couponCode, slug } = item;
 
                             {
                                 return (
 
                                     !couponCode || productType === "sale" ?
 
-                                        <PopularSalesCard dealsLgSize={4} key={id} name={name} clicks={clicks} category={category} productImages={productImages} id={''} stores={stores} locations={locations} NZWide={NZWide} endDate={endDate} productType={productType} productModes={productModes} />
+                                        <PopularSalesCard dealsLgSize={4} key={id} name={name} clicks={clicks} category={category} productImages={productImages} id={''} stores={stores} locations={locations} NZWide={NZWide} endDate={endDate} productType={productType} productModes={productModes} slug={slug} />
 
                                         :
 
                                         <PopularCouponsCard circleBottomClass="254px" dealsLgSize={4} key={id} name={name} category={category} productImages={productImages}
                                             id={id} NZWide={NZWide} clicks={clicks} productType={productType} productModes={productModes}
-                                            endDate={endDate} stores={stores} locations={locations} />
+                                            endDate={endDate} stores={stores} locations={locations} slug={slug} />
 
                                     // <>
                                     //     {productType === "sale" && <PopularSalesCard dealsLgSize={4} key={id} name={name} clicks={clicks} category={category} productImages={productImages} id={''} stores={stores} locations={locations} NZWide={NZWide} endDate={endDate} productType={productType} productModes={productModes} />}

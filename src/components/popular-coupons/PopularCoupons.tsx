@@ -22,11 +22,11 @@ const PopularCoupons: React.FC = () => {
             <Box className="coupons-main-div" sx={{ pl: '50px', pr: "43px" }}>
                 <Grid container className="coupons-grid-container">
                     {apiData && apiData.map((item) => {
-                        const { id, name, clicks, category, stores, productImages, locations, productType, productModes, NZWide, endDate } = item
+                        const { id, name, clicks, category, stores, productImages, locations, productType, productModes, NZWide, endDate, slug } = item
                         return (
                             <PopularCouponsCard key={id} name={name} category={category} productImages={productImages}
                                 id={id} NZWide={NZWide} clicks={clicks} productType={productType} productModes={productModes}
-                                endDate={endDate} stores={stores} locations={locations} />
+                                endDate={endDate} stores={stores} locations={locations} slug={slug} />
                         )
                     })
                     }

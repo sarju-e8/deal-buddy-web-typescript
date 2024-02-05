@@ -9,6 +9,7 @@ import { Deal } from '../../@types/deals';
 import { calculateDays } from '../../helperFunctions/CalculateDays';
 import { theme } from '../../theme/theme';
 import ButtonComp from '../common-components/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,13 +21,21 @@ import ButtonComp from '../common-components/Button';
     gap: 24px;
 }
 </style> */}
-const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate }: Deal) => {
+const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, dealsMdSize = 4, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate, slug }: Deal) => {
 
     const expiresInDaysCount = calculateDays(endDate);
 
+    const navigate = useNavigate();
+
+    const navigateToViewDetail = (slug) => {
+        // console.log("slug", slug)
+
+        navigate(`/deals/${slug}`);
+    }
+
     return (
         <>
-            <Grid item lg={dealsLgSize} md={4} sm={6} xs={12} className='coupons-single-item-grid' sx={{
+            <Grid item lg={dealsLgSize} md={dealsMdSize} sm={6} xs={12} className='coupons-single-item-grid' sx={{
                 p: "10px",
                 // hover on coupon that time display view count
                 "& : hover .coupons-image .view-info": { gap: "24px", gridGap: "24px", display: "flex" }
@@ -140,7 +149,8 @@ const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, name
                                 <Typography sx={{ ...theme.typography.button, textTransform: "capitalize" }}>
                                     Show Code</Typography>
                             </Button> */}
-                            <ButtonComp name="Show Code" sx={{ marginTop: "20px" }}></ButtonComp>
+                            <ButtonComp name="Show Code" sx={{ marginTop: "20px" }}
+                                func_call={() => navigateToViewDetail(slug)}></ButtonComp>
                         </Box>
                     </Box>
 
