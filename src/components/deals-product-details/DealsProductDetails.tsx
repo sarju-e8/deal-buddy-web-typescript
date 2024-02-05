@@ -10,7 +10,7 @@ import { getIndividualDealsProductDetails } from '../../services/DealsProductDet
 import { useDispatch } from 'react-redux'
 import { individualDealProductDetailData } from '../../redux/features/DealProductDetailSlice'
 import MoreDealsList from './MoreDealsList'
-import { storePageNumber } from '../../redux/features/dealModeSlice'
+import { shortByValue, storePageNumber } from '../../redux/features/dealModeSlice'
 
 const DealsProductDetails = () => {
 
@@ -27,7 +27,8 @@ const DealsProductDetails = () => {
         });
 
         dispatch(storePageNumber(1));
-
+        dispatch(shortByValue("date"));
+        
     }, [urlDealSlug])
 
     return (

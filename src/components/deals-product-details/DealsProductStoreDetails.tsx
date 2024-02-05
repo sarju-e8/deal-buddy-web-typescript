@@ -97,32 +97,37 @@ const DealsProductStoreDetails = () => {
                                 }
 
 
-                                <Box className="item-details-website" sx={{ display: "flex", mb: "12px" }}>
-                                    <LanguageOutlinedIcon sx={{
-                                        color: theme.palette.text.primary, mr: "12px",
-                                        fontSize: "22px", lineHeight: "16px", fontWeight: 400
-                                    }} />
-                                    <Link href={storeData?.website} target="_blank" className="phone" sx={{
-                                        cursor: "pointer", textDecoration: "none", color: theme.palette.common.black,
-                                        "&:hover": { color: theme.palette.text.primary, transition: ".5s", },
-                                        // width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
-                                    }}>
-                                        <Typography> {storeData?.website}</Typography>
-                                    </Link>
-                                </Box>
+                                {
+                                    storeData?.website === null ? <></> :
+                                        <Box className="item-details-website" sx={{ display: "flex", mb: "12px" }}>
+                                            <LanguageOutlinedIcon sx={{
+                                                color: theme.palette.text.primary, mr: "12px",
+                                                fontSize: "22px", lineHeight: "16px", fontWeight: 400
+                                            }} />
+                                            <Link href={storeData?.website} target="_blank" className="website" sx={{
+                                                cursor: "pointer", textDecoration: "none", color: theme.palette.common.black,
+                                                "&:hover": { color: theme.palette.text.primary, transition: ".5s", },
+                                                // width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
+                                            }}>
+                                                <Typography> {storeData?.website}</Typography>
+                                            </Link>
+                                        </Box>
+                                }
 
-                                <Box className="store-description"
-                                    sx={{ mt: "16px", fontSize: theme.typography.body1, height: "auto" }}>
-                                    <Typography sx={{ fontSize: theme.typography.body1 }}>
-                                        {/* {storeData?.description} */}
-                                        {readMore ? storeData?.description : `${storeData?.description.substring(0, 150)}...`}
-                                        <Link sx={{ mt: "8px", textDecoration: "none", cursor: "pointer", display: "block", transition: "0.5s" }}
-                                            className='btn' onClick={() => setReadMore(!readMore)}>
-                                            {readMore ? "Read Less" : "Read More"}
-                                        </Link>
-                                    </Typography>
+                                {
+                                    storeData?.description === null ? <></> :
+                                        <Box className="store-description"
+                                            sx={{ mt: "16px", fontSize: theme.typography.body1, height: "auto" }}>
+                                            <Typography sx={{ fontSize: theme.typography.body1 }}>
+                                                {/* {storeData?.description} */}
+                                                {readMore ? storeData?.description : `${storeData?.description.substring(0, 150)}...`}
+                                                <Link sx={{ mt: "8px", textDecoration: "none", cursor: "pointer", display: "block", transition: "0.5s" }}
+                                                    className='btn' onClick={() => setReadMore(!readMore)}>
+                                                    {readMore ? "Read Less" : "Read More"}
+                                                </Link>
+                                            </Typography>
 
-                                    {/* <Typography sx={{ fontSize: theme.typography.body1 }}>
+                                            {/* <Typography sx={{ fontSize: theme.typography.body1 }}>
                                         {
                                             resultArray.length > 35
                                                 ? showAllText
@@ -143,7 +148,9 @@ const DealsProductStoreDetails = () => {
                                     >
                                         {showAllText ? "Read Less" : "Read More"}
                                     </Typography> */}
-                                </Box>
+                                        </Box>
+                                }
+
                             </Box>
 
 
