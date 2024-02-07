@@ -26,7 +26,7 @@ const DealsProductDetailsSidebar = () => {
     const CouponImage = "https://www.dealbuddy.co.nz/assets/img/coupon.png?v=1";
 
     let timeLeft = dealProductStoreDetails?.remainingDuration;
-    console.log(dealProductStoreDetails)
+    // console.log(dealProductStoreDetails)
 
     const secondsToDhms = (timeLeft) => {
         timeLeft = Number(timeLeft)
@@ -50,11 +50,11 @@ const DealsProductDetailsSidebar = () => {
     }
 
     useEffect(() => {
-        console.log(secondsToDhms(timeLeft));
-        console.log('days', productRemainingDays);
-        console.log('hour', productRemainingHour);
-        console.log('minutes', productRemainingMinutes);
-        console.log('seconds', productRemainingSeconds);
+        // console.log(secondsToDhms(timeLeft));
+        // console.log('days', productRemainingDays);
+        // console.log('hour', productRemainingHour);
+        // console.log('minutes', productRemainingMinutes);
+        // console.log('seconds', productRemainingSeconds);
         if (timeLeft > 0) {
             const interval = setInterval(() => {
                 secondsToDhms(timeLeft);
