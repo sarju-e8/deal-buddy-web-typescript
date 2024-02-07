@@ -13,18 +13,11 @@ const DealsProductStoreDetails = () => {
 
     const storeDetails = useSelector((state: any) => state.DealsProductDetails.individualDealProductDetail);
     const storeData = storeDetails?.stores?.[0];
-    console.log("storedata", storeData)
 
     const [readMore, setReadMore] = useState(false);
 
-    const [showAllText, setShowAllText] = useState(false);
-
     const dispatch = useDispatch();
 
-    // const testString = storeData?.description;
-    // const resultArray = testString.split(" ");
-    // const arr1 = resultArray.slice(0, 35).join(" ");
-    // const arr2 = resultArray.slice(35).join(" ");
     return (
         <>
             {
@@ -71,16 +64,13 @@ const DealsProductStoreDetails = () => {
                                     }} />
                                     <Typography className="location" sx={{
                                         color: theme.palette.common.black,
-                                        // "&:hover": { color: theme.palette.text.primary, transition: ".5s", },
-                                        // width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
                                     }}>
-                                        {/* {storeData?.address?.fillAddress} */}
                                         {storeData?.storeModes[0].name === "Online" ? "Online Store" : storeData?.address?.fillAddress}
                                     </Typography>
                                 </Box>
 
                                 {
-                                    storeData?.phone === null ? <></> :
+                                    storeData?.phone && (
                                         <Box className="item-details-phone" sx={{ display: "flex", mb: "12px" }}>
                                             <PhoneInTalkOutlinedIcon sx={{
                                                 color: theme.palette.text.primary, mr: "12px",
@@ -88,17 +78,16 @@ const DealsProductStoreDetails = () => {
                                             }} />
                                             <Typography className="phone" sx={{
                                                 color: theme.palette.common.black,
-                                                // "&:hover": { color: theme.palette.text.primary, transition: ".5s", },
-                                                // width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
                                             }}>
                                                 {storeData?.phone}
                                             </Typography>
                                         </Box>
+                                    )
                                 }
 
 
                                 {
-                                    storeData?.website === null ? <></> :
+                                    storeData?.website && (
                                         <Box className="item-details-website" sx={{ display: "flex", mb: "12px" }}>
                                             <LanguageOutlinedIcon sx={{
                                                 color: theme.palette.text.primary, mr: "12px",
@@ -107,57 +96,30 @@ const DealsProductStoreDetails = () => {
                                             <Link href={storeData?.website} target="_blank" className="website" sx={{
                                                 cursor: "pointer", textDecoration: "none", color: theme.palette.common.black,
                                                 "&:hover": { color: theme.palette.text.primary, transition: ".5s", },
-                                                // width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
                                             }}>
                                                 <Typography> {storeData?.website}</Typography>
                                             </Link>
                                         </Box>
+                                    )
                                 }
 
                                 {
-                                    storeData?.description === null ? <></> :
+                                    storeData?.description && (
                                         <Box className="store-description"
                                             sx={{ mt: "16px", fontSize: theme.typography.body1, height: "auto" }}>
                                             <Typography sx={{ fontSize: theme.typography.body1 }}>
-                                                {/* {storeData?.description} */}
                                                 {readMore ? storeData?.description : `${storeData?.description.substring(0, 150)}...`}
                                                 <Link sx={{ mt: "8px", textDecoration: "none", cursor: "pointer", display: "block", transition: "0.5s" }}
                                                     className='btn' onClick={() => setReadMore(!readMore)}>
                                                     {readMore ? "Read Less" : "Read More"}
                                                 </Link>
                                             </Typography>
-
-                                            {/* <Typography sx={{ fontSize: theme.typography.body1 }}>
-                                        {
-                                            resultArray.length > 35
-                                                ? showAllText
-                                                    ? `${arr1} ${arr2}`
-                                                    : `${arr1}...`
-                                                : testString
-                                        }
-                                    </Typography>
-
-                                    <Typography
-                                        onClick={() => setShowAllText(!showAllText)}
-                                        sx={{
-                                            fontSize: theme.typography.body1,
-                                            color: theme.palette.text.primary,
-                                            cursor: "pointer",
-                                            // mt: { xl: "0.5rem" },
-                                        }}
-                                    >
-                                        {showAllText ? "Read Less" : "Read More"}
-                                    </Typography> */}
                                         </Box>
+                                    )
                                 }
-
                             </Box>
-
-
                         </Box>
-
-
-                    </Box >
+                    </Box>
                     : <></>
             }
         </>

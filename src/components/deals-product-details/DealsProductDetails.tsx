@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import DealsProductSlider from './DealsProductSlider'
 import DealsProductDetailsSidebar from './DealsProductDetailsSidebar'
 import DealsProductStoreDetails from './DealsProductStoreDetails'
@@ -10,7 +10,7 @@ import { getIndividualDealsProductDetails } from '../../services/DealsProductDet
 import { useDispatch } from 'react-redux'
 import { individualDealProductDetailData } from '../../redux/features/DealProductDetailSlice'
 import MoreDealsList from './MoreDealsList'
-import { shortByValue, storePageNumber } from '../../redux/features/dealModeSlice'
+import { shortByValue, storePageNumber, storeProductType } from '../../redux/features/dealModeSlice'
 
 const DealsProductDetails = () => {
 
@@ -19,6 +19,13 @@ const DealsProductDetails = () => {
     const urlParams = useParams();
     const { urlDealSlug } = urlParams;
 
+    const storeDispatchedValue = useCallback(() => {
+        dispatch(storePageNumber(1));
+        dispatch(shortByValue("date"));
+        dispatch(storeProductType(""));
+        console.log("useCallback")
+    }, []);
+
     useEffect(() => {
 
         getIndividualDealsProductDetails(urlDealSlug).then((res) => {
@@ -26,9 +33,8 @@ const DealsProductDetails = () => {
             dispatch(individualDealProductDetailData(res.data));
         });
 
-        dispatch(storePageNumber(1));
-        dispatch(shortByValue("date"));
-        
+        storeDispatchedValue();
+
     }, [urlDealSlug])
 
     return (
