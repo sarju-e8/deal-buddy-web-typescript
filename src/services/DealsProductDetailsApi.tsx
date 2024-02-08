@@ -14,10 +14,13 @@ export const getIndividualDealsProductDetails = async (slug: string) => {
     return IndividualDealsProductsDetailsData;
 }
 
-export const getMoreDeals = async (params: object) => {
+export const getMoreDeals = async (params: object, currentCityValue: string) => {
     const MoreDealsData = await axios.get(`${BASE_URL}/api/deal/similar/deals`, {
         params: {
             ...params
+        },
+        headers: {
+            "City": currentCityValue
         }
     });
     return MoreDealsData;

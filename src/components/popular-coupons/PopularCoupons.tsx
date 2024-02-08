@@ -3,17 +3,19 @@ import React, { useEffect, useState } from 'react'
 import PopularCouponsCard from './PopularCouponsCard'
 import { getCoupons } from '../../services/PopularCouponApi';
 import { Deal } from '../../@types/deals';
+import { useSelector } from 'react-redux';
 
 const PopularCoupons: React.FC = () => {
     const [apiData, setApiData] = useState<Deal[]>([]);
+    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
 
     const url: string = "deal/deals?v=1703156660286&limit=999&page=1&productType=coupon&shortBy=clicks&isPopular=true&updateViewCount=true&t=1703156660285";
 
     useEffect(() => {
-        getCoupons(url).then((res) => {
+        getCoupons(url, currentCityValue).then((res) => {
             setApiData(res.data.items);
         });
-    }, [])
+    }, [currentCityValue])
 
     // console.log("coupons", apiData);
 

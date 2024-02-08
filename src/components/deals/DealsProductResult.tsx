@@ -47,6 +47,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     const pageNumber = useSelector((state: any) => state.dealModeOptions.page);
     const storeProductTypeValue = useSelector((state: any) => state.dealModeOptions.productType);
     const categorySlugValue = useSelector((state: any) => state.dealModeOptions.categorySlug);
+    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
 
     // const [temp, setTemp] = useState(1)
 
@@ -185,7 +186,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
         }
 
         if (pageNumber > 1) {
-            getDeals(params).then((res) => {
+            getDeals(params, currentCityValue).then((res) => {
                 const concatNewData = res.data.items;
                 // setAllItemCount(res.data.total);
                 setAllItemCount(res.data.sellCount + res.data.couponCount);
@@ -197,7 +198,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
                 // console.log("default ", shortByRadionButtonValue)
             });
         } else {
-            getDeals(params).then((res) => {
+            getDeals(params, currentCityValue).then((res) => {
                 setAllItemCount(res.data.sellCount + res.data.couponCount);
                 setSalesCount(res.data.sellCount);
                 setCouponsCount(res.data.couponCount);
@@ -208,7 +209,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
             });
         }
 
-    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, urlSlug, urlStoreSlug, urlsearchKeyword])
+    }, [pageNumber, shortByRadionButtonValue, storeProductTypeValue, storeDealMode, storeDiscountType, urlSlug, urlStoreSlug, urlsearchKeyword, currentCityValue])
 
     //     if (pageNumber === 1) {
     //         getDealsAndCoupons(url, shortByRadionButtonValue).then((res) => {

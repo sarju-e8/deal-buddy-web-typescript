@@ -23,7 +23,7 @@ const DealsProductDetails = () => {
         dispatch(storePageNumber(1));
         dispatch(shortByValue("date"));
         dispatch(storeProductType(""));
-        console.log("useCallback")
+        // console.log("useCallback")
     }, []);
 
     useEffect(() => {

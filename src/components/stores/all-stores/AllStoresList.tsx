@@ -19,6 +19,7 @@ const AllStoresList: React.FC = () => {
     const storeSearchKeyword = useSelector((state: any) => state.searchFilters.searchKeyword);
     const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
     const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
+    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
 
     const dispatch = useDispatch();
 
@@ -41,7 +42,7 @@ const AllStoresList: React.FC = () => {
         }
 
         if (pageNumber > 1) {
-            getAllStores(params).then((res) => {
+            getAllStores(params, currentCityValue).then((res) => {
                 setLoading(true);
                 const concatNewData = res.data.items;
                 setTotalStoresCount(res.data.total);
@@ -49,7 +50,7 @@ const AllStoresList: React.FC = () => {
                 setLoading(false);
             });
         } else {
-            getAllStores(params).then((res) => {
+            getAllStores(params, currentCityValue).then((res) => {
                 // allStoresList.push(res.data.items);
                 // console.log(res.data.items);
                 // const nextPageData = allStoresList;
@@ -59,7 +60,7 @@ const AllStoresList: React.FC = () => {
                 setLoading(false);
             });
         }
-    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
+    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId, currentCityValue])
     // console.log("allStoreApipageNumber", pageNumber);
 
     return (

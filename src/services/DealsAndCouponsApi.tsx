@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 const BASE_URL = "https://www.dealbuddy.co.nz/api";
 
 
-export const getDeals = async (params: object) => {
+export const getDeals = async (params: object, currentCityValue: string) => {
     // console.log("firstApi", discountTypes)
     const AllDealsAndCoupons = await axios.get(`${BASE_URL}/deal/deals`, {
         params: {
             ...params
+        },
+        headers: {
+            "City": currentCityValue
         }
     }
 

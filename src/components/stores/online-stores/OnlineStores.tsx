@@ -20,6 +20,7 @@ const OnlineStores = () => {
     const storeSearchKeyword = useSelector((state: any) => state.searchFilters.searchKeyword);
     const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
     const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
+    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
 
     const dispatch = useDispatch();
 
@@ -43,7 +44,7 @@ const OnlineStores = () => {
         }
 
         if (pageNumber > 1) {
-            getAllStores(params).then((res) => {
+            getAllStores(params, currentCityValue).then((res) => {
                 setLoading(true);
                 const concatNewData = res.data.items;
                 setTotalOnlineStoresCount(res.data.total);
@@ -51,7 +52,7 @@ const OnlineStores = () => {
                 setLoading(false);
             });
         } else {
-            getAllStores(params).then((res) => {
+            getAllStores(params, currentCityValue).then((res) => {
                 // onlineStoresList.push(res.data.items);
                 // // console.log(res.data.items);
                 // const nextPageData = onlineStoresList;
@@ -61,7 +62,7 @@ const OnlineStores = () => {
                 setLoading(false);
             });
         }
-    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
+    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId, currentCityValue])
     return (
         <>
             <StoreSearchBarAndDropDown title="Discover stores offering deals on online shopping" />

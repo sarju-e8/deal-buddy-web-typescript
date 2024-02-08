@@ -8,18 +8,20 @@ import { Deal } from '../../@types/deals';
 import { getSaleProduct } from '../../services/PopularSaleProductApi';
 import PopularSalesCard from './PopularSalesCard';
 import { string } from 'yup';
+import { useSelector } from 'react-redux';
 // const image_url: string[] = []
 
 const PopularSalesProducts: React.FC = () => {
     const [apiData, setApiData] = useState<Deal[]>([]);
+    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
 
     const url: string = "deal/deals?v=1702983878189&limit=999&page=1&productType=sale&shortBy=clicks&isPopular=true&updateViewCount=true&t=1702983878189";
 
     useEffect(() => {
-        getSaleProduct(url).then((res) => {
+        getSaleProduct(url, currentCityValue).then((res) => {
             setApiData(res.data.items);
         });
-    }, [])
+    }, [currentCityValue])
 
     // console.log("apiDaatSale", apiData)
 

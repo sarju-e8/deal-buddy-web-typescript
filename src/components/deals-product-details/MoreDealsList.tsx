@@ -10,6 +10,7 @@ import PopularCouponsCard from '../popular-coupons/PopularCouponsCard';
 
 const MoreDealsList = () => {
     const productData = useSelector((state: any) => state.DealsProductDetails.individualDealProductDetail);
+    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
 
     // const storeProductId = productData ? productData?.id : "27e137bc-51e8-45da-be36-a62805f85421";
 
@@ -22,21 +23,19 @@ const MoreDealsList = () => {
     const [moreDealList, setMoreDealList] = useState<Deal[]>([]);
 
     useEffect(() => {
-        console.log("storeid", storeProductId)
         var params = {
             productId: storeProductId,
             limit: 4,
-
         }
 
         if (storeProductId) {
-            getMoreDeals(params).then((res) => {
+            getMoreDeals(params, currentCityValue).then((res) => {
                 setMoreDealList(res.data);
             });
         }
 
-    }, [storeProductId])
-    console.log("moredee ", moreDealList)
+    }, [storeProductId, currentCityValue])
+
     return (
         <>
             <Box className="more-deal" sx={{ mt: "20px" }}>
