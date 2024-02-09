@@ -1,6 +1,7 @@
 import { Box, Container, Grid, Link, Modal, Stack, Typography } from '@mui/material'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import React, { useCallback, useEffect, useState } from 'react'
 import { theme } from '../../theme/theme';
 import SelectCity from '../select-city-town/SelectCity';
@@ -14,12 +15,9 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // maxWidth: 374,
     width: 300,
-    // height: "auto",
     bgcolor: theme.palette.common.white,
     border: '1px solid rgba(0,0,0,.2)',
-    // boxShadow: 24,
     p: 4,
     borderRadius: "14px",
     display: "flex",
@@ -57,23 +55,24 @@ const HeaderSelectLocation = () => {
 
     return (
         <>
-            {/* <Container maxWidth="xl">
-                <Grid container>
-                    <Grid item lg={3} md={3} sm={3} xs={12}> */}
-            <Box onClick={handleOpen} sx={{ bgcolor: theme.palette.common.white, borderRadius: 2.5, maxWidth: "180px" }}>
+            <Box onClick={handleOpen}
+                sx={{ bgcolor: theme.palette.common.white, borderRadius: 2.5, height: "44px", width: "auto", ml: "50px" }}>
                 <Link sx={{ textDecoration: "none", color: theme.palette.common.black, cursor: 'pointer' }} >
                     <Stack direction={'row'} sx={{ px: 1.5, py: 1 }}>
                         <LocationOnOutlinedIcon sx={{ color: theme.palette.text.primary, fontSize: 26 }} />
                         <Typography sx={{ pl: 1, fontSize: theme.typography.paragraph }}>
                             {currentCityValue ? currentCityValue : "NZ Wide"}
                         </Typography>
-                        <KeyboardArrowDownIcon sx={{ pl: 3, fontSize: 22 }} />
+                        {storeModalOpenValue ?
+                            <KeyboardArrowUpIcon sx={{ pl: 3, fontSize: 22 }} />
+                            :
+                            <KeyboardArrowDownIcon sx={{ pl: 3, fontSize: 22 }} />
+                        }
                     </Stack>
                 </Link>
             </Box>
 
             <Box className='modal-container'>
-                {/* <Button onClick={handleOpen}>Open modal</Button> */}
                 <Modal
                     open={storeModalOpenValue}
                     onClose={handleClose}
@@ -85,9 +84,6 @@ const HeaderSelectLocation = () => {
                     </Box>
                 </Modal>
             </Box>
-            {/* </Grid>
-                </Grid>
-            </Container> */}
         </>
     )
 }

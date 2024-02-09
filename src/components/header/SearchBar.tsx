@@ -35,14 +35,18 @@ const SearchBar = () => {
             limit: 30,
         };
         cancelTokenSource = axios.CancelToken.source();
-        mainSearchData(cancelTokenSource, params).then((res) => {
-            if (res?.data?.items?.length > 0) {
-                setSearchResultData(res.data.items);
-            }
-            else if ((res?.data?.items?.length == 0)) {
-                setSearchResultData(res.data.items);
-            }
-        })
+        if (searchValue.length > 0) {
+            mainSearchData(cancelTokenSource, params).then((res) => {
+                if (res?.data?.items?.length > 0) {
+                    setSearchResultData(res.data.items);
+                }
+                else if ((res?.data?.items?.length == 0)) {
+                    setSearchResultData(res.data.items);
+                }
+            })
+        } else {
+            setSearchResultData([]);
+        }
 
         if (searchValue) {
             setOpenLIstBox(true);
@@ -61,17 +65,16 @@ const SearchBar = () => {
         <Box
             component={"div"}
             sx={{
-                height: "80%",
+                height: "44px",
                 maxWidth: "80%",
                 bgcolor: "white",
-                ml: { xl: "2rem" },
+                ml: "20px",
                 width: { xl: "auto" },
                 alignItems: "center",
                 display: "flex",
                 borderRadius: "10px",
                 outline: "none",
                 fieldset: { border: "none", outline: "none" },
-
             }}
         >
             <SearchOutlinedIcon sx={{ ml: "10px" }} />
@@ -88,8 +91,8 @@ const SearchBar = () => {
                 }}
 
                 PopperComponent={(props) => (
-                    <Popper className='popper-custom' {...props} sx={{
-                        "& .MuiPaper-root.MuiAutocomplete-paper": { color: "black", ml: "-32px", width: "432px", backgroundColor: `${theme.palette.common.white}!important` },
+                    searchValue.length > 0 && <Popper className='popper-custom' {...props} sx={{
+                        "& .MuiPaper-root.MuiAutocomplete-paper": { color: "black", ml: "-32px", width: "460px", backgroundColor: `${theme.palette.common.white}!important` },
                         "& ul": { maxHeight: "390px", }
                     }}>
                         {props.children}

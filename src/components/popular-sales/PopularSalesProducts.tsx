@@ -11,25 +11,7 @@ import { string } from 'yup';
 import { useSelector } from 'react-redux';
 // const image_url: string[] = []
 
-const PopularSalesProducts: React.FC = () => {
-    const [apiData, setApiData] = useState<Deal[]>([]);
-    const currentCityValue = useSelector((state: any) => state.SelectCity.currentCity);
-
-    const url: string = "deal/deals?v=1702983878189&limit=999&page=1&productType=sale&shortBy=clicks&isPopular=true&updateViewCount=true&t=1702983878189";
-
-    useEffect(() => {
-        getSaleProduct(url, currentCityValue).then((res) => {
-            setApiData(res.data.items);
-        });
-    }, [currentCityValue])
-
-    // console.log("apiDaatSale", apiData)
-
-    // apiData && apiData.map((item) => {
-    //     // let url: string = item.productImages[0].imageUrl;
-    //     image_url.push(url);
-    // })
-    // image_url && console.log(image_url);
+const PopularSalesProducts = ({ saleList }) => {
 
     return (
         <>
@@ -38,8 +20,8 @@ const PopularSalesProducts: React.FC = () => {
                 <Grid container className='product-grid-container'>
 
 
-                    {apiData &&
-                        apiData.map((data) => {
+                    {saleList &&
+                        saleList.map((data) => {
                             // const categoryName = data.category.name
                             const { id, name, clicks, category, stores, productImages, locations, productType, productModes, NZWide, endDate, slug } = data
 

@@ -1,12 +1,14 @@
 import axios from "axios";
-// https://www.dealbuddy.co.nz/api/deal/deals?v=1702983878189&limit=999&page=1&productType=sale&shortBy=clicks&isPopular=true&updateViewCount=true&t=1702983878189
 
 const BASE_URL = "https://www.dealbuddy.co.nz/api";
 
-export const getSaleProduct = async (url: string, currentCityValue: string) => {
-    const SaleProductData = await axios.get(`${BASE_URL}/${url}`, {
+export const getSaleProduct = async (params: object, currentCityValue: string) => {
+    const SaleProductData = await axios.get(`${BASE_URL}/deal/deals`, {
         headers: {
             "City": currentCityValue
+        },
+        params: {
+            ...params
         }
     });
     return SaleProductData;
