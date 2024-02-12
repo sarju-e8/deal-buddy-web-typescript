@@ -6,7 +6,7 @@ const initialState = {
     discountType: "",
     categoryId: "",
     categoryName: "",
-
+    storeList: {},
 }
 
 export const StoreFilterSlice = createSlice({
@@ -27,10 +27,13 @@ export const StoreFilterSlice = createSlice({
         },
         selectedCategoryName: (state, action) => {
             state.categoryName = action.payload;
+        },
+        getAllStoreList: (state, action) => {
+            state.storeList = action.payload;
         }
     }
 });
 
-export const { searchValue, discountValue, categoryValue, selectedDiscountType, selectedCategoryName } = StoreFilterSlice.actions;
+export const { searchValue, discountValue, categoryValue, selectedDiscountType, selectedCategoryName, getAllStoreList } = StoreFilterSlice.actions;
 
 export default StoreFilterSlice.reducer;

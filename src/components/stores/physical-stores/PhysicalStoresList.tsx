@@ -9,6 +9,7 @@ import ButtonComp from '../../common-components/Button';
 import { storePageNumber } from '../../../redux/features/dealModeSlice';
 import NoStoreAvailabel from '../../common-components/NoStoreAvailabel';
 import Loading from '../../common-components/Loading';
+import { getAllStoreList } from '../../../redux/features/StoreFilterSlice';
 
 const PhysicalStoresList = () => {
     const [physicalStoresList, setPhysicalStoresList] = useState<Stores[]>([]);
@@ -38,7 +39,21 @@ const PhysicalStoresList = () => {
             // NorthEast[lat]: -30.63678836122169,
             // SouthWest[lng]: 156.93617212499998,
             // SouthWest[lat]: -50.42868600361074,
-            // ismapView: true,
+            NorthEast: {
+                lng: -167.38023412500002,
+                lat: -30.63678836122169,
+            },
+            // NorthEast: {
+            //     lat: -30.63678836122169,
+            // },
+            SouthWest: {
+                lng: 156.93617212499998,
+                lat: -50.42868600361074,
+            },
+            // SouthWest: {
+            //     lat: -50.42868600361074,
+            // },
+            ismapView: true,
         }
         if (pageNumber > 1) {
             getAllStores(params).then((res) => {
@@ -46,6 +61,7 @@ const PhysicalStoresList = () => {
                 const concatNewData = res.data.items;
                 setTotalPhysicalStoresCount(res.data.total);
                 setPhysicalStoresList(physicalStoresList.concat(concatNewData));
+                dispatch(getAllStoreList(physicalStoresList.concat(concatNewData)));
                 setLoading(false);
             });
         } else {
@@ -53,6 +69,7 @@ const PhysicalStoresList = () => {
                 setLoading(true);
                 setTotalPhysicalStoresCount(res.data.total);
                 setPhysicalStoresList(res.data.items);
+                dispatch(getAllStoreList(res.data.items));
                 setLoading(false);
             });
         }
