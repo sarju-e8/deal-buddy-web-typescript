@@ -20,60 +20,40 @@ const PhysicalStoresList = () => {
     const storeSearchKeyword = useSelector((state: any) => state.searchFilters.searchKeyword);
     const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
     const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
+    const storeNorthEastLat = useSelector((state: any) => state.searchFilters.northEastLat);
+    const storeNorthEastLng = useSelector((state: any) => state.searchFilters.northEastLng);
+    const storeSouthWestLat = useSelector((state: any) => state.searchFilters.southWestLat);
+    const storeSouthWestLng = useSelector((state: any) => state.searchFilters.southWestLng);
 
     const dispatch = useDispatch();
 
-
-    // const url: string = `store/stores?v=1704367569621&take=100&page=1&skip=0&storeMode=In%20Store&searchKeyword=&NorthEast%5Blng%5D=-167.38023412500002&NorthEast%5Blat%5D=-30.63678836122169&SouthWest%5Blng%5D=156.93617212499998&SouthWest%5Blat%5D=-50.42868600361074&ismapView=true&t=1704367569620`;
-
     useEffect(() => {
         var params = {
-            page: pageNumber,
-            take: 20,
+            page: 1,
+            take: 100,
             skip: 0,
             storeMode: "In Store",
             searchKeyword: storeSearchKeyword,
             categoryId: storeCategoryId,
             discountTypeId: storeDiscountTypeId,
-            // NorthEast[lng]: -167.38023412500002,
-            // NorthEast[lat]: -30.63678836122169,
-            // SouthWest[lng]: 156.93617212499998,
-            // SouthWest[lat]: -50.42868600361074,
             NorthEast: {
-                lng: -167.38023412500002,
-                lat: -30.63678836122169,
+                lng: storeNorthEastLng,
+                lat: storeNorthEastLat
             },
-            // NorthEast: {
-            //     lat: -30.63678836122169,
-            // },
             SouthWest: {
-                lng: 156.93617212499998,
-                lat: -50.42868600361074,
+                lng: storeSouthWestLng,
+                lat: storeSouthWestLat
             },
-            // SouthWest: {
-            //     lat: -50.42868600361074,
-            // },
             ismapView: true,
         }
-        if (pageNumber > 1) {
-            getAllStores(params).then((res) => {
-                setLoading(true);
-                const concatNewData = res.data.items;
-                setTotalPhysicalStoresCount(res.data.total);
-                setPhysicalStoresList(physicalStoresList.concat(concatNewData));
-                dispatch(getAllStoreList(physicalStoresList.concat(concatNewData)));
-                setLoading(false);
-            });
-        } else {
-            getAllStores(params).then((res) => {
-                setLoading(true);
-                setTotalPhysicalStoresCount(res.data.total);
-                setPhysicalStoresList(res.data.items);
-                dispatch(getAllStoreList(res.data.items));
-                setLoading(false);
-            });
-        }
-    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
+        getAllStores(params).then((res) => {
+            setLoading(true);
+            setTotalPhysicalStoresCount(res.data.total);
+            setPhysicalStoresList(res.data.items);
+            dispatch(getAllStoreList(res.data.items));
+            setLoading(false);
+        });
+    }, [storeSearchKeyword, storeCategoryId, storeDiscountTypeId, storeNorthEastLng, storeNorthEastLat, storeSouthWestLng, storeSouthWestLat])
 
     return (
         <>
@@ -92,14 +72,6 @@ const PhysicalStoresList = () => {
                         ) : (<Loading />)
                     }
                 </Grid>
-                {
-                    physicalStoresList.length < totalPhysicalStoresCount ?
-                        <Box className="btn-div" sx={{ pt: "40px", textAlign: "center" }}>
-                            <ButtonComp func_call={() => { dispatch(storePageNumber(pageNumber + 1)) }}
-                                name="Load more"></ButtonComp>
-                        </Box>
-                        : <></>
-                }
             </Box>
         </>
     )

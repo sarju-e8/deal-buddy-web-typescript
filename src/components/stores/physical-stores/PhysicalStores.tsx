@@ -2,7 +2,7 @@ import React from 'react'
 import StoreSearchBarAndDropDown from '../../common-components/StoreSearchBarAndDropDown'
 import { Container, Grid } from '@mui/material'
 import PhysicalStoresList from './PhysicalStoresList'
-import MyComponent from './PhysicalStoresMapView'
+import PhysicalStoresMapView from './PhysicalStoresMapView'
 
 const PhysicalStores = () => {
     return (
@@ -15,7 +15,7 @@ const PhysicalStores = () => {
                         <PhysicalStoresList />
                     </Grid>
                     <Grid item lg={8} md={7} sm={12} xs={12}>
-                        <MyComponent />
+                        <PhysicalStoresMapView />
                     </Grid>
                 </Grid>
             </Container>
