@@ -20,10 +20,9 @@ const PhysicalStoresList = () => {
     const storeSearchKeyword = useSelector((state: any) => state.searchFilters.searchKeyword);
     const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
     const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
-    const storeNorthEastLat = useSelector((state: any) => state.searchFilters.northEastLat);
-    const storeNorthEastLng = useSelector((state: any) => state.searchFilters.northEastLng);
-    const storeSouthWestLat = useSelector((state: any) => state.searchFilters.southWestLat);
-    const storeSouthWestLng = useSelector((state: any) => state.searchFilters.southWestLng);
+
+    const northEastCordinates = useSelector((state: any) => state.searchFilters.northEastCoordinates);
+    const southWestCordinates = useSelector((state: any) => state.searchFilters.southWestCoordinates);
 
     const dispatch = useDispatch();
 
@@ -37,12 +36,12 @@ const PhysicalStoresList = () => {
             categoryId: storeCategoryId,
             discountTypeId: storeDiscountTypeId,
             NorthEast: {
-                lng: storeNorthEastLng,
-                lat: storeNorthEastLat
+                lng: northEastCordinates.lng,
+                lat: northEastCordinates.lat
             },
             SouthWest: {
-                lng: storeSouthWestLng,
-                lat: storeSouthWestLat
+                lng: southWestCordinates.lng,
+                lat: southWestCordinates.lat
             },
             ismapView: true,
         }
@@ -53,7 +52,7 @@ const PhysicalStoresList = () => {
             dispatch(getAllStoreList(res.data.items));
             setLoading(false);
         });
-    }, [storeSearchKeyword, storeCategoryId, storeDiscountTypeId, storeNorthEastLng, storeNorthEastLat, storeSouthWestLng, storeSouthWestLat])
+    }, [southWestCordinates, northEastCordinates, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
 
     return (
         <>

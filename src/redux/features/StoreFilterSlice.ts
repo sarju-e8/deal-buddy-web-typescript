@@ -7,10 +7,8 @@ const initialState = {
     categoryId: "",
     categoryName: "",
     storeList: [],
-    northEastLng: -167.38023412500002,
-    northEastLat: -30.63678836122169,
-    southWestLng: 156.93617212499998,
-    southWestLat: -50.42868600361074,
+    northEastCoordinates: {},
+    southWestCoordinates: {},
 }
 
 export const StoreFilterSlice = createSlice({
@@ -35,22 +33,16 @@ export const StoreFilterSlice = createSlice({
         getAllStoreList: (state, action) => {
             state.storeList = action.payload;
         },
-        getNorthEastLat: (state, action) => {
-            state.northEastLat = action.payload;
+        getNorthEastCoordinates: (state, action) => {
+            state.northEastCoordinates = action.payload;
         },
-        getNorthEastLng: (state, action) => {
-            state.northEastLng = action.payload;
-        },
-        getSouthWestLat: (state, action) => {
-            state.southWestLat = action.payload;
-        },
-        getSouthWestLng: (state, action) => {
-            state.southWestLng = action.payload;
-        },
+        getSouthWestCoordinates: (state, action) => {
+            state.southWestCoordinates = action.payload;
+        }
     }
 });
 
 export const { searchValue, discountValue, categoryValue, selectedDiscountType, selectedCategoryName,
-    getAllStoreList, getNorthEastLat, getNorthEastLng, getSouthWestLat, getSouthWestLng, } = StoreFilterSlice.actions;
+    getAllStoreList, getNorthEastCoordinates, getSouthWestCoordinates } = StoreFilterSlice.actions;
 
 export default StoreFilterSlice.reducer;

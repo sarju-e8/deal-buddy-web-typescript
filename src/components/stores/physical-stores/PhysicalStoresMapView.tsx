@@ -8,7 +8,7 @@ import { theme } from '../../../theme/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { getNorthEastLat, getNorthEastLng, getSouthWestLat, getSouthWestLng } from '../../../redux/features/StoreFilterSlice';
+import { getNorthEastCoordinates, getSouthWestCoordinates } from '../../../redux/features/StoreFilterSlice';
 
 const containerStyle = {
     width: '100%',
@@ -30,6 +30,7 @@ let bounds = {
 function PhysicalStoresMapView() {
     const [loading, setLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [zoom, setZoom] = useState(2);
     const markerStoreList = useSelector((state: any) => state.searchFilters.storeList);
     const mapRef = useRef<any>(null);
     const dispatch = useDispatch();
@@ -42,10 +43,8 @@ function PhysicalStoresMapView() {
             let NorthEastCordinates = bounds.getNorthEast().toJSON();
             let SouthWestCordinates = bounds.getSouthWest().toJSON();
 
-            dispatch(getNorthEastLat(NorthEastCordinates.lat));
-            dispatch(getNorthEastLng(NorthEastCordinates.lng));
-            dispatch(getSouthWestLat(SouthWestCordinates.lat));
-            dispatch(getSouthWestLng(SouthWestCordinates.lng));
+            dispatch(getNorthEastCoordinates(NorthEastCordinates));
+            dispatch(getSouthWestCoordinates(SouthWestCordinates));
         }
     }
 
@@ -62,13 +61,14 @@ function PhysicalStoresMapView() {
 
     setTimeout(() => {
         setLoading(false);
+        setZoom(1);
     }, 1000);
 
     return isLoaded ? (
         <GoogleMap
             mapContainerStyle={containerStyle}
             center={mapCenter}
-            zoom={2}
+            zoom={zoom}
             onLoad={(map) => {
                 mapRef.current = map;
                 map.addListener("zoom_changed", handleZoomChanged);
@@ -106,7 +106,7 @@ function PhysicalStoresMapView() {
                         <NavLink to={`/stores/${selectedMarker?.slug}`} style={{ textDecoration: "inherit" }}>
                             <Box sx={{
                                 display: "flex", alignItems: "center",
-                                "&:hover .selected-store-name": { color: theme.palette.text.primary }
+                                "&:hover .selected-store-name": { color: theme.palette.text.primary, transition: ".5s" }
                             }}>
                                 <Box component="img" src={selectedMarker?.imageUrl} sx={{
                                     height: "40px", width: "40px",
