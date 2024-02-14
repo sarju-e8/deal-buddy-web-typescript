@@ -6,7 +6,7 @@ import { user } from "../../assets/image_path";
 const HeaderUserLoginStatus = () => {
     return (
         <>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mr: "-17px" }}>
                 <Button variant="outlined"
                     sx={{
                         borderColor: "white",
