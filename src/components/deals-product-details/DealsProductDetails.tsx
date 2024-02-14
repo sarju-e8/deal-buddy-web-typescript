@@ -23,13 +23,11 @@ const DealsProductDetails = () => {
         dispatch(storePageNumber(1));
         dispatch(shortByValue("date"));
         dispatch(storeProductType(""));
-        // console.log("useCallback")
     }, []);
 
     useEffect(() => {
 
         getIndividualDealsProductDetails(urlDealSlug).then((res) => {
-            console.log("details", res);
             dispatch(individualDealProductDetailData(res.data));
         });
 
