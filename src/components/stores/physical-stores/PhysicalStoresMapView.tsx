@@ -30,12 +30,13 @@ let bounds = {
 function PhysicalStoresMapView() {
     const [loading, setLoading] = useState(true);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [selectedMarkerPosition, setSelectedMarkerPosition] = useState(null);
     const [zoom, setZoom] = useState(2);
     const markerStoreList = useSelector((state: any) => state.searchFilters.storeList);
     const mapRef = useRef<any>(null);
     const dispatch = useDispatch();
 
-    const handleZoomChanged = () => {
+    const handleZoomChanged = useCallback(() => {
         const newMap = mapRef.current;
         if (newMap) {
             const bounds = newMap.getBounds();
@@ -46,12 +47,7 @@ function PhysicalStoresMapView() {
             dispatch(getNorthEastCoordinates(NorthEastCordinates));
             dispatch(getSouthWestCoordinates(SouthWestCordinates));
         }
-    }
-
-    const selectedMarkerData = {
-        lat: selectedMarker?.address?.latitude,
-        lng: selectedMarker?.address?.longitude
-    }
+    }, [])
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -91,7 +87,11 @@ function PhysicalStoresMapView() {
                                 url: "https://www.dealbuddy.co.nz/assets/img/marker.svg",
                                 scaledSize: new window.google.maps.Size(40, 40)
                             }}
-                            onClick={() => setSelectedMarker(item)}
+                            onClick={() => {
+                                setSelectedMarker(item)
+                                setSelectedMarkerPosition(storePosition)
+                            }
+                            }
                         />
                     )
                 })
@@ -100,7 +100,7 @@ function PhysicalStoresMapView() {
                 selectedMarker?.id ? (
                     <InfoWindowF
                         key={selectedMarker?.id}
-                        position={selectedMarkerData}
+                        position={selectedMarkerPosition}
                         onCloseClick={() => setSelectedMarker(null)}
                     >
                         <NavLink to={`/stores/${selectedMarker?.slug}`} style={{ textDecoration: "inherit" }}>

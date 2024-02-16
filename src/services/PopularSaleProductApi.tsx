@@ -3,7 +3,11 @@ import axios from "axios";
 
 const BASE_URL = "https://www.dealbuddy.co.nz/api";
 
-export const getSaleProduct = async (url: string) => {
-    const SaleProductData = await axios.get(`${BASE_URL}/${url}`);
+export const getSaleProduct = async (params: object) => {
+    const SaleProductData = await axios.get(`${BASE_URL}/deal/deals`, {
+        params: {
+            ...params
+        }
+    });
     return SaleProductData;
 }

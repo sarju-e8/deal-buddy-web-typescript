@@ -7,7 +7,7 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { theme } from '../../theme/theme';
-import { storePageNumber } from '../../redux/features/dealModeSlice';
+import { shortByValue, storePageNumber } from '../../redux/features/dealModeSlice';
 import { useDispatch } from 'react-redux';
 import { categoryValue, discountValue, selectedCategoryName, selectedDiscountType } from '../../redux/features/StoreFilterSlice';
 
@@ -68,6 +68,11 @@ const NavbarMenus = () => {
         dispatch(selectedDiscountType(""));
         dispatch(categoryValue(""));
         dispatch(selectedCategoryName(""));
+    }
+
+    const handleDeals = () => {
+        dispatch(shortByValue("date"));
+        dispatch(storePageNumber(1));
     }
     return (
         <>
@@ -130,7 +135,8 @@ const NavbarMenus = () => {
                         <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }}><LocalOfferOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{
                             ...styles.menuNameStyle,
                             fontWeight: location.pathname === "/deals" ? "bold" : 400
-                        }}>Deals</Typography></Link>
+                        }}
+                            onClick={handleDeals}>Deals</Typography></Link>
                     </NavLink>
                     <NavLink style={{ textDecoration: "inherit" }} to={'/physical-stores'}>
                         <Link sx={{ ...styles.navbarMenuStyle, '& : hover': { ...styles.menuNameHoverStyle } }}><LocationOnOutlinedIcon sx={{ ...styles.menuIconStyle }} /><Typography component='span' sx={{

@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { theme } from '../../theme/theme'
 import { useDispatch, useSelector } from 'react-redux'
 import { getIndividualCategoryDetails } from '../../services/CategoryApi'
@@ -11,7 +11,9 @@ const GetTheDealTitle = () => {
     const storePageDescription = useSelector((state: any) => state.categoryNameAndDesc.description);
     const storeIsActive = useSelector((state: any) => state.categoryNameAndDesc.isActive);
 
-    const dealsPageTitle = "Get the finest deals on everything with exciting discounts and coupon codes";
+    const dealsPageTitle = useMemo(() => {
+        return "Get the finest deals on everything with exciting discounts and coupon codes"
+    }, []);
 
     const [pageTitle, setPageTitle] = useState("");
     const [description, setDescription] = useState("");

@@ -1,7 +1,7 @@
 import { Box, InputAdornment, Link, Menu, MenuItem, Stack, TextField, Typography } from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { isWhiteSpaceLike } from 'typescript';
 import { theme } from '../../theme/theme';
 import { getSearchValue } from '../../services/HeaderMainSearchBarApi';
@@ -29,32 +29,28 @@ const HeaderSearchBar = () => {
         setAnchorElSearch(event.currentTarget);
     };
 
-    const handleSearchValueClose = () => {
+    const handleSearchValueClose = useCallback(() => {
         setAnchorElSearch(null);
         // setSearchValue("");
-    };
-
-    // console.log(typeof (searchValue))
+    }, []);
 
     let interval;
 
-    const handleSearchValue = (event: React.KeyboardEvent | any) => {
+    const handleSearchValue = useCallback((event: React.KeyboardEvent | any) => {
         // clearTimeout(interval);
 
         // interval = setTimeout(() => {
         // event.preventDefault();
-        console.log("e", event.target.value)
         setSearchValue(event.target.value);
         setAnchorElSearch(event.currentTarget);
-        console.log(">>>", event.currentTarget)
         // }, 1000);
-    };
+    }, []);
 
-    const handleNavigateSearchDeal = (slug: string) => {
+    const handleNavigateSearchDeal = useCallback((slug: string) => {
         navigate(`/deals/${slug}`);
         setSearchValue("");
         handleSearchValueClose();
-    }
+    }, []);
 
     useEffect(() => {
 

@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { theme } from '../../theme/theme'
 import { useSelector } from 'react-redux';
 import { Deal } from '../../@types/deals';
@@ -13,8 +13,13 @@ const MoreDealsList = () => {
 
     // const storeProductId = productData ? productData?.id : "27e137bc-51e8-45da-be36-a62805f85421";
 
-    const storeProductId = productData?.id;
-    const storeProductType = productData?.productType;
+    const storeProductId = useMemo(() => {
+        return productData?.id
+    }, [productData]);
+
+    const storeProductType = useMemo(() => {
+        return productData?.productType
+    }, [productData]);
 
     const urlParams = useParams();
     const { urlDealSlug } = urlParams;
@@ -22,11 +27,9 @@ const MoreDealsList = () => {
     const [moreDealList, setMoreDealList] = useState<Deal[]>([]);
 
     useEffect(() => {
-        console.log("storeid", storeProductId)
         var params = {
             productId: storeProductId,
             limit: 4,
-
         }
 
         if (storeProductId) {
@@ -36,7 +39,7 @@ const MoreDealsList = () => {
         }
 
     }, [storeProductId])
-    console.log("moredee ", moreDealList)
+
     return (
         <>
             <Box className="more-deal" sx={{ mt: "20px" }}>
@@ -47,7 +50,6 @@ const MoreDealsList = () => {
                     {
                         moreDealList.map((item) => {
                             const { NZWide, category, clicks, endDate, id, locations, name, productImages, productModes, productType, stores, couponCode, slug } = item;
-                            console.log("productType", productType)
                             return (
                                 storeProductType === "sale" ?
                                     (<PopularSalesCard key={id} name={name} clicks={clicks} category={category} productImages={productImages} id={''} stores={stores} locations={locations} NZWide={NZWide} endDate={endDate} productType={productType} productModes={productModes} slug={slug} />)

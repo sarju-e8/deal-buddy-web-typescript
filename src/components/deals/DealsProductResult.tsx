@@ -28,7 +28,7 @@ const style = {
 }
 
 
-const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
+const DealsProductResult = () => {
     const [dealsList, setDealsList] = useState<Deal[]>([]);
     const [allItamCount, setAllItemCount] = useState(0);
     const [salesCount, setSalesCount] = useState(0);
@@ -36,7 +36,6 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
     const [totalDealsCount, setTotalDealsCount] = useState(0);
 
     // const [productTypeValue, setProductTypeValue] = React.useState('all');
-    const [sortBy, setSortBy] = useState(namesSortBy)
     const [storeDealModes, setStoreDealModes] = useState<DealMode[]>()
     const [storeDiscountTypes, setStoreDiscountType] = useState([])
     const [storeShortBy, setStoreShortBy] = useState();
@@ -370,7 +369,7 @@ const DealsProductResult = ({ namesSortBy, namesDealModes }: any) => {
 
                 {
                     dealsList.length < totalDealsCount ? (<Box className="btn-div" sx={{ pt: "40px", textAlign: "center", m: "auto" }}>
-                        <ButtonComp func_call={() => {
+                        <ButtonComp customFunctionCall={() => {
                             dispatch(storePageNumber(pageNumber + 1))
                             // alert(dealsList.length)
                         }} name="Load more"></ButtonComp>

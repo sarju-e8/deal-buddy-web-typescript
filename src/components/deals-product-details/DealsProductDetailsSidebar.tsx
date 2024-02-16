@@ -1,5 +1,5 @@
 import { Box, Button, Link, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { theme } from '../../theme/theme'
 import ButtonComp from '../common-components/Button'
 import { TiSocialFacebook } from "react-icons/ti";
@@ -25,10 +25,11 @@ const DealsProductDetailsSidebar = () => {
     const SaleImage = "https://www.dealbuddy.co.nz/assets/img/sale.png?v=1";
     const CouponImage = "https://www.dealbuddy.co.nz/assets/img/coupon.png?v=1";
 
-    let timeLeft = dealProductStoreDetails?.remainingDuration;
-    // console.log(dealProductStoreDetails)
+    let timeLeft = useMemo(() => {
+        return dealProductStoreDetails?.remainingDuration
+    }, [dealProductStoreDetails]);
 
-    const secondsToDhms = (timeLeft) => {
+    const secondsToDhms = useCallback((timeLeft) => {
         timeLeft = Number(timeLeft)
         var daysLeft = Math.floor(timeLeft / (3600 * 24))
         var hourLeft = Math.floor((timeLeft % (3600 * 24)) / 3600)
@@ -47,7 +48,7 @@ const DealsProductDetailsSidebar = () => {
 
         // return dDisplay + hDisplay + mDisplay + sDisplay
 
-    }
+    }, []);
 
     useEffect(() => {
         // console.log(secondsToDhms(timeLeft));

@@ -1,12 +1,12 @@
 import { Box, Container, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { theme } from '../../theme/theme'
 import { Cost } from '../../@types/Cost';
 
 const HowMuchCost = () => {
 
-    const costItemData: Cost[] = [
+    const costItemData: Cost[] = useMemo(() => [
         {
             id: 1,
             itemName: "Basic Dashboard"
@@ -27,7 +27,7 @@ const HowMuchCost = () => {
             id: 5,
             itemName: "Store listing"
         },
-    ]
+    ], []);
 
     const CostItemList = ({ itemName }: Cost) => {
         return (
@@ -62,7 +62,7 @@ const HowMuchCost = () => {
 
             <Box className="row">
                 <Grid container sx={{ display: "flex", justifyContent: "center", margin: "auto 0" }}>
-                    <Grid item lg={3} md={2} sx={{ maxWidth:"20%!important" }}>
+                    <Grid item lg={3} md={2} sx={{ maxWidth: "20%!important" }}>
                         <Box className="cost-card"
                             sx={{
                                 height: "auto", textAlign: "center", background: theme.palette.background.paper,

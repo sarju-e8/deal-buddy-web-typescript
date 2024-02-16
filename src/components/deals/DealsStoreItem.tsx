@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getIndividualStoreDetails } from '../../services/AllStoreApi';
@@ -57,11 +57,9 @@ const DealsStoreItem = () => {
         var individualStoreParams = {
             isActive: storeIsActive,
         }
-        // console.log("url store slug", urlStoreSlug);
         if (urlStoreSlug) {
             getIndividualStoreDetails(urlStoreSlug, individualStoreParams).then((res) => {
                 dispatch(storeIsActiveValueChange(true));
-                // console.log("Deals Store item", res)
                 setDealsStoreDetail(res.data);
 
                 // setStoreName(res.data.name);
@@ -145,7 +143,7 @@ const DealsStoreItem = () => {
     //     )
     // }
 
-    const navigateAddress = (event) => {
+    const navigateAddress = useCallback((event) => {
         event.stopPropagation();
         event.preventDefault();
         let addressParams = "/?q=" + encodeURIComponent(dealsStoreDetail?.address?.fillAddress)
@@ -153,7 +151,7 @@ const DealsStoreItem = () => {
             addressParams = '?q=' + dealsStoreDetail?.address?.latitude + ',' + dealsStoreDetail?.address?.longitude;
         }
         window.open('https://maps.google.com' + addressParams, '_blank')
-    }
+    }, []);
 
     return (
         <>

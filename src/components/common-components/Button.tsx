@@ -3,13 +3,12 @@ import React from 'react'
 import { theme } from '../../theme/theme'
 import { Buttons } from '../../@types/Buttons'
 
-const ButtonComp = ({ name, sx, customFontSize,func_call }: Buttons) => {
-    // console.log("buttonTheme", customFontSize)
+const ButtonComp = ({ name, sx, customFontSize, customFunctionCall }: Buttons) => {
     return (
         <>
-            <Button 
-            onClick={func_call}
-            className='view-btn'
+            <Button
+                onClick={customFunctionCall}
+                className='view-btn'
                 sx={{
                     ...sx,
                     borderRadius: "5px", border: "none", color: theme.palette.common.white, padding: "10px 24px", display: "inline-block", background: theme.buttonGradient.greenGradient, transition: ".5s", boxShadow: "unset",
@@ -25,7 +24,7 @@ const ButtonComp = ({ name, sx, customFontSize,func_call }: Buttons) => {
                     fontWeight: theme.typography.button.fontWeight, textTransform: "capitalize"
                 }}>
                     {name}</Typography>
-            </Button >
+            </Button>
         </>
     )
 }

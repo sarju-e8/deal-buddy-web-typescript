@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { theme } from '../../theme/theme'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation, Link } from 'react-router-dom'
@@ -21,7 +21,9 @@ interface Tags {
 
 const DealsProductDescription = () => {
     const descriptionDetails = useSelector((state: any) => state.DealsProductDetails.individualDealProductDetail);
-    const tagsData: Tags[] = descriptionDetails.tags;
+    const tagsData: Tags[] = useMemo(() => {
+        return descriptionDetails.tags;
+    }, [descriptionDetails]);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

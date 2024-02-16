@@ -1,5 +1,5 @@
 import { Box, Link, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { theme } from '../../theme/theme'
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
@@ -12,7 +12,9 @@ import { storePageNumber } from '../../redux/features/dealModeSlice';
 const DealsProductStoreDetails = () => {
 
     const storeDetails = useSelector((state: any) => state.DealsProductDetails.individualDealProductDetail);
-    const storeData = storeDetails?.stores?.[0];
+    const storeData = useMemo(() => {
+        return storeDetails?.stores?.[0];
+    }, [storeDetails]);
 
     const [readMore, setReadMore] = useState(false);
 

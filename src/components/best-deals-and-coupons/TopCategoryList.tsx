@@ -60,27 +60,21 @@ const TopCategoryList: React.FC = () => {
 
     const [apiData, setApiData] = useState<Category[]>([]);
 
-    const url: string = 'category??v=1702558604710&where%5Bstatus%5D=active&order%5BorderBy%5D=ASC&take=6';
-
     useEffect(() => {
-        // fetch("https://www.dealbuddy.co.nz/api/category?v=1702558604710&where%5Bstatus%5D=active&order%5BorderBy%5D=ASC&take=6"
-        // ).then(
-        //     response => {
-        //         return response.json();
-        //     }
-        // ).then(
-        //     data => {
-        //         console.log("data", data);
-        //         setApiData(data.items);
-        //     }
-        // )
+        const params = {
+            where: {
+                status: "active"
+            },
+            order: {
+                orderBy: "ASC"
+            },
+            take: 6,
+        }
 
-
-        getCategory(url).then((res) => {
+        getCategory(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])
-    // console.log("apidata", apiData);
     return (
         <>
             <Container maxWidth="lg">
@@ -88,7 +82,6 @@ const TopCategoryList: React.FC = () => {
                     <Typography className='category-main-title' sx={{ ...theme.typography.h5, marginBottom: "3px" }}>Top Categories</Typography>
                     {
                         apiData && apiData.map((item) => {
-                            // console.log(item);
                             const { id, name, imageUrl } = item;
                             return (
                                 <CategoryList key={id} name={name} image={imageUrl} />

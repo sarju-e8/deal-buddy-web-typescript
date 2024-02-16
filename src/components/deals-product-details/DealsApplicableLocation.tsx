@@ -1,12 +1,14 @@
 import { Box, Link, Typography } from '@mui/material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { theme } from '../../theme/theme'
 import { useSelector } from 'react-redux';
 
 const DealsApplicableLocation = () => {
     const locationDetails = useSelector((state: any) => state.DealsProductDetails.individualDealProductDetail);
-    const locationData: [] = locationDetails.locations;
-    console.log("location", locationData);
+    const locationData = useMemo(() => {
+        return locationDetails.locations;
+    }, [locationDetails]);
+
     return (
         <>
             <Box className="product-store-address-container" sx={{ pl: "85px", width: "85%" }}>
@@ -35,16 +37,14 @@ const DealsApplicableLocation = () => {
                                 {/* {locationData?.[0]?.location} */}
                                 {
                                     locationDetails?.NZWide ? `NZ Wide` :
-                                        
-                                            locationData && locationData?.map((item) => {
-                                                const { location } = item;
 
-                                                return (
-                                                    location
-                                                )
-                                            })
-                                
-                                
+                                        locationData && locationData?.map((item) => {
+                                            const { location } = item;
+
+                                            return (
+                                                location
+                                            )
+                                        })
                                 }
                                 {/* {
                                     locationData && locationData?.map((item) => {

@@ -51,7 +51,6 @@ const AllStoresList: React.FC = () => {
         } else {
             getAllStores(params).then((res) => {
                 // allStoresList.push(res.data.items);
-                // console.log(res.data.items);
                 // const nextPageData = allStoresList;
                 setLoading(true);
                 setTotalStoresCount(res.data.total);
@@ -60,7 +59,6 @@ const AllStoresList: React.FC = () => {
             });
         }
     }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
-    // console.log("allStoreApipageNumber", pageNumber);
 
     return (
         <>
@@ -89,7 +87,7 @@ const AllStoresList: React.FC = () => {
                     {
                         allStoresList.length < totalStoresCount ?
                             <Box className="btn-div" sx={{ pt: "40px", textAlign: "center" }}>
-                                <ButtonComp func_call={() => { dispatch(storePageNumber(pageNumber + 1)) }}
+                                <ButtonComp customFunctionCall={() => { dispatch(storePageNumber(pageNumber + 1)) }}
                                     name="Load more"></ButtonComp>
                             </Box>
                             : <></>

@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { theme } from '../../theme/theme'
 import { businessBriefcaseIcon, dealsCouponIcon, storeIcon } from '../../assets/image_path'
 import { BusinessWorks } from '../../@types/BusinessWorks'
@@ -13,7 +13,7 @@ const style = {
 
 const BusinessHowItWorks = () => {
 
-    const businessWorksData: BusinessWorks[] = [
+    const businessWorksData: BusinessWorks[] = useMemo(() => [
         {
             id: 1,
             name: "Sign up and add your business",
@@ -35,7 +35,7 @@ const BusinessHowItWorks = () => {
             icon: dealsCouponIcon,
             stepCount: "Step 3"
         }
-    ]
+    ], []);
 
     const BusinessWorkCards = ({ id, desc, icon, name, stepCount }: BusinessWorks) => {
         return (

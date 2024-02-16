@@ -1,5 +1,5 @@
 import { Box, Grid, Link, Typography } from '@mui/material'
-import React from 'react'
+import React, { useCallback } from 'react'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
@@ -14,16 +14,15 @@ const StoreCards = ({ activeDealsCount, address, imageUrl, name, storeModes, slu
 
     const dispatch = useDispatch();
 
-    const handleStoreName = (slug: string) => {
-        // console.log("store slug", slug);
+    const handleStoreName = useCallback((slug: string) => {
         dispatch(storePageNumber(1));
         dispatch(discountValue(""));
         dispatch(selectedDiscountType(""));
         dispatch(categoryValue(""));
         dispatch(selectedCategoryName(""));
-    }
+    }, []);
 
-    const navigateAddress = (event) => {
+    const navigateAddress = useCallback((event) => {
         event.stopPropagation();
         event.preventDefault();
         let addressParams = "/?q=" + encodeURIComponent(address?.fillAddress)
@@ -31,7 +30,7 @@ const StoreCards = ({ activeDealsCount, address, imageUrl, name, storeModes, slu
             addressParams = '?q=' + address?.latitude + ',' + address?.longitude;
         }
         window.open('https://maps.google.com' + addressParams, '_blank')
-    }
+    }, []);
 
     return (
         <>
