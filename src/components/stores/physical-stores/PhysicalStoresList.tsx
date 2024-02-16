@@ -9,6 +9,7 @@ import ButtonComp from '../../common-components/Button';
 import { storePageNumber } from '../../../redux/features/dealModeSlice';
 import NoStoreAvailabel from '../../common-components/NoStoreAvailabel';
 import Loading from '../../common-components/Loading';
+import { getAllStoreList } from '../../../redux/features/StoreFilterSlice';
 
 const PhysicalStoresList = () => {
     const [physicalStoresList, setPhysicalStoresList] = useState<Stores[]>([]);
@@ -20,43 +21,38 @@ const PhysicalStoresList = () => {
     const storeCategoryId = useSelector((state: any) => state.searchFilters.categoryId);
     const storeDiscountTypeId = useSelector((state: any) => state.searchFilters.discountTypeId);
 
+    const northEastCordinates = useSelector((state: any) => state.searchFilters.northEastCoordinates);
+    const southWestCordinates = useSelector((state: any) => state.searchFilters.southWestCoordinates);
+
     const dispatch = useDispatch();
-
-
-    // const url: string = `store/stores?v=1704367569621&take=100&page=1&skip=0&storeMode=In%20Store&searchKeyword=&NorthEast%5Blng%5D=-167.38023412500002&NorthEast%5Blat%5D=-30.63678836122169&SouthWest%5Blng%5D=156.93617212499998&SouthWest%5Blat%5D=-50.42868600361074&ismapView=true&t=1704367569620`;
 
     useEffect(() => {
         var params = {
-            page: pageNumber,
-            take: 20,
+            page: 1,
+            take: 100,
             skip: 0,
             storeMode: "In Store",
             searchKeyword: storeSearchKeyword,
             categoryId: storeCategoryId,
             discountTypeId: storeDiscountTypeId,
-            // NorthEast[lng]: -167.38023412500002,
-            // NorthEast[lat]: -30.63678836122169,
-            // SouthWest[lng]: 156.93617212499998,
-            // SouthWest[lat]: -50.42868600361074,
-            // ismapView: true,
+            NorthEast: {
+                lng: northEastCordinates.lng,
+                lat: northEastCordinates.lat
+            },
+            SouthWest: {
+                lng: southWestCordinates.lng,
+                lat: southWestCordinates.lat
+            },
+            ismapView: true,
         }
-        if (pageNumber > 1) {
-            getAllStores(params).then((res) => {
-                setLoading(true);
-                const concatNewData = res.data.items;
-                setTotalPhysicalStoresCount(res.data.total);
-                setPhysicalStoresList(physicalStoresList.concat(concatNewData));
-                setLoading(false);
-            });
-        } else {
-            getAllStores(params).then((res) => {
-                setLoading(true);
-                setTotalPhysicalStoresCount(res.data.total);
-                setPhysicalStoresList(res.data.items);
-                setLoading(false);
-            });
-        }
-    }, [pageNumber, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
+        getAllStores(params).then((res) => {
+            setLoading(true);
+            setTotalPhysicalStoresCount(res.data.total);
+            setPhysicalStoresList(res.data.items);
+            dispatch(getAllStoreList(res.data.items));
+            setLoading(false);
+        });
+    }, [southWestCordinates, northEastCordinates, storeSearchKeyword, storeCategoryId, storeDiscountTypeId])
 
     return (
         <>
@@ -75,14 +71,6 @@ const PhysicalStoresList = () => {
                         ) : (<Loading />)
                     }
                 </Grid>
-                {
-                    physicalStoresList.length < totalPhysicalStoresCount ?
-                        <Box className="btn-div" sx={{ pt: "40px", textAlign: "center" }}>
-                            <ButtonComp func_call={() => { dispatch(storePageNumber(pageNumber + 1)) }}
-                                name="Load more"></ButtonComp>
-                        </Box>
-                        : <></>
-                }
             </Box>
         </>
     )

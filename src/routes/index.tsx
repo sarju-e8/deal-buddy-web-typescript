@@ -11,6 +11,18 @@ import PhysicalStores from "../components/stores/physical-stores/PhysicalStores"
 import MainDeals from "../components/deals/MainDeals";
 import { useSelector } from "react-redux";
 import DealsProductDetails from "../components/deals-product-details/DealsProductDetails";
+import { Suspense, lazy } from "react";
+
+const LazyHome = lazy(() => import('../components/home/Home'));
+const LazyCategories = lazy(() => import("../components/categories/Categories"));
+const LazyMainDeals = lazy(() => import("../components/deals/MainDeals"));
+const LazyAllStores = lazy(() => import("../components/stores/all-stores/AllStores"));
+const LazyOnlineStores = lazy(() => import("../components/stores/online-stores/OnlineStores"));
+const LazyPhysicalStores = lazy(() => import("../components/stores/physical-stores/PhysicalStores"));
+const LazyHowItWorks = lazy(() => import("../components/how-it-works/HowItWorks"));
+const LazyListYourBusiness = lazy(() => import("../components/list-your-business/ListYourBusiness"));
+const LazyDealsProductDetails = lazy(() => import("../components/deals-product-details/DealsProductDetails"));
+const LazyNotFound = lazy(() => import("../components/not-found/NotFound"));
 
 export default function Router() {
 
@@ -19,7 +31,11 @@ export default function Router() {
     return useRoutes([
         {
             path: "/",
-            element: <Home />,
+            element:
+                <Suspense fallback="Loading...">
+                    <LazyHome />
+                </Suspense>
+            ,
             children: [
                 // { path: "categories", element: <Categories /> },
             ],
@@ -30,36 +46,81 @@ export default function Router() {
             // element: <Categories />,
             children: [
                 // { element: <Navigate to={`categories/:urlSlug`} replace />, index: true, },
-                { element: <Categories />, index: true },
-                { path: `:urlSlug`, element: <MainDeals />, }
+                {
+                    element:
+                        <Suspense fallback="Loading...">
+                            <LazyCategories />
+                        </Suspense>,
+                    index: true
+                },
+                {
+                    path: `:urlSlug`, element:
+                        <Suspense fallback="Loading...">
+                            <LazyMainDeals />
+                        </Suspense>,
+                }
             ]
 
         },
         {
             path: "/stores",
             children: [
-                { element: <AllStores />, index: true },
-                { path: `:urlStoreSlug`, element: <MainDeals />, }
+                {
+                    element:
+                        <Suspense fallback="Loading...">
+                            <LazyAllStores />
+                        </Suspense>,
+                    index: true
+                },
+                {
+                    path: `:urlStoreSlug`, element:
+                        <Suspense fallback="Loading...">
+                            <LazyMainDeals />
+                        </Suspense>,
+                }
             ]
         },
         {
-            path: "/online-stores", element: <OnlineStores />
+            path: "/online-stores", element:
+                <Suspense fallback="Loading...">
+                    <LazyOnlineStores />
+                </Suspense>
         },
         {
-            path: "/physical-stores", element: <PhysicalStores />
+            path: "/physical-stores", element:
+                <Suspense fallback="Loading...">
+                    <LazyPhysicalStores />
+                </Suspense>
         },
         {
             path: "/deals",
             children: [
-                { element: <MainDeals />, index: true },
-                { path: ":urlDealSlug", element: <DealsProductDetails /> },
+                {
+                    element:
+                        <Suspense fallback="Loading...">
+                            <LazyMainDeals />
+                        </Suspense>,
+                    index: true
+                },
+                {
+                    path: ":urlDealSlug", element:
+                        <Suspense fallback="Loading...">
+                            <LazyDealsProductDetails />
+                        </Suspense>
+                },
             ]
         },
         {
             path: "/search",
             children: [
-                { element: <MainDeals />, index: true },
-                // { path: ":urlTagName", element: <MainDeals /> },
+                {
+                    element:
+                        <Suspense fallback="Loading...">
+                            <LazyMainDeals />
+                        </Suspense>,
+                    index: true
+                },
+                // {path: ":urlTagName", element: <MainDeals /> },
             ]
         },
         // {
@@ -67,10 +128,16 @@ export default function Router() {
         //     path: "/test-product-details", element: <DealsProductDetails />
         // },
         {
-            path: "/how-it-works", element: <HowItWorks />
+            path: "/how-it-works", element:
+                <Suspense fallback="Loading...">
+                    <LazyHowItWorks />
+                </Suspense>
         },
         {
-            path: "/list-your-business", element: <ListYourBusiness />
+            path: "/list-your-business", element:
+                <Suspense fallback="Loading...">
+                    <LazyListYourBusiness />
+                </Suspense>
         },
         {
             path: "/contact-us", element: <></>
@@ -94,6 +161,11 @@ export default function Router() {
             path: "/privacy-policy", element: <></>
         },
         { path: "*", element: <Navigate to="/404" /> },
-        { path: "/404", element: <NotFound /> },
+        {
+            path: "/404", element:
+                <Suspense fallback="Loading...">
+                    <LazyNotFound />
+                </Suspense>
+        },
     ])
 }

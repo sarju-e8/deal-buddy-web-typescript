@@ -53,7 +53,6 @@ const OnlineStores = () => {
         } else {
             getAllStores(params).then((res) => {
                 // onlineStoresList.push(res.data.items);
-                // // console.log(res.data.items);
                 // const nextPageData = onlineStoresList;
                 setLoading(true);
                 setTotalOnlineStoresCount(res.data.total);
@@ -85,7 +84,7 @@ const OnlineStores = () => {
                     {
                         onlineStoresList.length < totalOnlineStoresCount ?
                             <Box className="btn-div" sx={{ pt: "40px", textAlign: "center" }}>
-                                <ButtonComp func_call={() => { dispatch(storePageNumber(pageNumber + 1)) }}
+                                <ButtonComp customFunctionCall={() => { dispatch(storePageNumber(pageNumber + 1)) }}
                                     name="Load more"></ButtonComp>
                             </Box>
                             : <></>

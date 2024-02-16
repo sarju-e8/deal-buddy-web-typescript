@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Link, Typography } from '@mui/material'
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { ClickIcon } from '../../assets/image_path'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -23,15 +23,15 @@ import { useNavigate } from 'react-router-dom';
 </style> */}
 const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, dealsMdSize = 4, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate, slug }: Deal) => {
 
-    const expiresInDaysCount = calculateDays(endDate);
+    const expiresInDaysCount = useMemo(() => {
+        return calculateDays(endDate);
+    }, []);
 
     const navigate = useNavigate();
 
-    const navigateToViewDetail = (slug) => {
-        // console.log("slug", slug)
-
+    const navigateToViewDetail = useCallback((slug) => {
         navigate(`/deals/${slug}`);
-    }
+    }, []);
 
     return (
         <>
@@ -150,7 +150,7 @@ const PopularCouponsCard = ({ circleBottomClass = "270px", dealsLgSize = 3, deal
                                     Show Code</Typography>
                             </Button> */}
                             <ButtonComp name="Show Code" sx={{ marginTop: "20px" }}
-                                func_call={() => navigateToViewDetail(slug)}></ButtonComp>
+                                customFunctionCall={() => navigateToViewDetail(slug)}></ButtonComp>
                         </Box>
                     </Box>
 

@@ -1,5 +1,5 @@
 import { Box, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { theme } from '../../theme/theme'
 import { getDealsMode, getDiscountType } from '../../services/DealsAndCouponsApi'
 import { Deal } from '../../@types/deals'
@@ -24,30 +24,31 @@ const style = {
 
 
 
-const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
-    const shortByData = [
-        {
-            id: 0,
-            name: "Clicks",
-            value: "clicks",
-        },
-        {
-            id: 1,
-            name: "Date",
-            value: "date",
-        },
-        {
-            id: 2,
-            name: "Title",
-            value: "title",
-        },
-        {
-            id: 3,
-            name: "Views",
-            value: "views",
-        },
-        // "Clicks", "Date", "Title", "Views"
-    ];
+const DealsFilter = () => {
+    const shortByData = useMemo(() =>
+        [
+            {
+                id: 0,
+                name: "Clicks",
+                value: "clicks",
+            },
+            {
+                id: 1,
+                name: "Date",
+                value: "date",
+            },
+            {
+                id: 2,
+                name: "Title",
+                value: "title",
+            },
+            {
+                id: 3,
+                name: "Views",
+                value: "views",
+            },
+            // "Clicks", "Date", "Title", "Views"
+        ], []);
 
     const [filterApiSortByClicksData, setFilterApiSortByClicksData] = useState<Deal[]>([]);
     let [pageNumber, setPageNumber] = useState<number>(1);
@@ -64,7 +65,7 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
     const checkedValues = useSelector((state: any) => state.dealModeOptions.dealModes);
     // const isChecked = useSelector((state: any) => state.dealModeOptions.isChecked);
 
-    const handleCheckboxChange = (event) => {
+    const handleCheckboxChange = useCallback((event) => {
         const value = event.target.value;
         // console.log("event change", event);
         if (event.target.checked) {
@@ -74,13 +75,13 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
             dispatch(removeCheckboxValue(value));
             dispatch(storePageNumber(1));
         }
-    };
+    }, []);
 
     // const dispatchDiscountType = useDispatch();
     const discountCheckedValues = useSelector((state: any) => state.dealModeOptions.discountTypes);
 
 
-    const handleDiscountTypeChkBox = (event) => {
+    const handleDiscountTypeChkBox = useCallback((event) => {
         const discountChkBoxValue = event.target.value;
         if (event.target.checked) {
             dispatch(addDiscountTypeChkValue(discountChkBoxValue));
@@ -89,13 +90,13 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
             dispatch(removeDiscountTypeChkValue(discountChkBoxValue));
             dispatch(storePageNumber(1));
         }
-    };
+    }, []);
 
-    const handleShortByData = (event) => {
+    const handleShortByData = useCallback((event) => {
         const radioButtonValue = event.target.value;
         dispatch(shortByValue(radioButtonValue));
         dispatch(storePageNumber(1));
-    }
+    }, []);
 
     const dealsHandleClick = () => {
         setPageNumber(pageNumber += 1);
@@ -129,7 +130,7 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
         // } else {
         // console.log("sort by before: ", sortBy);
         // console.log("sortbyy", sortBy);
-        setNamesSortBy(sortBy);
+        // setNamesSortBy(sortBy);
         // console.log("sort by after: ", sortBy);
         // }
     }
@@ -137,7 +138,7 @@ const DealsFilter = ({ setNamesSortBy, setNamesDealModes }: any) => {
     const sortByDealModesData = (dealMode: string) => {
         // console.log(">>>>", dealMode);
 
-        setNamesDealModes(dealMode);
+        // setNamesDealModes(dealMode);
     }
 
     useEffect(() => {

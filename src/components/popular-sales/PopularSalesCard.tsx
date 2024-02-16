@@ -9,6 +9,7 @@ import { calculateDays } from '../../helperFunctions/CalculateDays';
 import { theme } from '../../theme/theme';
 import ButtonComp from '../common-components/Button';
 import { useNavigate } from 'react-router-dom';
+import { useCallback, useMemo } from 'react';
 
 
 export interface SalesProductCard {
@@ -30,15 +31,15 @@ const style = {
 const PopularSalesCard = ({ dealsLgSize = 3, name, productImages, clicks, category, stores, locations, productType, productModes, NZWide, endDate, slug }: Deal) => {
 
 
-    const expiresInDaysCount = calculateDays(endDate);
+    const expiresInDaysCount = useMemo(() => {
+        return calculateDays(endDate);
+    }, []);
 
     const navigate = useNavigate();
 
-    const navigateToViewDetail = (slug) => {
-        // console.log("slug", slug)
-
+    const navigateToViewDetail = useCallback((slug) => {
         navigate(`/deals/${slug}`);
-    }
+    }, []);
 
     return (
         <>
@@ -120,7 +121,7 @@ const PopularSalesCard = ({ dealsLgSize = 3, name, productImages, clicks, catego
                         </Button> */}
 
                         <ButtonComp name="View Deal" sx={{ marginTop: "20px" }}
-                            func_call={() => navigateToViewDetail(slug)}
+                            customFunctionCall={() => navigateToViewDetail(slug)}
                         ></ButtonComp>
                     </Box>
                 </Box>

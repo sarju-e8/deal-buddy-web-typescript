@@ -2,7 +2,7 @@ import { Box, Container, Grid, Link, List, ListItem, Typography } from '@mui/mat
 import { footerLogo, footerLogoIcon, facebookIcon, instaIcon, appStore, googlePlayStore } from '../../assets/image_path';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { FooterLinks } from '../../@types/FooterLinks';
 import { theme } from '../../theme/theme';
 import { NavLink } from 'react-router-dom';
@@ -31,7 +31,7 @@ const style = {
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
 
-    const quickLinksData: FooterLinks[] = [
+    const quickLinksData: FooterLinks[] = useMemo(() => [
         {
             id: 1,
             linkName: "Home",
@@ -57,9 +57,9 @@ const Footer: React.FC = () => {
             linkName: "Blogs",
             linkPath: "/blogs",
         },
-    ]
+    ], []);
 
-    const generalLinksData: FooterLinks[] = [
+    const generalLinksData: FooterLinks[] = useMemo(() => [
         {
             id: 1,
             linkName: "Categories",
@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
             linkName: "NZ Price Comparision Site",
             linkPath: "/nz-price-comparison-sites",
         },
-    ]
+    ], []);
 
     const FooterCommonLinks = ({ linkName, linkPath }: FooterLinks) => {
         return (
@@ -168,7 +168,6 @@ const Footer: React.FC = () => {
                                                         {
                                                             quickLinksData.map((item) => {
                                                                 const { id, linkName, linkPath } = item;
-                                                                // console.log("qldId", id)
                                                                 return <FooterCommonLinks key={id} linkPath={linkPath} linkName={linkName} />
                                                             })
                                                         }

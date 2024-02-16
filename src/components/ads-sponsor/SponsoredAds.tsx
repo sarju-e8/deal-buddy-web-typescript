@@ -8,15 +8,15 @@ import { theme } from '../../theme/theme';
 const SponsoredAds: React.FC = () => {
     const [apiData, setApiData] = useState<SponsorAds[]>([]);
 
-    const url: string = "sponsored-ads?v=1703163820228&take=12";
-
     useEffect(() => {
-        getSponsorAds(url).then((res) => {
+        const params = {
+            take: 12,
+        }
+
+        getSponsorAds(params).then((res) => {
             setApiData(res.data.items)
         });
     }, [])
-    // console.log("sponsor-ads", apiData);
-
 
     return (
         <>

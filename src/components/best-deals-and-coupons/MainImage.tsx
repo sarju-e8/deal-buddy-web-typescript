@@ -34,6 +34,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import { getSliderImage } from '../../services/SliderImageApi';
 import { Slider } from '../../@types/Slider';
 import { Link } from '@mui/material';
+import { useCallback } from 'react';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -78,20 +79,18 @@ function SwipeableTextMobileStepper() {
       setApiData(res.data.items);
     });
   }, [])
-  // console.log("sliderApi", apiData);
 
-
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  }, []);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  }, []);
 
-  const handleStepChange = (step: number) => {
+  const handleStepChange = useCallback((step: number) => {
     setActiveStep(step);
-  };
+  }, []);
 
   return (
     <Box className="main-slider-div" sx={{ maxWidth: "100%", height: "100%", flexGrow: 1 }}>
@@ -117,7 +116,6 @@ function SwipeableTextMobileStepper() {
       >
         {
           apiData && apiData.map((item, index) => {
-            // console.log("imgItem", item, index);
             return <>
               <div key={item.id}>
                 {Math.abs(activeStep - index) <= 2 ? (

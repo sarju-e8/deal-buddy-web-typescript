@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useCallback, useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -34,9 +34,12 @@ const CategorySlider = () => {
 
     useEffect(() => {
         var params = {
-            where: "",
-            status: "active",
-            orderBy: "ASC",
+            where: {
+                status: "active"
+            },
+            order: {
+                orderBy: "ASC"
+            },
         }
         // if (!apiData) {
         getAllCategoryList(params).then((res) => {
@@ -79,14 +82,13 @@ const CategorySlider = () => {
 
     // }, [storeSlug])
 
-    const handleCategoryName = (slug: string) => {
-        console.log(">>>>", slug);
+    const handleCategoryName = useCallback((slug: string) => {
         // dispatch(storeCategorySlug(slug));
         dispatch(storePageNumber(1));
         // setSelected(slug);
         // dispatch(storeIsActiveValueChange(true));
         // alert("slug alert" + slug)
-    }
+    }, []);
 
     // const settings = {
     //     className: "center",

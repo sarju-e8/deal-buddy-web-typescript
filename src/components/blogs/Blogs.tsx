@@ -7,14 +7,19 @@ import BlogCards from './BlogCards';
 const Blogs: React.FC = () => {
     const [apiData, setApiData] = useState<IBlogs[]>([]);
 
-    const url: string = "blog?v=1701406123153&where%5Bstatus%5D=active&where%5BisShowOnHome%5D=true&take=999";
-
     useEffect(() => {
-        getBlogs(url).then((res) => {
+        const params = {
+            where: {
+                status: "active",
+                isShowOnHome: true,
+            },
+            take: 999,
+        }
+
+        getBlogs(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])
-    // console.log("blogs", apiData);
 
     return (
         <>

@@ -7,14 +7,16 @@ import { Stores } from '../../@types/Stores';
 const PopularStores: React.FC = () => {
     const [apiData, setApiData] = useState<Stores[]>([]);
 
-    const url: string = "store/stores?v=1703249863368&take=999&isPopular=true&t=1703249863368";
-
     useEffect(() => {
-        getStores(url).then((res) => {
+        const params = {
+            take: 999,
+            isPopular: true,
+        }
+
+        getStores(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])
-    // console.log("stores", apiData);
 
     return (
         <>

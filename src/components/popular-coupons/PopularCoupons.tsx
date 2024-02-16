@@ -7,15 +7,20 @@ import { Deal } from '../../@types/deals';
 const PopularCoupons: React.FC = () => {
     const [apiData, setApiData] = useState<Deal[]>([]);
 
-    const url: string = "deal/deals?v=1703156660286&limit=999&page=1&productType=coupon&shortBy=clicks&isPopular=true&updateViewCount=true&t=1703156660285";
-
     useEffect(() => {
-        getCoupons(url).then((res) => {
+        const params = {
+            limit: 999,
+            page: 1,
+            productType: "coupon",
+            shortBy: "clicks",
+            isPopular: true,
+            updateViewCount: true,
+        }
+
+        getCoupons(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])
-
-    // console.log("coupons", apiData);
 
     return (
         <>

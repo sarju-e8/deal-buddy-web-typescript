@@ -1,5 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Link, Typography } from '@mui/material'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { theme } from '../../theme/theme'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { NavLink } from 'react-router-dom';
@@ -11,12 +11,9 @@ interface IFaq {
 const FAQ = ({ isListBusinessPage }: IFaq) => {
     const [expanded, setExpanded] = React.useState<string | false>(false);
 
-    const handleChange =
-        (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-            setExpanded(isExpanded ? panel : false);
-        };
-
-    // console.log("islistpage", isListBusinessPage);
+    const handleChange = useCallback((panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? panel : false);
+    }, []);
 
     return (
         <>

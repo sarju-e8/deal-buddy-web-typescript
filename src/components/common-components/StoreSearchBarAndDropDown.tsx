@@ -1,5 +1,5 @@
 import { Box, Container, FormControl, Button, Menu, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { theme } from '../../theme/theme';
@@ -40,70 +40,72 @@ const StoreSearchBarAndDropDown = ({ title, subTitle }: IProps) => {
     const [categoryList, setCategoryList] = useState<FilterProps[]>([]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [categoryAnchorEl, setCategoryAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const categoryOpen = Boolean(categoryAnchorEl);
+    const open = useMemo(() => {
+        return Boolean(anchorEl)
+    }, []);
+
+    const categoryOpen = useMemo(() => {
+        return Boolean(categoryAnchorEl)
+    }, []);
 
     const dispatch = useDispatch();
 
     const storeDiscountType = useSelector((state: any) => state.searchFilters.discountType);
     const storeCategoryName = useSelector((state: any) => state.searchFilters.categoryName);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
-    };
+    }, []);
 
-    const categoryHandleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const categoryHandleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         setCategoryAnchorEl(event.currentTarget);
-    };
+    }, []);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setAnchorEl(null);
-    };
+    }, []);
 
-    const categoryHandleClose = () => {
+    const categoryHandleClose = useCallback(() => {
         setCategoryAnchorEl(null);
-    };
+    }, []);
 
-    const handleDiscountTypeValue = (id: string, name: string) => {
+    const handleDiscountTypeValue = useCallback((id: string, name: string) => {
         dispatch(discountValue(id));
         dispatch(selectedDiscountType(name));
         dispatch(storePageNumber(1));
-        // setAnchorEl(null);
         handleClose();
-    }
+    }, []);
 
-    const handleCategoryValue = (id: string, name: string) => {
+    const handleCategoryValue = useCallback((id: string, name: string) => {
         dispatch(categoryValue(id));
         dispatch(selectedCategoryName(name));
         dispatch(storePageNumber(1));
         categoryHandleClose();
-    }
+    }, []);
 
-    const handleCommonApplyAllFilter = (filter: string) => {
+    const handleCommonApplyAllFilter = useCallback((filter: string) => {
         if (filter === "All Discount Type") {
-            console.log("All Discount applied")
             dispatch(discountValue(""));
             dispatch(selectedDiscountType("Discount Type"));
             dispatch(storePageNumber(1));
             handleClose();
         } else {
-            console.log("All Categories applied")
             dispatch(categoryValue(""));
             dispatch(selectedCategoryName("Categories"));
             dispatch(storePageNumber(1));
             categoryHandleClose();
         }
-    }
+    }, []);
 
     let interval;
 
-    const handleOnChangeSearch = (e) => {
+    const handleOnChangeSearch = useCallback((e) => {
         clearTimeout(interval);
 
         interval = setTimeout(() => {
             dispatch(searchValue(e.target.value));
         }, 1000);
-    };
+    }, []);
 
     useEffect(() => {
         getDiscountType().then((res) => {

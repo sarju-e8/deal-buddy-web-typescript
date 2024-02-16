@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { mainSearchData } from '../../services/HeaderMainSearchBarApi';
 import { Autocomplete, Box, Popper, Typography } from '@mui/material';
@@ -16,16 +16,16 @@ const SearchBar = () => {
     const [anchorElSearch, setAnchorElSearch] = useState<null | HTMLElement>(null);
     const navigate = useNavigate();
 
-    const handleSearchValueClose = () => {
+    const handleSearchValueClose = useCallback(() => {
         setAnchorElSearch(null);
         setSearchValue("");
-    };
+    }, []);
 
-    const handleNavigateSearchDeal = (slug: string) => {
+    const handleNavigateSearchDeal = useCallback((slug: string) => {
         navigate(`/deals/${slug}`);
         setSearchValue("");
         handleSearchValueClose();
-    }
+    }, []);
 
     let cancelTokenSource = axios.CancelToken.source();
 

@@ -14,38 +14,41 @@ import { Slider } from '../../@types/Slider';
 import { Link } from '@mui/material';
 import { getTestSliderData } from '../../services/DealsProductDetailsApi';
 import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useMemo } from 'react';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const DealsProductSlider = () => {
 
     const sliderImages = useSelector((state: any) => state.DealsProductDetails.individualDealProductDetail);
-    const dealProductImagesList = sliderImages.productImages;
-    // console.log(dealProductImagesList);
+    const dealProductImagesList = useMemo(() => {
+        return sliderImages.productImages
+    }, [sliderImages]);
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [apiData, setApiData] = React.useState<Slider[]>([]);
-    const maxSteps = dealProductImagesList?.length;
+    // const [apiData, setApiData] = React.useState<Slider[]>([]);
+    const maxSteps = useMemo(() => {
+        return dealProductImagesList?.length
+    }, [dealProductImagesList]);
 
-    React.useEffect(() => {
-        getTestSliderData().then((res) => {
-            // console.log("tets", res.data.photos);
-            setApiData(res.data.photos);
-        });
-    }, [])
+    // useEffect(() => {
+    //     getTestSliderData().then((res) => {
+    //         setApiData(res.data.photos);
+    //     });
+    // }, [])
 
-    const handleNext = () => {
+    const handleNext = useCallback(() => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+    }, []);
 
-    const handleBack = () => {
+    const handleBack = useCallback(() => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    }, []);
 
-    const handleStepChange = (step: number) => {
+    const handleStepChange = useCallback((step: number) => {
         setActiveStep(step);
-    };
+    }, []);
 
     return (
         <Box className="main-slider-div" sx={{ maxWidth: "100%", height: "auto", flexGrow: 1 }}>
@@ -58,7 +61,6 @@ const DealsProductSlider = () => {
             >
                 {
                     dealProductImagesList && dealProductImagesList.map((item, index) => {
-                        // console.log("imgItem", item, index);
                         return (
                             <>
                                 <div key={item.id}>

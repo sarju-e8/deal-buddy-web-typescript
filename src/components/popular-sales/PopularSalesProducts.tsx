@@ -13,15 +13,20 @@ import { string } from 'yup';
 const PopularSalesProducts: React.FC = () => {
     const [apiData, setApiData] = useState<Deal[]>([]);
 
-    const url: string = "deal/deals?v=1702983878189&limit=999&page=1&productType=sale&shortBy=clicks&isPopular=true&updateViewCount=true&t=1702983878189";
-
     useEffect(() => {
-        getSaleProduct(url).then((res) => {
+        const params = {
+            limit: 999,
+            page: 1,
+            productType: "sale",
+            shortBy: "clicks",
+            isPopular: true,
+            updateViewCount: true,
+        }
+
+        getSaleProduct(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])
-
-    // console.log("apiDaatSale", apiData)
 
     // apiData && apiData.map((item) => {
     //     // let url: string = item.productImages[0].imageUrl;

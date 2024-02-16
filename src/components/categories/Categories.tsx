@@ -6,23 +6,24 @@ import { getAllCategoryList } from '../../services/CategoryApi'
 import { Category } from '../../@types/category'
 import CategoryCards from './CategoryCards'
 
-const Categories: React.FC = () => {
+const Categories = () => {
     const [apiData, setApiData] = useState<Category[]>([]);
-
-    // const url: string = "category?v=1704193922481&where%5Bstatus%5D=active&order%5BorderBy%5D=ASC";
 
     useEffect(() => {
         var params = {
-            where: "",
-            status: "active",
-            orderBy: "ASC",
+            where: {
+                status: "active"
+            },
+            order: {
+                orderBy: "ASC"
+            },
         }
 
         getAllCategoryList(params).then((res) => {
             setApiData(res.data.items);
         });
     }, [])
-    // console.log("categoryList", apiData);
+
     return (
         <>
             <Container maxWidth="xl">
